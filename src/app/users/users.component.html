@@ -1,0 +1,18 @@
+<h2>Joueurs</h2>
+<ul>
+  @for(user of users; track user.id) {
+    <li>{{ user.name }}
+    <button (click)="editUser(user)">Modifier</button>
+    <button (click)="deleteUser(user)" >Supprimer</button>
+
+  </li>
+    }
+</ul>
+<button (click)="addUser()">Ajouter</button>
+<div>
+  <form [formGroup]="userForm"(ngSubmit)="validateFormUser()">
+    <label for="user-name">{{ textInput }}</label>
+    <input name="user-name" type="text" formControlName="name" name="name" required/>
+    <button type="submit" [disabled]="!userForm.valid">{{ textButton }}</button>
+  </form>
+</div>
