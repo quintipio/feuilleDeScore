@@ -2,15 +2,14 @@
 <h1>Feuille de score</h1>
         <nav>
             <ul>
-                <li><a href="/users">Joueur</a></li>
-                <li><a href="/games">Jeux</a></li>
+                <li><a routerLink="/users">Joueur</a></li>
+                <li><a routerLink="/games">Jeux</a></li>
             </ul>
         </nav>
-        <router-outlet />
 
 <main class="container">
   <section>
-    <p><i class="fas fa-camera"></i></p>
+    <router-outlet />
   </section>
 </main>
 
