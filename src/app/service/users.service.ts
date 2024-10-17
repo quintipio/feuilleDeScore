@@ -13,14 +13,18 @@ export class UserService {
   ];
 
   getUsers(): User[] {
-    return this.users;
+    return this.users.map(user => ({
+      ...user,
+      isSelected: user.isSelected ?? false,
+    }));
   }
 
   getUser(id: number) {
-    return this.users[id];
+    const user = this.users.find(user => user.id === id);
+    return user ? { ...user, isSelected: user.isSelected ?? false } : undefined;
   }
 
-  addUser(newUser: Omit<User, 'id'>): void {
+  addUser(newUser: Omit<User, 'id' | 'isSelected'>): void {
     const newId = this.users.length > 0 ? Math.max(...this.users.map(u => u.id)) + 1 : 1;
     this.users.push({ id: newId, ...newUser });
   }

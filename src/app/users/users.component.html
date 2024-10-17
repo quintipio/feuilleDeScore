@@ -1,18 +1,52 @@
-<h2>Joueurs</h2>
-<ul>
-  @for(user of users; track user.id) {
-    <li>{{ user.name }}
-    <button (click)="editUser(user)">Modifier</button>
-    <button (click)="deleteUser(user)" >Supprimer</button>
+<div class="row">
+  <h2>Joueurs</h2>
+</div>
 
-  </li>
+<div class="row">
+  <ul class="vertical-list">
+    @for(user of users; track user.id) {
+     <li [ngClass]="{'selected': user.isSelected}" (click)="toggleSelection(user.id)">
+      <div class="align-left">{{ user.name }}</div>
+      <div class="align-right">
+        <button (click)="editUser(user); $event.stopPropagation()" class="btn btn-outline-warning" style="margin:0 5px 5px" data-bs-toggle="modal"
+          data-bs-target="#userModal"><i class="fa-solid fa-edit"></i></button>
+        <button (click)="deleteUser(user); $event.stopPropagation()" class="btn btn-outline-danger" style="margin:0 5px 5px"><i
+            class="fa-solid fa-trash"></i></button>
+      </div>
+    </li>
     }
-</ul>
-<button (click)="addUser()" class="btn btn-success">Ajouter</button>
+  </ul>
+</div>
 <div>
-  <form [formGroup]="userForm"(ngSubmit)="validateFormUser()">
-    <label for="user-name">{{ textInput }}</label>
-    <input name="user-name" type="text" formControlName="name" name="name" required/>
-    <button type="submit" [disabled]="!userForm.valid">{{ textButton }}</button>
-  </form>
+  <button (click)="addUser()" class="btn btn-outline-primary" type="button" data-bs-toggle="modal"
+    data-bs-target="#userModal">
+    <i class="fa-solid fa-add"></i>
+  </button>
+
+  <button class="btn btn-outline-success align-element-right" type="button">
+    <i class="fa-solid fa-arrow-right"></i>
+    </button>
+
+  <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ titleModalInput }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form [formGroup]="userForm" (ngSubmit)="validateFormUser()">
+          <div class="modal-body">
+            <label for="user-name">{{ textInput }}</label>
+            <input name="user-name" type="text" formControlName="name" name="name" required />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i
+                class="fa-solid fa-xmark"></i></button>
+            <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid" data-bs-dismiss="modal"><i
+                class="fa-solid fa-save"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

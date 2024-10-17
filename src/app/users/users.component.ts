@@ -1,13 +1,14 @@
 import {Component, inject} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
 import {ReactiveFormsModule, Validators} from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { UserService } from '../service/users.service';
 import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
@@ -17,6 +18,7 @@ export class UsersComponent {
   users: User[] = [];
 
   textInput = "";
+  titleModalInput = "";
   textButton = "Sauvegarder";
   userForm = new FormGroup({name: new FormControl('', Validators.required),});
   private currentUserId: number | null = null;
@@ -31,6 +33,7 @@ export class UsersComponent {
 
   addUser(){
     this.textInput = "Entrez le nouveau nom : ";
+    this.titleModalInput = "Ajouter";
   }
 
   deleteUser(user: User){
@@ -39,9 +42,17 @@ export class UsersComponent {
   }
 
   editUser(user: User) {
+    this.titleModalInput = "Modifier";
     this.textInput = "Modifier le nom : ";
     this.userForm.patchValue({ name: user.name });
     this.currentUserId = user.id;
+  }
+
+  toggleSelection(userId: number) {
+    const user = this.users.find(user => user.id === userId);
+    if (user) {
+      user.isSelected = !user.isSelected;
+    }
   }
 
   validateFormUser() {
@@ -50,7 +61,7 @@ export class UsersComponent {
     if (typeof newName === 'string') {
       if (this.currentUserId !== null) {
         // Modifier l'utilisateur existant
-        const updatedUser = { id: this.currentUserId, name: newName };
+        const updatedUser = { id: this.currentUserId, name: newName};
         const success = this.userService.updateUser(updatedUser);
         if (success) {
           this.loadUsers();
@@ -59,7 +70,7 @@ export class UsersComponent {
         }
       } else {
         // Ajouter un nouvel utilisateur
-        const newUser = { name: newName };
+        const newUser = { name: newName};
         this.userService.addUser(newUser);
         this.loadUsers();
       }
