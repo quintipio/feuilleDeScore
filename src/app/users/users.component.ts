@@ -1,9 +1,10 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
 import {ReactiveFormsModule, Validators} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../service/users.service';
 import { User } from '../models/user.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -12,8 +13,8 @@ import { User } from '../models/user.model';
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
-export class UsersComponent {
-  userService = inject(UserService);
+export class UsersComponent implements OnInit {
+  private userService = inject(UserService);
 
   users: User[] = [];
 
@@ -28,7 +29,9 @@ export class UsersComponent {
   }
 
   loadUsers(): void {
-    this.users = this.userService.getUsers();
+    this.userService.users$.subscribe((data: User[]) => {
+      this.users = data;
+    });
   }
 
   addUser(){
@@ -53,6 +56,8 @@ export class UsersComponent {
     if (user) {
       user.isSelected = !user.isSelected;
     }
+    const selectedUsers = this.users.filter(user => user.isSelected);
+    this.userService.updateSelectedUsers(selectedUsers);
   }
 
   validateFormUser() {
