@@ -1,4 +1,6 @@
 <p>games works!</p>
+<app-input-score (valueChange)="onValueChange($event)"></app-input-score>
+<p>{{ parentValue }}</p>
 @for(user of selectedUsers; track user.id) {
   <p>{{user.id}} {{user.name }}</p>
  }

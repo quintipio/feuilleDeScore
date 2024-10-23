@@ -1,0 +1,5 @@
+<div class="number-input-container">
+  <button (click)="decrement()" class="btn btn-secondary btn-left"><i class="fa-solid fa-minus"></i></button>
+  <input type="number" [(ngModel)]="value" (input)="onInputChange($event)" size="3">
+  <button (click)="increment()"class="btn btn-secondary btn-right"><i class="fa-solid fa-plus"></i></button>
+</div>
