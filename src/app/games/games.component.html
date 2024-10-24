@@ -58,26 +58,33 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-      <form [formGroup]="gameForm" (ngSubmit)="validateFormGame()">
+      <form [formGroup]="gameForm" (ngSubmit)="validateFormGame()" class="form-container">
         <div class="modal-body">
-          <label for="game-name">Nom : </label>
-          <input name="game-name" type="text" formControlName="name" name="name" required />
-          <br />
-          <label for="game-win">Condition de victoire : </label>
-          <div class="btn-group game-win">
-            <button type="button"
-              [ngClass]="editGameConditionWinScoreEleve ? 'btn btn-success' : 'btn btn-outline-success'"
-              (click)="changeConditionWin(true)">Le score le plus élevé gagne</button>
-            <button type="button"
-              [ngClass]="!editGameConditionWinScoreEleve ? 'btn btn-success' : 'btn btn-outline-success'"
-              (click)="changeConditionWin(false)">Le score le plus bas gagne</button>
+          <div class="form-group">
+            <label for="game-name">Nom : </label>
+            <input name="game-name" type="text" formControlName="name" name="name" required maxlength="50"/>
           </div>
-          <br />
-          <label for="game-limit-manche">Nombre de manche limite : </label>
-          <input name="game-limit-manche" type="number" formControlName="mancheLimite" required min="0">
-          <br />
-          <label for="game-limit-point">Nombre de point limite : </label>
-          <input name="game-limit-point" type="number" formControlName="pointLimite" required min="0">
+
+          <div class="game-win-group">
+            <label for="game-win">Condition de victoire : </label>
+            <div name="game-win" class="btn-group btn-flex game-win">
+              <button type="button"
+                [ngClass]="editGameConditionWinScoreEleve ? 'btn btn-success' : 'btn btn-outline-success'"
+                (click)="changeConditionWin(true)">Le score le plus élevé gagne</button>
+              <button type="button"
+                [ngClass]="!editGameConditionWinScoreEleve ? 'btn btn-success' : 'btn btn-outline-success'"
+                (click)="changeConditionWin(false)">Le score le plus bas gagne</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="game-limit-manche">Nombre de manche limite : </label>
+            <input name="game-limit-manche" type="number" formControlName="mancheLimite" required min="0">
+          </div>
+          <div class="form-group">
+            <label for="game-limit-point">Nombre de point limite : </label>
+            <input name="game-limit-point" type="number" formControlName="pointLimite" required min="0">
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i

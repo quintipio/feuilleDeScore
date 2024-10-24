@@ -25,7 +25,7 @@ export class GamesComponent {
   labelModal = "";
   isModif = false;
   gameForm = new FormGroup({
-    name: new FormControl('', Validators.required),
+    name: new FormControl('', [Validators.required, Validators.max(50)]),
     mancheLimite: new FormControl('', [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*$')]),
     pointLimite: new FormControl('', [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*$')])
   });
