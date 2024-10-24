@@ -4,12 +4,12 @@ import {ReactiveFormsModule, Validators} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../service/users.service';
 import { User } from '../models/user.model';
-import { Observable } from 'rxjs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
@@ -58,6 +58,10 @@ export class UsersComponent implements OnInit {
     }
     const selectedUsers = this.users.filter(user => user.isSelected);
     this.userService.updateSelectedUsers(selectedUsers);
+  }
+
+  isSelectedUser(){
+    return this.users.filter(user => user.isSelected).length > 0;
   }
 
   validateFormUser() {

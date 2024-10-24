@@ -1,0 +1,6 @@
+[
+  {"id": 1, "name": "Jeu A", "scorePlusEleve": false, "scoreLimite": 100, "mancheLimite": 10},
+  {"id": 2, "name": "Jeu B", "scorePlusEleve": true, "scoreLimite": 8000, "mancheLimite": 0},
+  {"id": 3, "name": "Jeu C", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 3},
+  {"id": 4, "name": "Jeu Daezae sefsdfd sfsfd", "scorePlusEleve": true, "scoreLimite": 40, "mancheLimite": 0}
+]

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './input-score.component.css'
 })
 export class InputScoreComponent {
+  @Input() name: string = '';
   value: number = 0;
 
   @Output() valueChange: EventEmitter<number> = new EventEmitter<number>();

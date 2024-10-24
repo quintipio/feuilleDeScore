@@ -5,13 +5,14 @@
 <div class="row">
   <ul class="vertical-list">
     @for(user of users; track user.id) {
-     <li [ngClass]="{'selected': user.isSelected}" (click)="toggleSelection(user.id)">
+    <li [ngClass]="{'selected': user.isSelected}" (click)="toggleSelection(user.id)">
       <div class="align-left">{{ user.name }}</div>
       <div class="align-right">
-        <button (click)="editUser(user); $event.stopPropagation()" class="btn btn-outline-warning" style="margin:0 5px 5px" data-bs-toggle="modal"
-          data-bs-target="#userModal"><i class="fa-solid fa-edit"></i></button>
-        <button (click)="deleteUser(user); $event.stopPropagation()" class="btn btn-outline-danger" style="margin:0 5px 5px"><i
-            class="fa-solid fa-trash"></i></button>
+        <button (click)="editUser(user); $event.stopPropagation()" class="btn btn-outline-warning"
+          style="margin:0 5px 5px" data-bs-toggle="modal" data-bs-target="#userModal"><i
+            class="fa-solid fa-edit"></i></button>
+        <button (click)="deleteUser(user); $event.stopPropagation()" class="btn btn-outline-danger"
+          style="margin:0 5px 5px"><i class="fa-solid fa-trash"></i></button>
       </div>
     </li>
     }
@@ -23,9 +24,11 @@
     <i class="fa-solid fa-add"></i>
   </button>
 
-  <button class="btn btn-outline-success align-element-right" type="button">
-    <i class="fa-solid fa-arrow-right"></i>
+  <a routerLink="/games">
+    <button *ngIf="isSelectedUser()" class="btn btn-outline-success align-element-right" type="button">
+      <i class="fa-solid fa-arrow-right"></i>
     </button>
+  </a>
 
   <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">

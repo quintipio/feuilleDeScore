@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable} from 'rxjs';
 import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private usersUrl = 'users.json';
+  private usersUrl = 'data/users.json';
 
   private usersSubject = new BehaviorSubject<User[]>([]);
   users$ = this.usersSubject.asObservable();
@@ -48,14 +48,14 @@ export class UserService {
     const newId = this.users.length > 0 ? Math.max(...this.users.map(u => u.id)) + 1 : 1;
     const newUserWithId: User = { id: newId, isSelected: false, ...newUser };
     this.users.push(newUserWithId);
-    this.usersSubject.next(this.users);  // Mettre à jour le BehaviorSubject avec la nouvelle liste
+    this.usersSubject.next(this.users);
   }
 
   updateUser(updatedUser: User): boolean {
     const index = this.users.findIndex(user => user.id === updatedUser.id);
     if (index !== -1) {
       this.users[index] = updatedUser;
-      this.usersSubject.next(this.users);  // Mettre à jour le BehaviorSubject avec la liste modifiée
+      this.usersSubject.next(this.users);
       return true;
     }
     return false;
@@ -65,7 +65,7 @@ export class UserService {
     const index = this.users.findIndex(user => user.id === id);
     if (index !== -1) {
       this.users.splice(index, 1);
-      this.usersSubject.next(this.users);  // Mettre à jour le BehaviorSubject avec la liste mise à jour
+      this.usersSubject.next(this.users);
       return true;
     }
     return false;
