@@ -1,8 +1,9 @@
 <div class="container-fluid nav-panel ">
   <nav>
     <ul class="horizontal-list">
-        <li><a routerLink="/users">Joueurs</a></li>
-        <li><a routerLink="/games">Jeux</a></li>
+        <li><a routerLink="/tables"><i class="fa-solid fa-gamepad"></i> Tables</a></li>
+        <li><a routerLink="/users" [queryParams]="{isCreateTable: false}"><i class="fa-solid fa-user"></i> Joueurs</a></li>
+        <li><a routerLink="/games" [queryParams]="{isCreateTable: false}"><i class="fa-solid fa-dice"></i> Jeux</a></li>
     </ul>
   </nav>
 </div>

@@ -33,7 +33,6 @@ export class UserService {
 
   updateSelectedUsers(updatedUsers: User[]): void {
     this.selectedUsers = updatedUsers;
-    console.log(this.selectedUsers);
   }
 
   getSelectedUsers(): User[] {

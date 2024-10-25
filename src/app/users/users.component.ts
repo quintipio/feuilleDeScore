@@ -4,7 +4,8 @@ import {ReactiveFormsModule, Validators} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../service/users.service';
 import { User } from '../models/user.model';
-import { RouterLink } from '@angular/router';
+import { RouterLink, ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -17,14 +18,19 @@ export class UsersComponent implements OnInit {
   private userService = inject(UserService);
 
   users: User[] = [];
-
+  isCreateTable: boolean = false;
   textInput = "";
   titleModalInput = "";
   textButton = "Sauvegarder";
   userForm = new FormGroup({name: new FormControl('', Validators.required),});
   private currentUserId: number | null = null;
 
+  constructor(private route: ActivatedRoute) {}
+
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.isCreateTable = params['isCreateTable'] === 'true';
+    });
     this.loadUsers();
   }
 
@@ -61,7 +67,7 @@ export class UsersComponent implements OnInit {
   }
 
   isSelectedUser(){
-    return this.users.filter(user => user.isSelected).length > 0;
+    return this.users.filter(user => user.isSelected).length > 0 && this.isCreateTable;
   }
 
   validateFormUser() {
