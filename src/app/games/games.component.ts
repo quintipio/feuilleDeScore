@@ -32,7 +32,6 @@ export class GamesComponent {
   });
 
 
-  userService = inject(UserService);
 
   constructor(private route: ActivatedRoute) { }
 

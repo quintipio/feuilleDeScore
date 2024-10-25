@@ -1,4 +1,13 @@
-<p>table works!</p>
-<a routerLink="/users" [queryParams]="{isCreateTable: true}">
-  <button class="btn btn-outline-primary">Créer une table</button>
-</a>
+<div class="row">
+  <a routerLink="/users" [queryParams]="{isCreateTable: true}">
+    <button class="btn btn-outline-primary">Créer une table</button>
+  </a>
+</div>
+
+<div class="row">
+  <ul class="vertical-list">
+    @for(table of tables; track table.id) {
+    <li>{{ table.name }}</li>
+    }
+  </ul>
+</div>
