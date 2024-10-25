@@ -2,14 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Game } from '../models/game.model';
-import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
 
-  isCreateTable: boolean = false;
   private gamesUrl = 'data/games.json';
 
   private gamesSubject = new BehaviorSubject<Game[]>([]);
@@ -17,14 +15,8 @@ export class GameService {
 
   private games: Game[] = [];
 
-  constructor(private http: HttpClient,private route: ActivatedRoute) {
+  constructor(private http: HttpClient) {
     this.loadGamesFromJson();
-  }
-
-  ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.isCreateTable = params['isCreateTable'] === 'true';
-    });
   }
 
   private loadGamesFromJson(): void {

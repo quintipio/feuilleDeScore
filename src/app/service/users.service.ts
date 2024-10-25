@@ -12,7 +12,6 @@ export class UserService {
   private usersSubject = new BehaviorSubject<User[]>([]);
   users$ = this.usersSubject.asObservable();
 
-  private selectedUsers: User[] = [];
   private users: User[] = [];
 
   constructor(private http: HttpClient) {
@@ -29,14 +28,6 @@ export class UserService {
         console.error('Error loading users:', error);
       }
     );
-  }
-
-  updateSelectedUsers(updatedUsers: User[]): void {
-    this.selectedUsers = updatedUsers;
-  }
-
-  getSelectedUsers(): User[] {
-    return this.selectedUsers;
   }
 
   getUsers(): Observable<User[]> {

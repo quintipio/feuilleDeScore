@@ -1,11 +1,10 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {FormGroup, FormControl} from '@angular/forms';
-import {ReactiveFormsModule, Validators} from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../service/users.service';
 import { User } from '../models/user.model';
 import { RouterLink, ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -18,14 +17,15 @@ export class UsersComponent implements OnInit {
   private userService = inject(UserService);
 
   users: User[] = [];
+  selectedUser: User[] = [];
   isCreateTable: boolean = false;
   textInput = "";
   titleModalInput = "";
   textButton = "Sauvegarder";
-  userForm = new FormGroup({name: new FormControl('', Validators.required),});
+  userForm = new FormGroup({ name: new FormControl('', Validators.required), });
   private currentUserId: number | null = null;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -40,13 +40,17 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  addUser(){
+  addUser() {
     this.textInput = "Entrez le nouveau nom : ";
     this.titleModalInput = "Ajouter";
   }
 
-  deleteUser(user: User){
-    this.userService.deleteUser(user.id)
+  deleteUser(user: User) {
+    this.userService.deleteUser(user.id);
+    const index = this.selectedUser.findIndex(u => u.id === user.id);
+    if (index !== -1) {
+      this.selectedUser.splice(index, 1);
+    }
     this.loadUsers();
   }
 
@@ -57,17 +61,25 @@ export class UsersComponent implements OnInit {
     this.currentUserId = user.id;
   }
 
-  toggleSelection(userId: number) {
+  toggleSelection(userId: number): void {
     const user = this.users.find(user => user.id === userId);
+
     if (user) {
-      user.isSelected = !user.isSelected;
+      const index = this.selectedUser.findIndex(u => u.id === user.id);
+      if (index !== -1) {
+        this.selectedUser.splice(index, 1);
+      } else {
+        this.selectedUser.push(user);
+      }
     }
-    const selectedUsers = this.users.filter(user => user.isSelected);
-    this.userService.updateSelectedUsers(selectedUsers);
   }
 
-  isSelectedUser(){
-    return this.users.filter(user => user.isSelected).length > 0 && this.isCreateTable;
+  checkSelectedUser(userId: number): boolean {
+    return this.selectedUser.findIndex(u => u.id === userId) !== -1;
+  }
+
+  isSelectedUser() {
+    return this.selectedUser.length > 0 && this.isCreateTable;
   }
 
   validateFormUser() {
@@ -76,7 +88,7 @@ export class UsersComponent implements OnInit {
     if (typeof newName === 'string') {
       if (this.currentUserId !== null) {
         // Modifier l'utilisateur existant
-        const updatedUser = { id: this.currentUserId, name: newName};
+        const updatedUser = { id: this.currentUserId, name: newName };
         const success = this.userService.updateUser(updatedUser);
         if (success) {
           this.loadUsers();
@@ -85,7 +97,7 @@ export class UsersComponent implements OnInit {
         }
       } else {
         // Ajouter un nouvel utilisateur
-        const newUser = { name: newName};
+        const newUser = { name: newName };
         this.userService.addUser(newUser);
         this.loadUsers();
       }

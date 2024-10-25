@@ -5,7 +5,7 @@ import { InputScoreComponent } from '../components/input-score/input-score.compo
 import { GameService } from '../service/games.service';
 import { Game } from '../models/game.model';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -18,6 +18,7 @@ import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angula
 export class GamesComponent {
   private gameService = inject(GameService);
 
+  isCreateTable: boolean = false;
   selectedUsers: User[] = [];
   selectedGame: number = 0;
   games: Game[] = [];
@@ -33,8 +34,14 @@ export class GamesComponent {
 
   userService = inject(UserService);
 
+  constructor(private route: ActivatedRoute) { }
+
   ngOnInit(): void {
-    this.selectedUsers = this.userService.getSelectedUsers();
+    this.route.queryParams.subscribe(params => {
+      this.isCreateTable = params['isCreateTable'] === 'true';
+      this.selectedUsers = params['selectedUsers'] ? JSON.parse(params['selectedUsers']) : [];
+      console.log(this.selectedUsers);
+    });
     this.loadGames();
   }
 
@@ -66,7 +73,7 @@ export class GamesComponent {
   }
 
   isReadyToCreateTable() {
-    return this.selectedGame != 0 && this.userService.getSelectedUsers().length > 0;
+    return this.selectedGame != 0 && this.selectedUsers.length > 0 && this.isCreateTable;
   }
 
   openNewGameModal(): void {

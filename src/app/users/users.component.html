@@ -5,7 +5,7 @@
 <div class="row">
   <ul class="vertical-list">
     @for(user of users; track user.id) {
-    <li [ngClass]="{'selected': user.isSelected}" (click)="toggleSelection(user.id)">
+    <li [ngClass]="{'selected': checkSelectedUser(user.id)} " (click)="toggleSelection(user.id)">
       <div class="align-left">{{ user.name }}</div>
       <div class="align-right">
         <button (click)="editUser(user); $event.stopPropagation()" class="btn btn-outline-warning"
@@ -24,7 +24,7 @@
     <i class="fa-solid fa-add"></i>
   </button>
 
-  <a routerLink="/games" [queryParams]="{isCreateTable: true}">
+  <a routerLink="/games" [queryParams]="{isCreateTable: true, selectedUsers: selectedUser | json }">
     <button *ngIf="isSelectedUser()" class="btn btn-outline-success align-element-right" type="button">
       <i class="fa-solid fa-arrow-right"></i>
     </button>
