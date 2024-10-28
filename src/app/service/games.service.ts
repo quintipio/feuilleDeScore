@@ -35,10 +35,9 @@ export class GameService {
     return this.gamesSubject.asObservable();
   }
 
-  addGame(newGame: Omit<Game, 'id'>): void {
-    const newId = this.games.length > 0 ? Math.max(...this.games.map(u => u.id)) + 1 : 1;
-    const newGameWithId: Game = { id: newId, ...newGame };
-    this.games.push(newGameWithId);
+  addGame(newGame:Game): void {
+    newGame.id = this.games.length > 0 ? Math.max(...this.games.map(u => u.id)) + 1 : 1;
+    this.games.push(newGame);
     this.gamesSubject.next(this.games);
     console.log(this.games);
   }

@@ -1,17 +1,16 @@
-import { Component, inject } from '@angular/core';
-import { UserService } from '../service/users.service';
+import { Component, inject, ViewChild } from '@angular/core';
 import { User } from '../models/user.model';
 import { InputScoreComponent } from '../components/input-score/input-score.component'
 import { GameService } from '../service/games.service';
 import { Game } from '../models/game.model';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute } from '@angular/router';
-import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ConfigGameComponent } from './config-game/config-game.component';
 
 @Component({
   selector: 'app-games',
   standalone: true,
-  imports: [InputScoreComponent, CommonModule, RouterLink, ReactiveFormsModule],
+  imports: [InputScoreComponent, CommonModule, RouterLink, ConfigGameComponent],
   templateUrl: './games.component.html',
   styleUrl: './games.component.css'
 })
@@ -22,15 +21,11 @@ export class GamesComponent {
   selectedUsers: User[] = [];
   selectedGame: number = 0;
   games: Game[] = [];
-  editGameConditionWinScoreEleve: boolean = true;
-  labelModal = "";
-  isModif = false;
-  gameForm = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.max(50)]),
-    mancheLimite: new FormControl('', [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*$')]),
-    pointLimite: new FormControl('', [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*$')])
-  });
 
+
+  @ViewChild(ConfigGameComponent) configGameComponent: ConfigGameComponent | undefined;
+  isModifConfig = false;
+  labelModalConfig = "";
 
 
   constructor(private route: ActivatedRoute) { }
@@ -76,63 +71,27 @@ export class GamesComponent {
   }
 
   openNewGameModal(): void {
-    this.labelModal = "Nouveau jeu";
-    this.gameForm.patchValue({ name: "", mancheLimite: "0", pointLimite: "0" });
-    this.isModif = false;
+    this.labelModalConfig = "Nouveau jeu";
+    this.isModifConfig = false;
+    if(this.configGameComponent){
+      this.configGameComponent.initializeGame(undefined);
+    }
   }
 
   openEditGameModal(): void {
-    this.labelModal = "Modifier le jeu";
-    this.isModif = true;
-    const gameSelected = this.games.find(game => game.id == this.selectedGame);
-    if (gameSelected != undefined) {
-      this.editGameConditionWinScoreEleve = gameSelected.scorePlusEleve;
-      this.gameForm.patchValue({ name: gameSelected.name, mancheLimite: gameSelected.mancheLimite.toString(), pointLimite: gameSelected.scoreLimite.toString() });
+    this.labelModalConfig = "Modifier le jeu";
+    this.isModifConfig = true;
+    const gameSelectedConfig = this.games.find(game => game.id == this.selectedGame);
+    if(this.configGameComponent && gameSelectedConfig){
+      this.configGameComponent.initializeGame(gameSelectedConfig);
     }
   }
 
-  validateFormGame(): void {
-    if(this.isModif){
-      const gameSelected = this.games.find(game => game.id == this.selectedGame);
-      if(gameSelected){
-        if(this.gameForm.value.name) {
-          gameSelected.name = this.gameForm.value.name;
-        }
-
-        if(this.gameForm.value.pointLimite) {
-          gameSelected.scoreLimite = Number.parseInt(this.gameForm.value.pointLimite);
-        }
-
-        if(this.gameForm.value.mancheLimite) {
-          gameSelected.mancheLimite = Number.parseInt(this.gameForm.value.mancheLimite);
-        }
-
-        gameSelected.scorePlusEleve = this.editGameConditionWinScoreEleve;
-
-        this.gameService.updateGame(gameSelected);
-      }
+  onGameValidated(game: Game) {
+    if(game.id === 0){
+      this.gameService.addGame(game);
     } else {
-      const newGame = {name: "", scorePlusEleve: this.editGameConditionWinScoreEleve, scoreLimite: 0, mancheLimite: 0};
-
-      if(this.gameForm.value.name) {
-        newGame.name = this.gameForm.value.name;
-      }
-
-      if(this.gameForm.value.pointLimite) {
-        newGame.scoreLimite = Number.parseInt(this.gameForm.value.pointLimite);
-      }
-
-      if(this.gameForm.value.mancheLimite) {
-        newGame.mancheLimite = Number.parseInt(this.gameForm.value.mancheLimite);
-      }
-
-      this.gameService.addGame(newGame)
-
+      this.gameService.updateGame(game);
     }
   }
-
-  changeConditionWin(scoreEleve: boolean) {
-    this.editGameConditionWinScoreEleve = scoreEleve;
-  }
-
 }
