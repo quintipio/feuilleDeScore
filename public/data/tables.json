@@ -1,4 +1,4 @@
 [
-  {"id": 1,"name": "Jeu B", "usersId": [1,2,3], "rules": { "scorePlusEleve": true, "scoreLimite": 8000, "mancheLimite": 0}},
-  {"id": 2,"name": "Jeu C", "usersId": [2,3], "rules": {"scorePlusEleve": false, "scoreLimite": 0, "mancheLimite": 3}}
+  {"id": 1, "usersId": [1,2,3], "game": {"name": "Jeu B", "scorePlusEleve": true, "scoreLimite": 8000, "mancheLimite": 0}},
+  {"id": 2, "usersId": [2,3], "game": {"name": "Jeu C", "scorePlusEleve": false, "scoreLimite": 0, "mancheLimite": 3}}
 ]

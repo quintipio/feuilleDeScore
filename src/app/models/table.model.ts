@@ -1,9 +1,8 @@
-import { Rule } from "./rule.model";
+import { Game } from "./game.model";
 
 export interface Table {
   id: number;
-  name: string;
-  usersId: [],
+  usersId: number[],
   users?: [],
-  rules: Rule
+  game: Game | undefined
 }

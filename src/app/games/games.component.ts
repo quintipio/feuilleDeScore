@@ -4,8 +4,9 @@ import { InputScoreComponent } from '../components/input-score/input-score.compo
 import { GameService } from '../service/games.service';
 import { Game } from '../models/game.model';
 import { CommonModule } from '@angular/common';
-import { RouterLink, ActivatedRoute } from '@angular/router';
+import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { ConfigGameComponent } from './config-game/config-game.component';
+import { TableService } from '../service/table.service';
 
 @Component({
   selector: 'app-games',
@@ -16,6 +17,7 @@ import { ConfigGameComponent } from './config-game/config-game.component';
 })
 export class GamesComponent {
   private gameService = inject(GameService);
+  private tableService = inject(TableService);
 
   isCreateTable: boolean = false;
   selectedUsers: User[] = [];
@@ -28,13 +30,12 @@ export class GamesComponent {
   labelModalConfig = "";
 
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.isCreateTable = params['isCreateTable'] === 'true';
       this.selectedUsers = params['selectedUsers'] ? JSON.parse(params['selectedUsers']) : [];
-      console.log(this.selectedUsers);
     });
     this.loadGames();
   }
@@ -93,5 +94,13 @@ export class GamesComponent {
     } else {
       this.gameService.updateGame(game);
     }
+  }
+
+  createTable(){
+      const newTable = this.tableService.generateEmptyTable();
+      newTable.usersId = this.selectedUsers.map(user => user.id);
+      newTable.game = this.games.find(game => game.id == this.selectedGame);
+      this.tableService.addTable(newTable);
+      this.router.navigate(['/tables']);
   }
 }

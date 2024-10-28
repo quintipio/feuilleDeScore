@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Table } from '../models/table.model';
+import { Game } from '../models/game.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,15 @@ export class TableService {
 
   constructor(private http: HttpClient) {
     this.loadTablesFromJson();
+  }
+
+  generateEmptyTable():Table {
+    const table:Table = {
+      id: 0,
+      usersId: [],
+      game: undefined
+    };
+    return table;
   }
 
   private loadTablesFromJson(): void {
@@ -35,12 +45,10 @@ export class TableService {
     return this.tablesSubject.asObservable();
   }
 
-  addTable(newTable: Omit<Table, 'id'>): void {
-    const newId = this.tables.length > 0 ? Math.max(...this.tables.map(u => u.id)) + 1 : 1;
-    const newTableWithId: Table = { id: newId, ...newTable };
-    this.tables.push(newTableWithId);
+  addTable(newTable: Table): void {
+    newTable.id = this.tables.length > 0 ? Math.max(...this.tables.map(u => u.id)) + 1 : 1;
+    this.tables.push(newTable);
     this.tablesSubject.next(this.tables);
-    console.log(this.tables);
   }
 
   updateTable(updatedTable: Table): boolean {
@@ -48,7 +56,6 @@ export class TableService {
     if (index !== -1) {
       this.tables[index] = updatedTable;
       this.tablesSubject.next(this.tables);
-      console.log(this.tables);
       return true;
     }
     return false;

@@ -35,7 +35,7 @@
   </div>
 
   <div class="col">
-    <button *ngIf="isReadyToCreateTable()" class="btn btn-outline-success align-element-right" type="button">
+    <button *ngIf="isReadyToCreateTable()" (click)="createTable()" class="btn btn-outline-success align-element-right" type="button">
       Créer une table
     </button>
   </div>
