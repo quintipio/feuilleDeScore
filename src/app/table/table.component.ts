@@ -1,5 +1,5 @@
 import { Component, inject, ViewChild } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { TableService } from '../service/table.service';
 import { Table } from '../models/table.model';
 import { UserService } from '../service/users.service';
@@ -22,6 +22,8 @@ export class TableComponent {
   tables:Table[] = [];
   private lastTableSelected = 0;
 
+  constructor(private route: ActivatedRoute, private router: Router) { }
+
   ngOnInit(){
     this.loadTables();
   }
@@ -36,6 +38,13 @@ export class TableComponent {
         });
       });
     });
+  }
+
+  startSheet(sheet: string | undefined, idTable: number) {
+    if(sheet){
+      var path = "sheet/"+sheet;
+      this.router.navigate([path], { queryParams: { idTable: idTable } });
+    }
   }
 
   deleteTable(id :number){

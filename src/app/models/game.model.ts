@@ -4,4 +4,5 @@ export interface Game {
   scorePlusEleve: boolean;
   scoreLimite: number;
   mancheLimite: number;
+  sheet:string;
 }

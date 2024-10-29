@@ -43,6 +43,12 @@ export class TableService {
     return this.tablesSubject.asObservable();
   }
 
+  getTable(id: number): Observable<Table | undefined> {
+    const table = this.tables.find(table => table.id === id);
+    return of(table);
+  }
+
+
   addTable(newTable: Table): void {
     newTable.id = this.tables.length > 0 ? Math.max(...this.tables.map(u => u.id)) + 1 : 1;
     this.tables.push(newTable);

@@ -47,7 +47,8 @@ export class ConfigGameComponent {
         name: '',
         scorePlusEleve: this.editGameConditionWinScoreEleve,
         scoreLimite: 0,
-        mancheLimite: 0
+        mancheLimite: 0,
+        sheet: "generic"
       };
       if(this.gameForm.value.name) {
         gameToSend.name = this.gameForm.value.name;
