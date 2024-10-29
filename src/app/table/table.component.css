@@ -1,0 +1,26 @@
+.table-element {
+  width: 100%;
+}
+
+.table-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: rgb(71, 114, 78);
+}
+
+.table-user {
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
+}
+
+.table-btn {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.table-btn button {
+  width: 50px;
+  text-align: center;
+}

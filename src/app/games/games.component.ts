@@ -1,6 +1,5 @@
 import { Component, inject, ViewChild } from '@angular/core';
 import { User } from '../models/user.model';
-import { InputScoreComponent } from '../components/input-score/input-score.component'
 import { GameService } from '../service/games.service';
 import { Game } from '../models/game.model';
 import { CommonModule } from '@angular/common';
@@ -11,7 +10,7 @@ import { TableService } from '../service/table.service';
 @Component({
   selector: 'app-games',
   standalone: true,
-  imports: [InputScoreComponent, CommonModule, RouterLink, ConfigGameComponent],
+  imports: [CommonModule, RouterLink, ConfigGameComponent],
   templateUrl: './games.component.html',
   styleUrl: './games.component.css'
 })

@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Table } from '../models/table.model';
-import { Game } from '../models/game.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +9,6 @@ import { Game } from '../models/game.model';
 export class TableService {
 
   private tablesUrl = 'data/tables.json';
-
   private tablesSubject = new BehaviorSubject<Table[]>([]);
   tables$ = this.tablesSubject.asObservable();
 

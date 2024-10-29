@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable} from 'rxjs';
+import { BehaviorSubject, map, Observable} from 'rxjs';
 import { User } from '../models/user.model';
 
 @Injectable({
@@ -33,6 +33,13 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.usersSubject.asObservable();
   }
+
+  getUsersById(ids: number[]): Observable<User[]> {
+    return this.usersSubject.asObservable().pipe(
+        map((users: User[]) => users.filter((user: User) => ids.includes(user.id)))
+    );
+  }
+
 
   addUser(newUser: Omit<User, 'id' | 'isSelected'>): void {
     const newId = this.users.length > 0 ? Math.max(...this.users.map(u => u.id)) + 1 : 1;
