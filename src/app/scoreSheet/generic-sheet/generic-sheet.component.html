@@ -8,46 +8,25 @@
     <table class="table-score">
       <tr>
         <th></th>
-        <th>Joueur A</th>
-        <th>Joueur B</th>
-        <th>Joueur C</th>
-        <th>Joueur D</th>
+        @for(user of users; track user.position) {
+          <th>{{user.user.name}} </th>
+        }
       </tr>
       <tr>
         <th></th>
-        <th>4545</th>
-        <th>86745</th>
-        <th>456876</th>
-        <th>78646</th>
+        <th *ngFor="let user of users; trackBy: trackByUserPosition">
+          {{ getSum(user) }}
+        </th>
       </tr>
-      <tr>
-        <td>#01</td>
-        <td>10</td>
-        <td>456</td>
-        <td>788</td>
-        <td>7864</td>
-      </tr>
-      <tr>
-        <td>#02</td>
-        <td>10</td>
-        <td>456</td>
-        <td>788</td>
-        <td>7864</td>
-      </tr>
-      <tr>
-        <td>#03</td>
-        <td>10</td>
-        <td>456</td>
-        <td>788</td>
-        <td>7864</td>
-      </tr>
-      <tr>
-        <td>#04</td>
-        <td>10</td>
-        <td>456</td>
-        <td>788</td>
-        <td>7864</td>
-      </tr>
+
+        @for(row of round; track row.row){
+          <tr>
+            <td>#{{row.row}}</td>
+            @for(point of row.points; track point.user.position){
+              <td>{{ point.value}}</td>
+            }
+          </tr>
+        }
     </table>
   </div>
 </div>
@@ -55,7 +34,7 @@
 
 <div class="row justify-content-center">
   <div class="button-wrapper">
-    <button class="btn btn-success rounded-circle btn-custom" type="button">
+    <button class="btn btn-success rounded-circle btn-custom" type="button" (click)="addRound()">
       <i class="fa-solid fa-add"></i>
     </button>
   </div>
