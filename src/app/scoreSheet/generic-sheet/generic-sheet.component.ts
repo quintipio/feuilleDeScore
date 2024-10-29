@@ -20,11 +20,9 @@ export class GenericSheetComponent {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const idTable = +params['idTable'];
-      console.log("COUCOU"+idTable);
       if (idTable) {
         this.tableService.getTable(idTable).subscribe(table => {
           this.table = table;
-          console.log(this.table?.game?.name);
         });
       }
     });
