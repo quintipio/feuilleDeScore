@@ -34,16 +34,10 @@ export class UserService {
     return this.usersSubject.asObservable();
   }
 
-  getUsersById(ids: number[]): Observable<User[]> {
-    return this.usersSubject.asObservable().pipe(
-        map((users: User[]) => users.filter((user: User) => ids.includes(user.id)))
-    );
-  }
 
-
-  addUser(newUser: Omit<User, 'id' | 'isSelected'>): void {
+  addUser(newUser: Omit<User, 'id'>): void {
     const newId = this.users.length > 0 ? Math.max(...this.users.map(u => u.id)) + 1 : 1;
-    const newUserWithId: User = { id: newId, isSelected: false, ...newUser };
+    const newUserWithId: User = { id: newId, ...newUser };
     this.users.push(newUserWithId);
     this.usersSubject.next(this.users);
   }

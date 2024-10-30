@@ -97,7 +97,7 @@ export class GamesComponent {
 
   createTable(){
       const newTable = this.tableService.generateEmptyTable();
-      newTable.usersId = this.selectedUsers.map(user => user.id);
+      newTable.users = this.selectedUsers;
       newTable.game = this.games.find(game => game.id == this.selectedGame);
       this.tableService.addTable(newTable);
       this.router.navigate(['/tables']);

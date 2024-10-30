@@ -31,12 +31,6 @@ export class TableComponent {
   loadTables() {
     this.tableService.tables$.subscribe((data: Table[]) => {
       this.tables = data;
-
-      this.tables.forEach((table, index) => {
-        this.userService.getUsersById(table.usersId).subscribe((users: User[]) => {
-          this.tables[index].users = users;
-        });
-      });
     });
   }
 

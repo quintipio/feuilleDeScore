@@ -3,7 +3,6 @@ import { User } from "./user.model";
 
 export interface Table {
   id: number;
-  usersId: number[],
-  users?: User[],
+  users: User[],
   game: Game | undefined
 }

@@ -21,7 +21,7 @@ export class TableService {
   generateEmptyTable():Table {
     const table:Table = {
       id: 0,
-      usersId: [],
+      users: [],
       game: undefined
     };
     return table;

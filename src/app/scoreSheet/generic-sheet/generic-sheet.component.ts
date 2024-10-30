@@ -13,7 +13,7 @@ type UserColumn = {
 }
 
 type CountRoundRow = {
-  user:UserColumn
+  user: UserColumn
   value: number;
 }
 
@@ -51,13 +51,8 @@ export class GenericSheetComponent {
         this.tableService.getTable(idTable).subscribe(table => {
           this.table = table;
           if (this.table) {
-            this.userService.getUsersById(this.table.usersId).subscribe((users: User[]) => {
-              if (this.table) {
-                this.table.users = users;
-                this.generateUsers(this.table.users);
-                this.addRound();
-              }
-            });
+            this.generateUsers(this.table.users);
+            this.addRound();
           }
         });
       }
@@ -96,12 +91,12 @@ export class GenericSheetComponent {
 
   addRound() {
     const row: RoundRow = {
-      "row" : this.round.length + 1,
-      "points" :[],
+      "row": this.round.length + 1,
+      "points": [],
     }
     this.users.forEach((userRow) => {
-      const count: CountRoundRow=  {
-        user : userRow,
+      const count: CountRoundRow = {
+        user: userRow,
         value: 0
       }
       row.points.push(count);
@@ -110,21 +105,21 @@ export class GenericSheetComponent {
     this.round.sort((a, b) => a.row - b.row);
   }
 
-  openInputPad(row: number, point:CountRoundRow){
-      this.selectedRow = row;
-      this.selectedPositionUser = point.user.position;
-      if(this.inputPadComponent){
-        this.inputPadComponent.openInput(point.value);
-      }
+  openInputPad(row: number, point: CountRoundRow) {
+    this.selectedRow = row;
+    this.selectedPositionUser = point.user.position;
+    if (this.inputPadComponent) {
+      this.inputPadComponent.openInput(point.value);
+    }
   }
 
   changeValue(numberValue: number) {
     const roundRow = this.round.find(row => row.row === this.selectedRow);
     if (roundRow) {
-        const countRoundRow = roundRow.points.find(point => point.user.position === this.selectedPositionUser);
-        if (countRoundRow) {
-            countRoundRow.value = numberValue;
-        }
+      const countRoundRow = roundRow.points.find(point => point.user.position === this.selectedPositionUser);
+      if (countRoundRow) {
+        countRoundRow.value = numberValue;
+      }
     }
-}
+  }
 }
