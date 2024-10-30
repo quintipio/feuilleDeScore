@@ -1,0 +1,32 @@
+<div class="input-pad-container">
+  <div class="display">{{ displayValue}}</div>
+
+  <div class="buttons-row">
+    <button class="button" (click)="onNumberClick('1')">1</button>
+    <button class="button" (click)="onNumberClick('2')">2</button>
+    <button class="button" (click)="onNumberClick('3')">3</button>
+  </div>
+
+  <div class="buttons-row">
+    <button class="button" (click)="onNumberClick('4')">4</button>
+    <button class="button" (click)="onNumberClick('5')">5</button>
+    <button class="button" (click)="onNumberClick('6')">6</button>
+  </div>
+
+  <div class="buttons-row">
+    <button class="button" (click)="onNumberClick('7')">7</button>
+    <button class="button" (click)="onNumberClick('8')">8</button>
+    <button class="button" (click)="onNumberClick('9')">9</button>
+  </div>
+
+  <div class="buttons-row">
+    <button class="button" (click)="onToggleSign()">+/-</button>
+    <button class="button" (click)="onNumberClick('0')">0</button>
+    <button class="button" (click)="onDelete()"><i class="fa-solid fa-delete-left"></i></button>
+  </div>
+
+  <div class="buttons-row">
+    <button class="button close-button btn btn-danger" (click)="onClose()" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+    <button class="button validate-button btn btn-success" (click)="onValidate()" data-bs-dismiss="modal"><i class="fa-solid fa-check"></i></button>
+  </div>
+</div>

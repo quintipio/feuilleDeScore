@@ -23,7 +23,7 @@
           <tr>
             <td>#{{row.row}}</td>
             @for(point of row.points; track point.user.position){
-              <td>{{ point.value}}</td>
+              <td class="point" (click)="openInputPad(row.row, point)" data-bs-toggle="modal" data-bs-target="#padModal">{{ point.value }}</td>
             }
           </tr>
         }
@@ -37,6 +37,15 @@
     <button class="btn btn-success rounded-circle btn-custom" type="button" (click)="addRound()">
       <i class="fa-solid fa-add"></i>
     </button>
+  </div>
+</div>
+
+
+<div class="modal fade" id="padModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <app-input-pad (valueChange)="changeValue($event)"></app-input-pad>
+    </div>
   </div>
 </div>
 

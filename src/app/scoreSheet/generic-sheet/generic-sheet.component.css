@@ -37,6 +37,14 @@
   text-align: center;
 }
 
+.point{
+  background-color: white;
+}
+
+.point:hover{
+  background-color: darkgrey;
+}
+
 .button-wrapper {
   position: relative;
   display: flex;

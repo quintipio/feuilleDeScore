@@ -1,10 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { Table } from '../../models/table.model';
 import { TableService } from '../../service/table.service';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../service/users.service';
 import { User } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
+import { InputPadComponent } from '../../components/input-pad/input-pad.component';
 
 type UserColumn = {
   position: number;
@@ -24,7 +25,7 @@ type RoundRow = {
 @Component({
   selector: 'app-generic-sheet',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, InputPadComponent],
   templateUrl: './generic-sheet.component.html',
   styleUrl: './generic-sheet.component.css'
 })
@@ -36,6 +37,10 @@ export class GenericSheetComponent {
   table: Table | undefined;
   round: RoundRow[] = [];
   users: UserColumn[] = [];
+
+  @ViewChild(InputPadComponent) inputPadComponent: InputPadComponent | undefined;
+  selectedRow: number = 0;
+  selectedPositionUser: number = 0;
 
   constructor(private route: ActivatedRoute, private router: Router) { }
 
@@ -85,7 +90,6 @@ export class GenericSheetComponent {
         }
       });
     });
-
     return totalValue;
   }
 
@@ -98,7 +102,7 @@ export class GenericSheetComponent {
     this.users.forEach((userRow) => {
       const count: CountRoundRow=  {
         user : userRow,
-        value: 3
+        value: 0
       }
       row.points.push(count);
     })
@@ -106,5 +110,21 @@ export class GenericSheetComponent {
     this.round.sort((a, b) => a.row - b.row);
   }
 
+  openInputPad(row: number, point:CountRoundRow){
+      this.selectedRow = row;
+      this.selectedPositionUser = point.user.position;
+      if(this.inputPadComponent){
+        this.inputPadComponent.openInput(point.value);
+      }
+  }
 
+  changeValue(numberValue: number) {
+    const roundRow = this.round.find(row => row.row === this.selectedRow);
+    if (roundRow) {
+        const countRoundRow = roundRow.points.find(point => point.user.position === this.selectedPositionUser);
+        if (countRoundRow) {
+            countRoundRow.value = numberValue;
+        }
+    }
+}
 }
