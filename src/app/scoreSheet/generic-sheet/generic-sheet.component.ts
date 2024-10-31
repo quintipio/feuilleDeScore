@@ -36,6 +36,7 @@ export class GenericSheetComponent {
   round: RoundRow[] = [];
   users: UserColumn[] = [];
   isEndingGame: boolean = false;
+  endingNextTurn: boolean = false;
 
   @ViewChild(InputPadComponent) inputPadComponent: InputPadComponent | undefined;
   selectedRow: number = 0;
@@ -100,7 +101,11 @@ export class GenericSheetComponent {
       for (const user of this.users) {
         var score = this.getSum(user);
         if(score >= this.table?.game?.scoreLimite){
-          this.isEndingGame = true;
+          if(this.table.game.lastTurnStopAfter && !this.endingNextTurn){
+            this.endingNextTurn = true;
+          } else {
+            this.isEndingGame = true;
+          }
           return;
         } else {
           this.isEndingGame = false;

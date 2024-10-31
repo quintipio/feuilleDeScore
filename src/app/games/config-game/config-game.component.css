@@ -1,20 +1,22 @@
-
 .form-container {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
 }
+
 .form-group {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
+
 label {
   flex: 1;
   margin-right: 10px;
 }
 
-input {
+input[type="text"],
+input[type="number"] {
   flex: 2;
   padding: 10px;
   border: 1px solid #ccc;
@@ -40,14 +42,27 @@ input {
   cursor: pointer;
 }
 
+.checkbox-group {
+  display: flex;
+  align-items: center; /* Aligne le label et la case à cocher sur la même ligne */
+  width: 100%; /* Occupe toute la largeur */
+}
 
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espace entre le label et la case à cocher */
+  margin-right: 0; /* Pas de marge supplémentaire à droite */
+  margin-top: 30px;
+  width: 100%;
+}
 
 @media (max-width: 600px) {
   .form-group {
-      flex-direction: line;
+    flex-direction: column;
   }
   label {
-      margin-right: 0;
-      margin-bottom: 5px;
+    margin-right: 0;
+    margin-bottom: 5px;
   }
 }

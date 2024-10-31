@@ -1,6 +1,6 @@
 [
-  {"id": 1, "name": "Jeu A", "scorePlusEleve": false, "scoreLimite": 100, "mancheLimite": 10, "sheet":"generic"},
-  {"id": 2, "name": "Jeu B", "scorePlusEleve": true, "scoreLimite": 8000, "mancheLimite": 0, "sheet":"generic"},
-  {"id": 3, "name": "Jeu C", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 3, "sheet":"generic"},
-  {"id": 4, "name": "Jeu Daezae sefsdfd sfsfd", "scorePlusEleve": true, "scoreLimite": 40, "mancheLimite": 0, "sheet":"generic"}
+  {"id": 1, "name": "Jeu A", "scorePlusEleve": false, "scoreLimite": 100, "mancheLimite": 10, "lastTurnStopAfter" : false, "sheet":"generic"},
+  {"id": 2, "name": "Jeu B", "scorePlusEleve": true, "scoreLimite": 8000, "mancheLimite": 0, "lastTurnStopAfter" : true, "sheet":"generic"},
+  {"id": 3, "name": "Jeu C", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 3, "lastTurnStopAfter" : false, "sheet":"generic"},
+  {"id": 4, "name": "Jeu Daezae sefsdfd sfsfd", "scorePlusEleve": true, "scoreLimite": 40, "mancheLimite": 0, "lastTurnStopAfter" : false, "sheet":"generic"}
 ]

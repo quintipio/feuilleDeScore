@@ -34,10 +34,10 @@
 
 <div class="row justify-content-center">
   <div class="button-wrapper">
-    <button *ngIf="isEndingGame" class="btn btn-success rounded-circle btn-custom" type="button" (click)="addRound()">
+    <button *ngIf="!isEndingGame" class="btn btn-success rounded-circle btn-custom" type="button" (click)="addRound()">
       <i class="fa-solid fa-add"></i>
     </button>
-    <button *ngIf="!isEndingGame" class="btn btn-danger rounded-circle btn-custom"  data-bs-toggle="modal" data-bs-target="#winnerModal" type="button" (click)="openWinner()">
+    <button *ngIf="isEndingGame" class="btn btn-danger rounded-circle btn-custom"  data-bs-toggle="modal" data-bs-target="#winnerModal" type="button" (click)="openWinner()">
       <i class="fa-solid fa-check"></i>
     </button>
   </div>
