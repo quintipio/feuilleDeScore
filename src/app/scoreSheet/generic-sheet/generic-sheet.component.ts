@@ -168,4 +168,8 @@ export class GenericSheetComponent {
     });
     this.winnerComponent?.loadWinners(winners);
   }
+
+  closeGame(){
+    this.router.navigate(["/tables"]);
+  }
 }

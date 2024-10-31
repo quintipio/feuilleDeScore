@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { User } from '../../models/user.model';
 
@@ -22,9 +22,14 @@ type CountRoundRow = {
 export class WinnerComponent {
 
   winners:CountRoundRow[] = [];
+  @Output() outWindow = new EventEmitter<void>();
 
   loadWinners(winners: CountRoundRow[]){
     console.log(winners);
     this.winners =winners;
+  }
+
+  onClose(){
+    this.outWindow.emit();
   }
 }
