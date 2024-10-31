@@ -144,6 +144,9 @@ export class GenericSheetComponent {
     if (roundRow) {
       const countRoundRow = roundRow.points.find(point => point.user.position === this.selectedPositionUser);
       if (countRoundRow) {
+        if(countRoundRow.value != 0) {
+          countRoundRow.value = 0;
+        }
         if(!this.table?.game?.scoreNegatif && this.getSum(countRoundRow.user)+numberValue < 0){
           countRoundRow.value = this.getSum(countRoundRow.user) *-1;
         } else {
