@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Résultat de la partie</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<div class="modal-body">
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nom</th>
+      <th>Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for(winner of winners; track winner.user.position){
+      <tr>
+        <td>#{{ winner.user.position }}</td>
+        <td>{{ winner.user.user.name }}</td>
+        <td><i>{{ winner.value }}</i></td>
+      </tr>
+    }
+  </tbody>
+</table>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary"  data-bs-dismiss="modal">Fermer la table</button>
+</div>
