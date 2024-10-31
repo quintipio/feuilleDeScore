@@ -1,4 +1,4 @@
 [
-  {"id": 1, "users": [{"id":1, "name": "Joeur A"},{"id":2, "name": "Joeur B"},{"id":3, "name": "Joeur C"}], "game": {"name": "Jeu B", "scorePlusEleve": true, "scoreLimite": 8000, "mancheLimite": 0, "lastTurnStopAfter" : true, "sheet":"generic"}},
-  {"id": 2, "users": [{"id":2, "name": "Joeur B"},{"id":3, "name": "Joeur C"}], "game": {"name": "Jeu C", "scorePlusEleve": false, "scoreLimite": 0, "mancheLimite": 3, "lastTurnStopAfter" : false, "sheet":"generic"}}
+  {"id": 1, "users": [{"id":1, "name": "Joueur A"},{"id":2, "name": "Joeur B"},{"id":3, "name": "Joueur C"}], "game": {"id": 1, "name": "Skyjo", "scorePlusEleve": false, "scoreLimite": 100, "mancheLimite": 10, "lastTurnStopAfter" : false, "scoreNegatif" : true, "sheet":"generic"}},
+  {"id": 2, "users": [{"id":2, "name": "Joueur B"},{"id":3, "name": "Joueur C"}], "game":   {"id": 4, "name": "Mille sabords", "scorePlusEleve": true, "scoreLimite": 6000, "mancheLimite": 0, "lastTurnStopAfter" : true, "scoreNegatif" : false, "sheet":"generic"}}
 ]

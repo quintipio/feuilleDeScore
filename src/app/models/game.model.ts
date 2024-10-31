@@ -6,4 +6,5 @@ export interface Game {
   mancheLimite: number;
   sheet:string;
   lastTurnStopAfter : boolean;
+  scoreNegatif : boolean;
 }

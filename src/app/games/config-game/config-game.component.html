@@ -30,8 +30,12 @@
       <input name="game-limit-point" type="number" formControlName="pointLimite" required min="0">
     </div>
     <div class="form-group checkbox-group" *ngIf="isScoreMaxEmpty()">
-      <label for="last-turn-stop">Une dernière manche est joué après le score max atteint
+      <label for="last-turn-stop">Une dernière manche est joué après le score max atteint :
         <input type="checkbox" name="last-turn-stop" formControlName="lastTurnStop" /></label>
+    </div>
+    <div class="form-group checkbox-group" *ngIf="isScoreMaxEmpty()">
+      <label for="scoreNegatif">Score négatif autorisé :
+        <input type="checkbox" name="scoreNegatif" formControlName="scoreNegatif" /></label>
     </div>
   </div>
   <div class="modal-footer">

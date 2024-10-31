@@ -114,8 +114,6 @@ export class GenericSheetComponent {
     }
   }
 
-
-
   addRound() {
     const row: RoundRow = {
       "row": this.round.length + 1,
@@ -146,7 +144,11 @@ export class GenericSheetComponent {
     if (roundRow) {
       const countRoundRow = roundRow.points.find(point => point.user.position === this.selectedPositionUser);
       if (countRoundRow) {
-        countRoundRow.value = numberValue;
+        if(!this.table?.game?.scoreNegatif && this.getSum(countRoundRow.user)+numberValue < 0){
+          countRoundRow.value = this.getSum(countRoundRow.user) *-1;
+        } else {
+          countRoundRow.value = numberValue;
+        }
       }
     }
     this.checkEndingGame();
