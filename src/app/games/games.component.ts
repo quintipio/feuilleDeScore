@@ -6,20 +6,25 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { ConfigGameComponent } from './config-game/config-game.component';
 import { TableService } from '../service/table.service';
+import { UserService } from '../service/users.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-games',
   standalone: true,
-  imports: [CommonModule, RouterLink, ConfigGameComponent],
+  imports: [CommonModule, RouterLink, ConfigGameComponent, FormsModule],
   templateUrl: './games.component.html',
   styleUrl: './games.component.css'
 })
 export class GamesComponent {
   private gameService = inject(GameService);
   private tableService = inject(TableService);
+  private userService = inject(UserService);
 
-  isCreateTable: boolean = false;
+  allUsers: User[] = [];
   selectedUsers: User[] = [];
+  newUser: string = '';
+
   selectedGame: number = 0;
   games: Game[] = [];
 
@@ -33,15 +38,21 @@ export class GamesComponent {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.isCreateTable = params['isCreateTable'] === 'true';
       this.selectedUsers = params['selectedUsers'] ? JSON.parse(params['selectedUsers']) : [];
     });
     this.loadGames();
+    this.loadAllUsers();
   }
 
   loadGames(): void {
     this.gameService.games$.subscribe((data: Game[]) => {
       this.games = data;
+    });
+  }
+
+  loadAllUsers(): void {
+    this.userService.users$.subscribe((data: User[]) => {
+      this.allUsers = data;
     });
   }
 
@@ -72,8 +83,36 @@ export class GamesComponent {
   }
 
   isReadyToCreateTable() {
-    return this.selectedGame != 0 && this.selectedUsers.length > 0 && this.isCreateTable;
+    return this.selectedGame != 0 && this.selectedUsers.length > 0;
   }
+
+  removeUser(id : number) {
+    this.selectedUsers = this.selectedUsers.filter(user => user.id !== id);
+  }
+
+
+  /*Gestion des utilisateurs */
+  addUser() {
+    if (this.newUser.trim() && this.newUser.length <= 50) {
+      const newUser: User = { id: Date.now(), name: this.newUser };
+      this.userService.addUser(newUser);
+      this.newUser = '';
+    }
+  }
+
+  deleteUser(user: User) {
+    this.allUsers = this.allUsers.filter(u => u.id !== user.id);
+    this.selectedUsers = this.selectedUsers.filter(u => u.id !== user.id);
+    this.userService.deleteUser(user.id);
+  }
+
+  selectUser(user: User) {
+    if (!this.selectedUsers.find(u => u.id === user.id)) {
+      this.selectedUsers.push(user);
+    }
+  }
+  /*Gestion de la table */
+
 
   openNewGameModal(): void {
     this.labelModalConfig = "Nouveau jeu";

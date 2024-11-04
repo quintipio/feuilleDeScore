@@ -1,6 +1,11 @@
 <div class="row" style="margin-top: 30px;">
+  <div class="col">
+    <button type="button" class="btn btn-outline-primary"  data-bs-toggle="modal" data-bs-target="#userModal">Ajouter des joueurs</button>
+  </div>
+</div>
+<div class="row">
   @for(user of selectedUsers; track user.id) {
-  <div class="userElement">{{user.name }}</div>
+  <div class="userElement">{{user.name }} <button class="btnUserElement" (click)="removeUser(user.id)"><i class="fa-solid fa-xmark"></i></button></div>
   }
 </div>
 
@@ -57,3 +62,55 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Joueurs</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="d-flex mb-3">
+          <input type="text" [(ngModel)]="newUser" placeholder="Nom de l'utilisateur" maxlength="50" class="form-control me-2">
+          <button class="btn btn-primary" (click)="addUser()" [disabled]="!newUser.trim() || newUser.length > 50">Ajouter</button>
+        </div>
+
+        <!-- Liste des utilisateurs de allUsers -->
+        <div class="mb-3">
+          <h6>Liste des utilisateurs</h6>
+          <div class="user-list">
+            <div *ngFor="let user of allUsers" class="user-item">
+              <span (click)="selectUser(user)" style="cursor: pointer;">{{ user.name }}</span>
+              <button class="btn" (click)="deleteUser(user)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Liste des utilisateurs sélectionnés de selectedUsers -->
+        <div>
+          <h6>Utilisateurs sélectionnés</h6>
+          <div class="selected-user-list">
+            <div *ngFor="let user of selectedUsers" class="selected-user-item">
+              <span>{{ user.name }}</span>
+              <button class="btnUserElement" (click)="removeUser(user.id)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <i class="fa-solid fa-xmark"></i> Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
