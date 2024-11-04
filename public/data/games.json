@@ -1,6 +1,6 @@
 [
-  {"id": 1, "name": "Skyjo", "scorePlusEleve": false, "scoreLimite": 100, "mancheLimite": 10, "lastTurnStopAfter" : false, "scoreNegatif" : true, "sheet":"generic"},
-  {"id": 2, "name": "6 qui prend", "scorePlusEleve": false, "scoreLimite": 66, "mancheLimite": 0, "lastTurnStopAfter" : false, "scoreNegatif" : false, "sheet":"generic"},
-  {"id": 3, "name": "Hula Hoo", "scorePlusEleve": true, "scoreLimite": 77, "mancheLimite": 0, "lastTurnStopAfter" : false, "scoreNegatif" : false, "sheet":"generic"},
-  {"id": 4, "name": "Mille sabords", "scorePlusEleve": true, "scoreLimite": 6000, "mancheLimite": 0, "lastTurnStopAfter" : true, "scoreNegatif" : false, "sheet":"generic"}
+  {"id": 1, "name": "Skyjo", "scorePlusEleve": false, "scoreLimite": 100, "mancheLimite": 10, "lastTurnStopAfter" : false, "scoreNegatif" : true, "canEdit" : false, "sheet":"generic"},
+  {"id": 2, "name": "6 qui prend", "scorePlusEleve": false, "scoreLimite": 66, "mancheLimite": 0, "lastTurnStopAfter" : false, "scoreNegatif" : false, "canEdit" : false, "sheet":"generic"},
+  {"id": 3, "name": "Hula Hoo", "scorePlusEleve": true, "scoreLimite": 77, "mancheLimite": 0, "lastTurnStopAfter" : false, "scoreNegatif" : false, "canEdit" : false, "sheet":"generic"},
+  {"id": 4, "name": "Mille sabords", "scorePlusEleve": true, "scoreLimite": 6000, "mancheLimite": 0, "lastTurnStopAfter" : true, "scoreNegatif" : false, "canEdit" : false, "sheet":"generic"}
 ]

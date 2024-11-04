@@ -22,14 +22,14 @@
   </div>
 
   <div class="col">
-    <button *ngIf="isSelectedGame()" class="btn btn-outline-secondary" type="button" (click)="openEditGameModal()"
-      data-bs-toggle="modal" data-bs-target="#gameModal">
+    <button *ngIf="isSelectedAndEditableGame()" class="btn btn-outline-secondary" type="button" (click)="openEditGameModal()"
+      data-bs-toggle="modal" data-bs-target="#gameModal" >
       <i class="fa-solid fa-edit"></i>
     </button>
   </div>
 
   <div class="col">
-    <button *ngIf="isSelectedGame()" class="btn btn-outline-danger" (click)="deleteGame()" type="button">
+    <button *ngIf="isSelectedAndEditableGame()" class="btn btn-outline-danger" (click)="deleteGame()" type="button">
       <i class="fa-solid fa-trash"></i>
     </button>
   </div>

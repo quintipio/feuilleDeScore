@@ -56,6 +56,7 @@ export class ConfigGameComponent {
         mancheLimite: 0,
         lastTurnStopAfter : false,
         scoreNegatif : false,
+        canEdit :true,
         sheet: "generic"
       };
       if(this.gameForm.value.name) {

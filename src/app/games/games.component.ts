@@ -62,8 +62,13 @@ export class GamesComponent {
     return this.selectedGame === id;
   }
 
-  isSelectedGame() {
-    return this.selectedGame != 0;
+  isSelectedAndEditableGame() {
+    if(this.selectedGame != 0) {
+      const gameSelectedConfig = this.games.find(game => game.id == this.selectedGame);
+      return gameSelectedConfig?.canEdit;
+    } else {
+      return false;
+    }
   }
 
   isReadyToCreateTable() {
