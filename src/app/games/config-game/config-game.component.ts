@@ -57,6 +57,8 @@ export class ConfigGameComponent {
         lastTurnStopAfter : false,
         scoreNegatif : false,
         canEdit :true,
+        minJoueur: undefined,
+        maxJoueur: undefined,
         sheet: "generic"
       };
       if(this.gameForm.value.name) {

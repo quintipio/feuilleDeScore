@@ -7,5 +7,7 @@ export interface Game {
   sheet:string;
   lastTurnStopAfter : boolean;
   scoreNegatif : boolean;
+  minJoueur? : number,
+  maxJoueur? : number;
   canEdit : boolean;
 }

@@ -8,6 +8,9 @@
   <div class="userElement">{{user.name }} <button class="btnUserElement" (click)="removeUser(user.id)"><i class="fa-solid fa-xmark"></i></button></div>
   }
 </div>
+<div class="row errorMessage">
+  {{errorMinMaxUser}}
+</div>
 
 <div class="row">
   @for(game of games; track game.id) {

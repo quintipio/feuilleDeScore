@@ -26,6 +26,8 @@ export class GamesComponent {
   newUser: string = '';
 
   selectedGame: number = 0;
+  isMinMaxJoueurOk: boolean = true;
+  errorMinMaxUser: string = "";
   games: Game[] = [];
 
 
@@ -59,6 +61,7 @@ export class GamesComponent {
   deleteGame(): void {
     this.gameService.deleteGame(this.selectedGame);
     this.selectedGame = 0;
+    this.checkUserForTable();
   }
 
   selectGame(selectedGame: number): void {
@@ -67,6 +70,7 @@ export class GamesComponent {
     } else {
       this.selectedGame = selectedGame;
     }
+    this.checkUserForTable();
   }
 
   isSelectGame(id: number): boolean {
@@ -74,7 +78,7 @@ export class GamesComponent {
   }
 
   isSelectedAndEditableGame() {
-    if(this.selectedGame != 0) {
+    if(this.isMinMaxJoueurOk && this.selectedGame != 0) {
       const gameSelectedConfig = this.games.find(game => game.id == this.selectedGame);
       return gameSelectedConfig?.canEdit;
     } else {
@@ -83,11 +87,38 @@ export class GamesComponent {
   }
 
   isReadyToCreateTable() {
-    return this.selectedGame != 0 && this.selectedUsers.length > 0;
+    return this.selectedGame != 0 && this.selectedUsers.length > 0 && this.isMinMaxJoueurOk;
   }
 
   removeUser(id : number) {
     this.selectedUsers = this.selectedUsers.filter(user => user.id !== id);
+    this.checkUserForTable();
+  }
+
+  checkUserForTable(){
+    console.log("Coucou")
+    if(this.selectedGame != 0) {
+      const gameSelectedConfig = this.games.find(game => game.id == this.selectedGame);
+      var numberUser = this.selectedUsers.length;
+      var minJoueur =(gameSelectedConfig?.minJoueur)? gameSelectedConfig.minJoueur:0;
+      var maxJoueur =(gameSelectedConfig?.maxJoueur)? gameSelectedConfig.maxJoueur:0;
+      if(minJoueur != 0){
+        if(numberUser < minJoueur){
+          this.isMinMaxJoueurOk = false;
+          this.errorMinMaxUser = "Il faut au moins "+minJoueur+" joueurs.";
+          return;
+        }
+      }
+      if(maxJoueur != 0){
+        if(numberUser > maxJoueur){
+          this.isMinMaxJoueurOk = false;
+          this.errorMinMaxUser = "Il faut au maxmimum "+maxJoueur+" joueurs.";
+          return;
+        }
+      }
+    }
+    this.isMinMaxJoueurOk = true;
+    this.errorMinMaxUser = "";
   }
 
 
@@ -104,11 +135,13 @@ export class GamesComponent {
     this.allUsers = this.allUsers.filter(u => u.id !== user.id);
     this.selectedUsers = this.selectedUsers.filter(u => u.id !== user.id);
     this.userService.deleteUser(user.id);
+    this.checkUserForTable();
   }
 
   selectUser(user: User) {
     if (!this.selectedUsers.find(u => u.id === user.id)) {
       this.selectedUsers.push(user);
+      this.checkUserForTable();
     }
   }
   /*Gestion de la table */
