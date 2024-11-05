@@ -7,15 +7,17 @@ import { InputPadComponent } from '../../components/input-pad/input-pad.componen
 import { WinnerComponent } from '../../components/winner/winner.component';
 import { SheetComponent } from '../../components/sheet/sheet.component';
 import { CountRoundRow, RoundRow, UserColumn } from '../../models/sheet';
+import { FormsModule } from '@angular/forms';
+import { User } from '../../models/user.model';
 
 @Component({
-  selector: 'app-generic-sheet',
+  selector: 'app-mille-sabord-sheet',
   standalone: true,
-  imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent,SheetComponent],
-  templateUrl: './generic-sheet.component.html',
-  styleUrl: './generic-sheet.component.css'
+  imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent,SheetComponent, FormsModule],
+  templateUrl: './mille-sabord-sheet.component.html',
+  styleUrl: './mille-sabord-sheet.component.css'
 })
-export class GenericSheetComponent {
+export class MilleSabordSheetComponent {
 
   @ViewChild(WinnerComponent) winnerComponent: WinnerComponent | undefined;
   @ViewChild(SheetComponent) sheetComponent: SheetComponent | undefined;
@@ -24,8 +26,12 @@ export class GenericSheetComponent {
   private cdr = inject(ChangeDetectorRef);
 
   isEndingGame: boolean = false;
+  endingNextTurn: boolean = false;
 
   table: Table | undefined;
+
+  selectedUser: User | null = null;
+
 
   constructor(private route: ActivatedRoute, private router: Router) { }
 
@@ -44,7 +50,14 @@ export class GenericSheetComponent {
   ngAfterViewInit() {
     if (this.table && this.sheetComponent) {
       this.sheetComponent.loadComponent(this.table);
-      this.cdr.detectChanges(); // Force la détection des changements ici
+      this.cdr.detectChanges();
+    }
+  }
+
+  onOkClick() {
+    if (this.selectedUser) {
+     this.isEndingGame = true;
+     this.sheetComponent?.openWinner();
     }
   }
 
@@ -60,8 +73,12 @@ export class GenericSheetComponent {
       for (const user of users) {
         var score = this.getSum(round, user);
         if(score >= this.table?.game?.scoreLimite){
+          if(!this.endingNextTurn){
+            this.endingNextTurn = true;
+          } else {
             this.isEndingGame = true;
-            return;
+          }
+          return;
         } else {
           this.isEndingGame = false;
         }
@@ -102,6 +119,18 @@ export class GenericSheetComponent {
     winners.forEach((winner, index) => {
       winner.user.position = index + 1;
     });
+
+  if (this.selectedUser) {
+    const index = winners.findIndex(winner => winner.user.user.id === this.selectedUser!.id);
+    if (index !== -1) {
+      const forcedWinner = winners.splice(index, 1)[0];
+      winners.unshift(forcedWinner);
+    }
+  }
+
+  winners.forEach((winner, index) => {
+    winner.user.position = index + 1;
+  });
     this.winnerComponent?.loadWinners(winners);
   }
 

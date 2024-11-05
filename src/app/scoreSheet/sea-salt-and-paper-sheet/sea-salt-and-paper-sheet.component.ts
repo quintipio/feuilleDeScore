@@ -7,15 +7,17 @@ import { InputPadComponent } from '../../components/input-pad/input-pad.componen
 import { WinnerComponent } from '../../components/winner/winner.component';
 import { SheetComponent } from '../../components/sheet/sheet.component';
 import { CountRoundRow, RoundRow, UserColumn } from '../../models/sheet';
+import { FormsModule } from '@angular/forms';
+import { User } from '../../models/user.model';
 
 @Component({
-  selector: 'app-generic-sheet',
+  selector: 'app-sea-salt-and-paper-sheet',
   standalone: true,
-  imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent,SheetComponent],
-  templateUrl: './generic-sheet.component.html',
-  styleUrl: './generic-sheet.component.css'
+  imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent,SheetComponent, FormsModule],
+  templateUrl: './sea-salt-and-paper-sheet.component.html',
+  styleUrl: './sea-salt-and-paper-sheet.component.css'
 })
-export class GenericSheetComponent {
+export class SeaSaltAndPaperSheetComponent {
 
   @ViewChild(WinnerComponent) winnerComponent: WinnerComponent | undefined;
   @ViewChild(SheetComponent) sheetComponent: SheetComponent | undefined;
@@ -27,6 +29,9 @@ export class GenericSheetComponent {
 
   table: Table | undefined;
 
+  selectedUser: User | null = null;
+
+
   constructor(private route: ActivatedRoute, private router: Router) { }
 
 
@@ -35,7 +40,18 @@ export class GenericSheetComponent {
       const idTable = +params['idTable'];
       if (idTable) {
         this.tableService.getTable(idTable).subscribe(table => {
-          this.table = table;
+          if(table){
+            if(table.users.length <= 2){
+              table.game!.scoreLimite = 40;
+            }
+            if(table.users.length === 3){
+              table.game!.scoreLimite = 35;
+            }
+            if(table.users.length >= 4){
+              table.game!.scoreLimite = 30;
+            }
+            this.table = table;
+          }
         });
       }
     });
@@ -44,7 +60,14 @@ export class GenericSheetComponent {
   ngAfterViewInit() {
     if (this.table && this.sheetComponent) {
       this.sheetComponent.loadComponent(this.table);
-      this.cdr.detectChanges(); // Force la détection des changements ici
+      this.cdr.detectChanges();
+    }
+  }
+
+  onOkClick() {
+    if (this.selectedUser) {
+     this.isEndingGame = true;
+     this.sheetComponent?.openWinner();
     }
   }
 
@@ -56,12 +79,13 @@ export class GenericSheetComponent {
       return;
     }
 
+    console.log(this.table?.game?.scoreLimite);
     if(this.table?.game?.scoreLimite && this.table?.game?.scoreLimite > 0){
       for (const user of users) {
         var score = this.getSum(round, user);
         if(score >= this.table?.game?.scoreLimite){
             this.isEndingGame = true;
-            return;
+          return;
         } else {
           this.isEndingGame = false;
         }
@@ -102,6 +126,18 @@ export class GenericSheetComponent {
     winners.forEach((winner, index) => {
       winner.user.position = index + 1;
     });
+
+  if (this.selectedUser) {
+    const index = winners.findIndex(winner => winner.user.user.id === this.selectedUser!.id);
+    if (index !== -1) {
+      const forcedWinner = winners.splice(index, 1)[0];
+      winners.unshift(forcedWinner);
+    }
+  }
+
+  winners.forEach((winner, index) => {
+    winner.user.position = index + 1;
+  });
     this.winnerComponent?.loadWinners(winners);
   }
 

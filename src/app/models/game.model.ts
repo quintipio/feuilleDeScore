@@ -5,7 +5,6 @@ export interface Game {
   scoreLimite: number;
   mancheLimite: number;
   sheet:string;
-  lastTurnStopAfter : boolean;
   scoreNegatif : boolean;
   minJoueur? : number,
   maxJoueur? : number;

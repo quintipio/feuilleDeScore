@@ -1,16 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { User } from '../../models/user.model';
-
-type UserColumn = {
-  position: number;
-  user: User;
-}
-
-type CountRoundRow = {
-  user: UserColumn
-  value: number;
-}
+import { CountRoundRow } from '../../models/sheet';
 
 @Component({
   selector: 'app-winner',
