@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
+import { GameService } from './service/games.service';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +11,12 @@ import { RouterOutlet, RouterLink } from '@angular/router';
 })
 export class AppComponent {
   title = 'feuilleScore-angular';
+
+  private gameService = inject(GameService);
+
+  ngOnInit(): void {
+    this.gameService.initializeGames()
+      .then(() => console.log("Vérification et initialisation des jeux terminée."))
+      .catch(error => console.error("Erreur lors de l'initialisation des jeux :", error));
+  }
 }

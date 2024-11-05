@@ -1,65 +1,68 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { Game } from '../models/game.model';
-
+import { Game, GameExisting, isGame } from '../models/game.model';
+import { IndexedDbService } from './indexedDb.service';
+import { firstValueFrom, from, map, Observable, of, switchMap } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
 
-  private gamesUrl = 'data/games.json';
+  constructor(private indexedDbService: IndexedDbService) {}
 
-  private gamesSubject = new BehaviorSubject<Game[]>([]);
-  games$ = this.gamesSubject.asObservable();
-
-  private games: Game[] = [];
-
-  constructor(private http: HttpClient) {
-    this.loadGamesFromJson();
+  async initializeGames(): Promise<void> {
+    for (const game of GameExisting) {
+      const existingGame = await this.findGameByUuid(game.uuid!);
+      if (!existingGame) {
+        await this.addGame(game);
+      }
+    }
   }
 
-  private loadGamesFromJson(): void {
-    this.http.get<Game[]>(this.gamesUrl).subscribe(
-      (data: Game[]) => {
-        this.games = data;
-        this.gamesSubject.next(this.games);
-      },
-      (error) => {
-        console.error('Error loading games:', error);
-      }
+  private getHighestId(): Promise<number> {
+    return this.indexedDbService.getAll("games").then(items => {
+      const highestId = items.reduce((maxId, item) => {
+        return item.id > maxId ? item.id : maxId;
+      }, 0);
+      return highestId + 1;
+    });
+  }
+
+  addGame(game: Game): Observable<void> {
+    return from(this.getHighestId()).pipe(
+      switchMap((newId) => {
+        game.id = newId;
+        return from(this.indexedDbService.add("games", game));
+      }),
+      map(() => undefined)
     );
   }
 
-  getGames(): Observable<Game[]> {
-    return this.gamesSubject.asObservable();
+  getGame(id: number): Observable<Game | undefined> {
+    return from(this.indexedDbService.get("games", id)).pipe(
+      map((result: any | undefined) => (isGame(result) ? result : undefined))
+    );
   }
 
-  addGame(newGame:Game): void {
-    newGame.id = this.games.length > 0 ? Math.max(...this.games.map(u => u.id)) + 1 : 1;
-    this.games.push(newGame);
-    this.gamesSubject.next(this.games);
-    console.log(this.games);
+  getAllGames(): Observable<Game[]> {
+    return from(this.indexedDbService.getAll("games")).pipe(
+      map((results: any[]) => results.filter(isGame) as Game[])
+    );
   }
 
-  updateGame(updatedGame: Game): boolean {
-    const index = this.games.findIndex(game => game.id === updatedGame.id);
-    if (index !== -1) {
-      this.games[index] = updatedGame;
-      this.gamesSubject.next(this.games);
-      console.log(this.games);
-      return true;
-    }
-    return false;
+  updateGame(game: Game): Observable<void> {
+    return from(this.indexedDbService.update("games", game)).pipe(
+      map(() => undefined)
+    );
   }
 
-  deleteGame(id: number): boolean {
-    const index = this.games.findIndex(game => game.id === id);
-    if (index !== -1) {
-      this.games.splice(index, 1);
-      this.gamesSubject.next(this.games);
-      return true;
-    }
-    return false;
+  deleteGame(id: number): Observable<void> {
+    return from(this.indexedDbService.delete("games", id)).pipe(
+      map(() => undefined)
+    );
+  }
+
+  private async findGameByUuid(uuid: string): Promise<Game | undefined> {
+    const games = await firstValueFrom(this.getAllGames());
+    return games.find(game => game.uuid === uuid);
   }
 }

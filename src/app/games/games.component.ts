@@ -1,6 +1,5 @@
 import { Component, inject, ViewChild } from '@angular/core';
 import { User } from '../models/user.model';
-import { GameService } from '../service/games.service';
 import { Game } from '../models/game.model';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
@@ -8,6 +7,8 @@ import { ConfigGameComponent } from './config-game/config-game.component';
 import { TableService } from '../service/table.service';
 import { UserService } from '../service/users.service';
 import { FormsModule } from '@angular/forms';
+import { GameService } from '../service/games.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-games',
@@ -21,14 +22,15 @@ export class GamesComponent {
   private tableService = inject(TableService);
   private userService = inject(UserService);
 
-  allUsers: User[] = [];
   selectedUsers: User[] = [];
   newUser: string = '';
+
+  allUsers: User[] = [];
+  games: Game[] = [];
 
   selectedGame: number = 0;
   isMinMaxJoueurOk: boolean = true;
   errorMinMaxUser: string = "";
-  games: Game[] = [];
 
 
   @ViewChild(ConfigGameComponent) configGameComponent: ConfigGameComponent | undefined;
@@ -47,21 +49,28 @@ export class GamesComponent {
   }
 
   loadGames(): void {
-    this.gameService.games$.subscribe((data: Game[]) => {
-      this.games = data;
+    this.gameService.getAllGames().subscribe({
+      next: (games: Game[]) => {this.games = games},
     });
   }
 
   loadAllUsers(): void {
-    this.userService.users$.subscribe((data: User[]) => {
-      this.allUsers = data;
+    this.userService.getAllUsers().subscribe({
+      next: (users: User[]) => {
+        this.allUsers = users
+      },
     });
+    console.log(this.allUsers)
   }
 
   deleteGame(): void {
-    this.gameService.deleteGame(this.selectedGame);
-    this.selectedGame = 0;
-    this.checkUserForTable();
+    this.gameService.deleteGame(this.selectedGame).subscribe({
+      next: () => {
+        this.selectedGame = 0;
+        this.loadGames()
+        this.checkUserForTable();
+      },
+    });
   }
 
   selectGame(selectedGame: number): void {
@@ -96,7 +105,6 @@ export class GamesComponent {
   }
 
   checkUserForTable(){
-    console.log("Coucou")
     if(this.selectedGame != 0) {
       const gameSelectedConfig = this.games.find(game => game.id == this.selectedGame);
       var numberUser = this.selectedUsers.length;
@@ -126,16 +134,26 @@ export class GamesComponent {
   addUser() {
     if (this.newUser.trim() && this.newUser.length <= 50) {
       const newUser: User = { id: Date.now(), name: this.newUser };
-      this.userService.addUser(newUser);
-      this.newUser = '';
+      this.userService.addUser(newUser).subscribe({
+        next: () => {
+          this.newUser = '';
+          this.loadAllUsers();
+        },
+        error: (err) => console.error('Erreur lors de l’ajout de l’utilisateur :', err)
+      });
     }
   }
 
   deleteUser(user: User) {
-    this.allUsers = this.allUsers.filter(u => u.id !== user.id);
-    this.selectedUsers = this.selectedUsers.filter(u => u.id !== user.id);
-    this.userService.deleteUser(user.id);
-    this.checkUserForTable();
+    this.userService.deleteUser(user.id).subscribe({
+      next: () => {
+        this.allUsers = this.allUsers.filter(u => u.id !== user.id);
+        this.selectedUsers = this.selectedUsers.filter(u => u.id !== user.id);
+        this.checkUserForTable();
+        this.loadAllUsers();
+      },
+      error: (err) => console.error('Erreur lors de la suppression de l’utilisateur :', err)
+    });
   }
 
   selectUser(user: User) {
@@ -167,8 +185,17 @@ export class GamesComponent {
   onGameValidated(game: Game) {
     if(game.id === 0){
       this.gameService.addGame(game);
+      this.gameService.addGame(game).subscribe({
+        next: () => {
+          this.loadGames();
+        },
+      });
     } else {
-      this.gameService.updateGame(game);
+      this.gameService.updateGame(game).subscribe({
+        next: () => {
+          this.loadGames();
+        },
+      });
     }
   }
 
