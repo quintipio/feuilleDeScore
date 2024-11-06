@@ -34,23 +34,28 @@ export class SeaSaltAndPaperSheetComponent {
 
   constructor(private route: ActivatedRoute, private router: Router) { }
 
-
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const idTable = +params['idTable'];
       if (idTable) {
-        this.tableService.getTable(idTable).subscribe(table => {
-          if(table){
-            if(table.users.length <= 2){
-              table.game!.scoreLimite = 40;
+        this.tableService.getTable(idTable).subscribe({
+          next: (table: Table | undefined) => {
+            if (table) {
+              if(table.users.length <= 2){
+                table.game!.scoreLimite = 40;
+              }
+              if(table.users.length === 3){
+                table.game!.scoreLimite = 35;
+              }
+              if(table.users.length >= 4){
+                table.game!.scoreLimite = 30;
+              }
+              this.table = table;
+              this.ngAfterViewInit();
             }
-            if(table.users.length === 3){
-              table.game!.scoreLimite = 35;
-            }
-            if(table.users.length >= 4){
-              table.game!.scoreLimite = 30;
-            }
-            this.table = table;
+          },
+          error: (error) => {
+            console.error("Error fetching table:", error);
           }
         });
       }
@@ -72,6 +77,13 @@ export class SeaSaltAndPaperSheetComponent {
   }
 
 
+  saveRoundInDb(round : RoundRow[]){
+    this.tableService.updateRound(this.table!.id, round).subscribe({
+      next: () => {
+      },
+    });
+  }
+
   checkEndingGame(round:RoundRow[], users:UserColumn[]) {
     const maxRowValue = Math.max(...round.map(r => r.row));
     if (this.table?.game?.mancheLimite && this.table?.game?.mancheLimite > 0 && maxRowValue >= this.table.game.mancheLimite) {
@@ -79,7 +91,6 @@ export class SeaSaltAndPaperSheetComponent {
       return;
     }
 
-    console.log(this.table?.game?.scoreLimite);
     if(this.table?.game?.scoreLimite && this.table?.game?.scoreLimite > 0){
       for (const user of users) {
         var score = this.getSum(round, user);
@@ -105,7 +116,6 @@ export class SeaSaltAndPaperSheetComponent {
     });
     return totalValue;
   }
-
 
   openWinner(round:RoundRow[], users: UserColumn[]){
     const winners:CountRoundRow[] = [];

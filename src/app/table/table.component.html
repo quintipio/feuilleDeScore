@@ -10,7 +10,11 @@
           })
         </div>
         <div class="table-btn">
-          <button class="btn btn-outline-success" type="button" (click)="startSheet(table.game?.sheet, table.id)">
+          <button *ngIf="isGameInProgress(table)" class="btn btn-outline-success" type="button" (click)="startSheet(table.game?.sheet, table.id)">
+            <i class="fa-solid fa-hourglass-start"></i>
+          </button>
+
+          <button class="btn btn-outline-success" type="button" (click)="startNewSheet(table.game?.sheet, table.id)">
             <i class="fa-solid fa-play"></i>
           </button>
 

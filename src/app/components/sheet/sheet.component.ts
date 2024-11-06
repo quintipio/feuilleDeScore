@@ -19,11 +19,11 @@ export class SheetComponent {
 
   @Output() checkEndingGame = new EventEmitter<{ round: RoundRow[], users: UserColumn[] }>();
   @Output() triggerOpenWinner = new EventEmitter<{ round: RoundRow[], users: UserColumn[] }>();
+  @Output() triggerSaveRound = new EventEmitter<RoundRow[]>();
   @Input() isEndingGame: boolean = false;
 
   table: Table | undefined;
   users: UserColumn[] = [];
-  round: RoundRow[] = [];
 
   @ViewChild(InputPadComponent) inputPadComponent: InputPadComponent | undefined;
   selectedRow: number = 0;
@@ -32,9 +32,11 @@ export class SheetComponent {
 
   loadComponent(table : Table){
     this.table = table;
-    console.log("COUCOUUU");
     this.generateUsers(table.users);
-    this.addRound();
+    if(table.round.length == 0){
+      this.addRound();
+    }
+    this.checkEndingGame.emit({ round: this.table!.round, users: this.users });
   }
 
   generateUsers(usersToAdd: User[]) {
@@ -42,7 +44,7 @@ export class SheetComponent {
     usersToAdd.forEach((user) => {
       const column: UserColumn = {
         "position": i,
-        "user": user
+        "user": user,
       }
       this.users.push(column);
       i += 1;
@@ -56,7 +58,7 @@ export class SheetComponent {
 
   getSum(user: UserColumn): number {
     let totalValue = 0;
-    this.round.forEach(roundRow => {
+    this.table!.round.forEach(roundRow => {
       roundRow.points.forEach(countRoundRow => {
         if (countRoundRow.user.position === user.position) {
           totalValue += countRoundRow.value;
@@ -68,7 +70,7 @@ export class SheetComponent {
 
   addRound() {
     const row: RoundRow = {
-      "row": this.round.length + 1,
+      "row": this.table!.round.length + 1,
       "points": [],
     }
     this.users.forEach((userRow) => {
@@ -78,15 +80,16 @@ export class SheetComponent {
       }
       row.points.push(count);
     })
-    this.round.push(row);
-    this.round.sort((a, b) => a.row - b.row);
-    if(this.round && this.users){
-      this.checkEndingGame.emit({ round: this.round, users: this.users });
+    this.table!.round.push(row);
+    this.table!.round.sort((a, b) => a.row - b.row);
+    if(this.table!.round && this.users){
+      this.checkEndingGame.emit({ round: this.table!.round, users: this.users });
+      this.triggerSaveRound.emit(this.table!.round);
     }
   }
 
   openWinner(){
-    this.triggerOpenWinner.emit({ round: this.round, users: this.users });
+    this.triggerOpenWinner.emit({ round: this.table!.round, users: this.users });
   }
 
   openInputPad(row: number, point: CountRoundRow) {
@@ -98,7 +101,7 @@ export class SheetComponent {
   }
 
   changeValue(numberValue: number) {
-    const roundRow = this.round.find(row => row.row === this.selectedRow);
+    const roundRow = this.table!.round.find(row => row.row === this.selectedRow);
     if (roundRow) {
       const countRoundRow = roundRow.points.find(point => point.user.position === this.selectedPositionUser);
       if (countRoundRow) {
@@ -112,8 +115,9 @@ export class SheetComponent {
         }
       }
     }
-    if(this.round && this.users){
-      this.checkEndingGame.emit({ round: this.round, users: this.users });
+    if(this.table!.round && this.users){
+      this.checkEndingGame.emit({ round: this.table!.round, users: this.users });
+      this.triggerSaveRound.emit(this.table!.round);
     }
   }
 

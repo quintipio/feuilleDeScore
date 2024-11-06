@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, from, map, switchMap } from 'rxjs';
 import { isTable, Table } from '../models/table.model';
 import { IndexedDbService } from './indexedDb.service';
+import { RoundRow } from '../models/sheet';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,8 @@ export class TableService {
     const table:Table = {
       id: 0,
       users: [],
-      game: undefined
+      game: undefined,
+      round: []
     };
     return table;
   }
@@ -47,6 +49,20 @@ export class TableService {
       map(() => undefined)
     );
   }
+
+  updateRound(idTable: number, round: RoundRow[]): Observable<void> {
+    return this.getTable(idTable).pipe(
+      switchMap((table) => {
+        if (table) {
+          table.round = round;
+          return this.updateTable(table);
+        } else {
+          throw new Error(`Table with id ${idTable} not found.`);
+        }
+      })
+    );
+  }
+
 
   getTable(id: number): Observable<Table | undefined> {
     return from(this.indexedDbService.get("tables", id)).pipe(

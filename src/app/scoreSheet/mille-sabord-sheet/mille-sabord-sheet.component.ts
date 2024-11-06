@@ -40,8 +40,16 @@ export class MilleSabordSheetComponent {
     this.route.queryParams.subscribe(params => {
       const idTable = +params['idTable'];
       if (idTable) {
-        this.tableService.getTable(idTable).subscribe(table => {
-          this.table = table;
+        this.tableService.getTable(idTable).subscribe({
+          next: (table: Table | undefined) => {
+            if (table) {
+              this.table = table;
+              this.ngAfterViewInit();
+            }
+          },
+          error: (error) => {
+            console.error("Error fetching table:", error);
+          }
         });
       }
     });
@@ -59,6 +67,14 @@ export class MilleSabordSheetComponent {
      this.isEndingGame = true;
      this.sheetComponent?.openWinner();
     }
+  }
+
+
+  saveRoundInDb(round : RoundRow[]){
+    this.tableService.updateRound(this.table!.id, round).subscribe({
+      next: () => {
+      },
+    });
   }
 
 
@@ -135,6 +151,10 @@ export class MilleSabordSheetComponent {
   }
 
   closeGame(){
-    this.router.navigate(["/tables"]);
+    this.tableService.updateRound(this.table!.id, []).subscribe({
+      next: () => {
+        this.router.navigate(["/tables"]);
+      },
+    });
   }
 }

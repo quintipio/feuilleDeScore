@@ -1,5 +1,0 @@
-[
-  {"id": 1, "users": [{"id":1, "name": "Joueur A"},{"id":2, "name": "Joueur B"},{"id":3, "name": "Joueur C"}], "game": {"id": 1, "name": "Skyjo", "scorePlusEleve": false, "scoreLimite": 100, "mancheLimite": 10, "scoreNegatif" : true, "canEdit" : false, "sheet":"generic"}},
-  {"id": 2, "users": [{"id":2, "name": "Joueur B"},{"id":3, "name": "Joueur C"}], "game":   {"id": 4, "name": "Mille sabords", "scorePlusEleve": true, "scoreLimite": 6000, "mancheLimite": 0, "scoreNegatif" : false, "canEdit" : false, "sheet":"milleSabords"}},
-  {"id": 3, "users": [{"id":1, "name": "Joueur A"},{"id":2, "name": "Joueur B"},{"id":3, "name": "Joueur C"}], "game":   {"id": 5, "name": "Sea salt and paper", "scorePlusEleve": true, "scoreLimite": 40, "mancheLimite": 0, "scoreNegatif" : false, "canEdit" : false, "sheet":"seaSaltAndPaper"}}
-]

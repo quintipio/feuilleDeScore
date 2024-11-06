@@ -1,28 +1,26 @@
 import { Component, inject, ViewChild } from '@angular/core';
-import { RouterLink, Router, ActivatedRoute } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { TableService } from '../service/table.service';
 import { Table } from '../models/table.model';
-import { UserService } from '../service/users.service';
-import { User } from '../models/user.model';
 import { Game } from '../models/game.model';
 import { ConfigGameComponent } from '../games/config-game/config-game.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [RouterLink, ConfigGameComponent],
+  imports: [RouterLink, ConfigGameComponent, CommonModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })
 export class TableComponent {
   @ViewChild(ConfigGameComponent) configGameComponent: ConfigGameComponent | undefined;
   private tableService = inject(TableService);
-  private userService = inject(UserService);
 
   tables:Table[] = [];
   private lastTableSelected = 0;
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit(){
     this.loadTables();
@@ -43,12 +41,28 @@ export class TableComponent {
     }
   }
 
+  startNewSheet(sheet: string | undefined, idTable: number) {
+    if(sheet){
+      this.tableService.updateRound(idTable, []).subscribe({
+        next: () => {
+          var path = "sheet/"+sheet;
+        this.router.navigate([path], { queryParams: { idTable: idTable } });
+        },
+      });
+
+    }
+  }
+
   deleteTable(id :number){
     this.tableService.deleteTable(id).subscribe({
       next: () => {
         this.loadTables();
       },
     });
+  }
+
+  isGameInProgress(table : Table){
+    return table.round.length > 0;
   }
 
   openGameModal(game :Game | undefined, id: number){

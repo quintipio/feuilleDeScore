@@ -7,6 +7,7 @@ import { InputPadComponent } from '../../components/input-pad/input-pad.componen
 import { WinnerComponent } from '../../components/winner/winner.component';
 import { SheetComponent } from '../../components/sheet/sheet.component';
 import { CountRoundRow, RoundRow, UserColumn } from '../../models/sheet';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-generic-sheet',
@@ -34,8 +35,16 @@ export class GenericSheetComponent {
     this.route.queryParams.subscribe(params => {
       const idTable = +params['idTable'];
       if (idTable) {
-        this.tableService.getTable(idTable).subscribe(table => {
-          this.table = table;
+        this.tableService.getTable(idTable).subscribe({
+          next: (table: Table | undefined) => {
+            if (table) {
+              this.table = table;
+              this.ngAfterViewInit();
+            }
+          },
+          error: (error) => {
+            console.error("Error fetching table:", error);
+          }
         });
       }
     });
@@ -44,8 +53,15 @@ export class GenericSheetComponent {
   ngAfterViewInit() {
     if (this.table && this.sheetComponent) {
       this.sheetComponent.loadComponent(this.table);
-      this.cdr.detectChanges(); // Force la détection des changements ici
+      this.cdr.detectChanges();
     }
+  }
+
+  saveRoundInDb(round : RoundRow[]){
+    this.tableService.updateRound(this.table!.id, round).subscribe({
+      next: () => {
+      },
+    });
   }
 
 

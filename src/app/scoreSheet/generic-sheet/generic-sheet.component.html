@@ -1,5 +1,6 @@
 <app-sheet (checkEndingGame)="checkEndingGame($event.round, $event.users)"
  (triggerOpenWinner)="openWinner($event.round, $event.users)"
+  (triggerSaveRound)="saveRoundInDb($event)"
  [isEndingGame]="isEndingGame"></app-sheet>
 
 

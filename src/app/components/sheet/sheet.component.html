@@ -19,7 +19,7 @@
           </th>
         </tr>
 
-          @for(row of round; track row.row){
+          @for(row of table?.round; track row.row){
             <tr>
               <td>#{{row.row}}</td>
               @for(point of row.points; track point.user.position){
