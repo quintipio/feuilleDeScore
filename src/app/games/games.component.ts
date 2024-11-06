@@ -8,7 +8,6 @@ import { TableService } from '../service/table.service';
 import { UserService } from '../service/users.service';
 import { FormsModule } from '@angular/forms';
 import { GameService } from '../service/games.service';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-games',
@@ -60,7 +59,6 @@ export class GamesComponent {
         this.allUsers = users
       },
     });
-    console.log(this.allUsers)
   }
 
   deleteGame(): void {
@@ -203,7 +201,10 @@ export class GamesComponent {
       const newTable = this.tableService.generateEmptyTable();
       newTable.users = this.selectedUsers;
       newTable.game = this.games.find(game => game.id == this.selectedGame);
-      this.tableService.addTable(newTable);
-      this.router.navigate(['/tables']);
+      this.tableService.addTable(newTable).subscribe({
+        next: () => {
+          this.router.navigate(['/tables']);
+        },
+      });
   }
 }

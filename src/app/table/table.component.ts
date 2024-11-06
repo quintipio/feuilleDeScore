@@ -29,8 +29,10 @@ export class TableComponent {
   }
 
   loadTables() {
-    this.tableService.tables$.subscribe((data: Table[]) => {
-      this.tables = data;
+    this.tableService.getAllTables().subscribe({
+      next: (tables: Table[]) => {
+        this.tables = tables
+      },
     });
   }
 
@@ -42,8 +44,11 @@ export class TableComponent {
   }
 
   deleteTable(id :number){
-    this.tableService.deleteTable(id);
-    this.loadTables();
+    this.tableService.deleteTable(id).subscribe({
+      next: () => {
+        this.loadTables();
+      },
+    });
   }
 
   openGameModal(game :Game | undefined, id: number){
@@ -58,7 +63,11 @@ export class TableComponent {
       const table = this.tables.find(table => table.id === this.lastTableSelected);
       if(table){
         table.game = game;
-        this.tableService.updateTable(table);
+        this.tableService.updateTable(table).subscribe({
+          next: () => {
+            this.loadTables();
+          },
+        });
       }
     }
   }

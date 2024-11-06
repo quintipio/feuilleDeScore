@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { isUser, User } from '../models/user.model';
 import { IndexedDbService } from './indexedDb.service';
-import { Observable, from, map, of, switchMap } from 'rxjs';
+import { Observable, from, map, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

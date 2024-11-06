@@ -1,21 +1,17 @@
-import { inject, Injectable } from '@angular/core';
+import {  Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { Table } from '../models/table.model';
+import { Observable, from, map, switchMap } from 'rxjs';
+import { isTable, Table } from '../models/table.model';
+import { IndexedDbService } from './indexedDb.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TableService {
 
-  private tablesUrl = 'data/tables.json';
-  private tablesSubject = new BehaviorSubject<Table[]>([]);
-  tables$ = this.tablesSubject.asObservable();
-
   private tables: Table[] = [];
 
-  constructor(private http: HttpClient) {
-    this.loadTablesFromJson();
+  constructor(private http: HttpClient, private indexedDbService: IndexedDbService) {
   }
 
   generateEmptyTable():Table {
@@ -27,51 +23,46 @@ export class TableService {
     return table;
   }
 
-  private loadTablesFromJson(): void {
-    this.http.get<Table[]>(this.tablesUrl).subscribe(
-      (data: Table[]) => {
-        this.tables = data;
-        this.tablesSubject.next(this.tables);
-      },
-      (error) => {
-        console.error('Error loading tables:', error);
-      }
+  addTable(table: Table): Observable<void> {
+    return from(this.getHighestId()).pipe(
+      switchMap((newId) => {
+        table.id = newId;
+        return from(this.indexedDbService.add("tables", table));
+      }),
+      map(() => undefined)
     );
   }
 
-  getTables(): Observable<Table[]> {
-    return this.tablesSubject.asObservable();
+  private getHighestId(): Promise<number> {
+    return this.indexedDbService.getAll("tables").then(items => {
+      const highestId = items.reduce((maxId, item) => {
+        return item.id > maxId ? item.id : maxId;
+      }, 0);
+      return highestId + 1;
+    });
+  }
+
+  updateTable(table: Table): Observable<void> {
+    return from(this.indexedDbService.update("tables", table)).pipe(
+      map(() => undefined)
+    );
   }
 
   getTable(id: number): Observable<Table | undefined> {
-    const table = this.tables.find(table => table.id === id);
-    return of(table);
+    return from(this.indexedDbService.get("tables", id)).pipe(
+      map((result: any | undefined) => (isTable(result) ? result : undefined))
+    );
   }
 
-
-  addTable(newTable: Table): void {
-    newTable.id = this.tables.length > 0 ? Math.max(...this.tables.map(u => u.id)) + 1 : 1;
-    this.tables.push(newTable);
-    this.tablesSubject.next(this.tables);
+  getAllTables(): Observable<Table[]> {
+    return from(this.indexedDbService.getAll("tables")).pipe(
+      map((results: any[]) => results.filter(isTable) as Table[])
+    );
   }
 
-  updateTable(updatedTable: Table): boolean {
-    const index = this.tables.findIndex(game => game.id === updatedTable.id);
-    if (index !== -1) {
-      this.tables[index] = updatedTable;
-      this.tablesSubject.next(this.tables);
-      return true;
-    }
-    return false;
-  }
-
-  deleteTable(id: number): boolean {
-    const index = this.tables.findIndex(game => game.id === id);
-    if (index !== -1) {
-      this.tables.splice(index, 1);
-      this.tablesSubject.next(this.tables);
-      return true;
-    }
-    return false;
+  deleteTable(id: number): Observable<void> {
+    return from(this.indexedDbService.delete("tables", id)).pipe(
+      map(() => undefined)
+    );
   }
 }
