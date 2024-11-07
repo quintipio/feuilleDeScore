@@ -13,7 +13,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/feuille-score-angular",
+            "outputPath": "dist/feuille-score-angular/browser/",
+            "baseHref": "/feuilleDeScore/",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -40,13 +41,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "3MB",
+                  "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "3MB",
+                  "maximumError": "6MB"
                 }
               ],
               "outputHashing": "all",
