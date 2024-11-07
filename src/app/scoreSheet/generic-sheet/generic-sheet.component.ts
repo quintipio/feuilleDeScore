@@ -61,6 +61,7 @@ export class GenericSheetComponent {
     this.tableService.updateRound(this.table!.id, round).subscribe({
       next: () => {
       },
+      error: (err) => console.error('Erreur lors de l\'update de la table :', err)
     });
   }
 

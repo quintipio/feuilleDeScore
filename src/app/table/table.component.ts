@@ -31,6 +31,7 @@ export class TableComponent {
       next: (tables: Table[]) => {
         this.tables = tables
       },
+      error: (err) => console.error('Erreur lors du chargement des tables :', err)
     });
   }
 
@@ -48,6 +49,7 @@ export class TableComponent {
           var path = "sheet/"+sheet;
         this.router.navigate([path], { queryParams: { idTable: idTable } });
         },
+        error: (err) => console.error('Erreur lors de la réinitialisation de la table:', err)
       });
 
     }
@@ -58,6 +60,7 @@ export class TableComponent {
       next: () => {
         this.loadTables();
       },
+      error: (err) => console.error('Erreur lors de la suppression de la table :', err)
     });
   }
 
@@ -81,6 +84,7 @@ export class TableComponent {
           next: () => {
             this.loadTables();
           },
+          error: (err) => console.error('Erreur lors de l\'update de la table :', err)
         });
       }
     }

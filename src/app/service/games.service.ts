@@ -13,7 +13,7 @@ export class GameService {
     for (const game of GameExisting) {
       const existingGame = await this.findGameByUuid(game.uuid!);
       if (!existingGame) {
-        await this.addGame(game);
+        await this.addGame(game).toPromise();
       }
     }
   }
@@ -30,7 +30,9 @@ export class GameService {
   addGame(game: Game): Observable<void> {
     return from(this.getHighestId()).pipe(
       switchMap((newId) => {
-        game.id = newId;
+        if(game.id !== 0){
+          game.id = newId;
+        }
         return from(this.indexedDbService.add("games", game));
       }),
       map(() => undefined)

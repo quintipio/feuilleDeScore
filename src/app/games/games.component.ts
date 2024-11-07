@@ -50,6 +50,7 @@ export class GamesComponent {
   loadGames(): void {
     this.gameService.getAllGames().subscribe({
       next: (games: Game[]) => {this.games = games},
+      error: (err) => console.log("Erreur lors du chargement des jeux : ", err)
     });
   }
 
@@ -58,6 +59,7 @@ export class GamesComponent {
       next: (users: User[]) => {
         this.allUsers = users
       },
+      error: (err) => console.log("Erreur lors du chargement des joueurs", err)
     });
   }
 
@@ -68,6 +70,7 @@ export class GamesComponent {
         this.loadGames()
         this.checkUserForTable();
       },
+      error: (err) => console.log("Erreur lors de la supression du jeu", err)
     });
   }
 
@@ -137,7 +140,7 @@ export class GamesComponent {
           this.newUser = '';
           this.loadAllUsers();
         },
-        error: (err) => console.error('Erreur lors de l’ajout de l’utilisateur :', err)
+        error: (err) => console.error('Erreur lors de l’ajout du joueur :', err)
       });
     }
   }
@@ -150,7 +153,7 @@ export class GamesComponent {
         this.checkUserForTable();
         this.loadAllUsers();
       },
-      error: (err) => console.error('Erreur lors de la suppression de l’utilisateur :', err)
+      error: (err) => console.error('Erreur lors de la suppression du joueur :', err)
     });
   }
 
@@ -187,12 +190,14 @@ export class GamesComponent {
         next: () => {
           this.loadGames();
         },
+        error: (err) => console.error('Erreur lors de l’ajout du jeu :', err)
       });
     } else {
       this.gameService.updateGame(game).subscribe({
         next: () => {
           this.loadGames();
         },
+        error: (err) => console.error('Erreur lors de la mise à jour du jeu :', err)
       });
     }
   }
@@ -205,6 +210,7 @@ export class GamesComponent {
         next: () => {
           this.router.navigate(['/tables']);
         },
+        error: (err) => console.error('Erreur lors de la creation de la table :', err)
       });
   }
 }
