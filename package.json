@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build-prod": "ng build --configuration production",
-    "deploy": "ng build --configuration production && npx angular-cli-ghpages --dir=dist/feuille-score-angular/browser",
+    "deploy": "ng build --configuration production && npx angular-cli-ghpages --dir=dist/feuilleDeScore/browser/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

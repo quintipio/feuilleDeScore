@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/feuille-score-angular/browser/",
+            "outputPath": "dist/feuilleDeScore/",
             "baseHref": "/feuilleDeScore/",
             "index": "src/index.html",
             "browser": "src/main.ts",
