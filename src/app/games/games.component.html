@@ -22,14 +22,6 @@
 <div class="row">
 
   <div class="col">
-    <a routerLink="/users">
-      <button class="btn btn-outline-success align-element-left" type="button">
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-    </a>
-  </div>
-
-  <div class="col">
     <button *ngIf="isSelectedAndEditableGame()" class="btn btn-outline-secondary" type="button" (click)="openEditGameModal()"
       data-bs-toggle="modal" data-bs-target="#gameModal" >
       <i class="fa-solid fa-edit"></i>

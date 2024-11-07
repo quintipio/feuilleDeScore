@@ -21,7 +21,7 @@
 
           @for(row of table?.round; track row.row){
             <tr>
-              <td>#{{row.row}}</td>
+              <td style="width: 30px;">#{{row.row}}</td>
               @for(point of row.points; track point.user.position){
                 <td class="point" (click)="openInputPad(row.row, point)" data-bs-toggle="modal" data-bs-target="#padModal">{{ point.value }}</td>
               }
