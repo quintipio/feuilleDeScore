@@ -1,5 +1,5 @@
 <div class="number-input-container" [attr.id]="name">
-  <button (click)="decrement()" class="btn btn-secondary btn-left"><i class="fa-solid fa-minus"></i></button>
-  <input type="number" [(ngModel)]="value" (input)="onInputChange($event)">
-  <button (click)="increment()"class="btn btn-secondary btn-right"><i class="fa-solid fa-plus"></i></button>
+  <button (click)="decrement()" class="btn btn-secondary btn-left" [disabled]="disabledMin()"><i class="fa-solid fa-minus"></i></button>
+  <p class="chiffre">{{ value }}</p>
+  <button (click)="increment()"class="btn btn-secondary btn-right" [disabled]="disabledMax()"><i class="fa-solid fa-plus"></i></button>
 </div>

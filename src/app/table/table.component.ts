@@ -44,10 +44,16 @@ export class TableComponent {
 
   startNewSheet(sheet: string | undefined, idTable: number) {
     if(sheet){
+      this.tableService.getTable(idTable);
       this.tableService.updateRound(idTable, []).subscribe({
         next: () => {
-          var path = "sheet/"+sheet;
-        this.router.navigate([path], { queryParams: { idTable: idTable } });
+          this.tableService.updateSpecificData(idTable, "").subscribe({
+            next: () => {
+              var path = "sheet/"+sheet;
+              this.router.navigate([path], { queryParams: { idTable: idTable } });
+            },
+            error: (err) => console.error('Erreur lors de la réinitialisation de la table:', err)
+          });
         },
         error: (err) => console.error('Erreur lors de la réinitialisation de la table:', err)
       });

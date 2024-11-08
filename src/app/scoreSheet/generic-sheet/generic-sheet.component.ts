@@ -7,7 +7,6 @@ import { InputPadComponent } from '../../components/input-pad/input-pad.componen
 import { WinnerComponent } from '../../components/winner/winner.component';
 import { SheetComponent } from '../../components/sheet/sheet.component';
 import { CountRoundRow, RoundRow, UserColumn } from '../../models/sheet';
-import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-generic-sheet',

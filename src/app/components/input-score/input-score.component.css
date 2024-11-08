@@ -1,34 +1,37 @@
 .number-input-container {
-    display: flex;
-    align-items: center;
-  }
+  display: flex;
+  align-items: center;
+}
 
-  button {
-    width: 30px;
-    height: 30px;
-  }
+.chiffre {
+  width: 45px;
+  padding-top: 10px;
+  text-align: center;
+  font-size: large;
+  font-weight: bolder;
+}
 
-  input {
-    width: 75px;
-    text-align: center;
-  }
+button {
+  width: 30px;
+  height: 30px;
+}
 
-  .btn {
-    border: 2px solid black;
-    line-height: 0px;
-    width: 40px;
-  }
+.btn {
+  border: 2px solid black;
+  line-height: 0px;
+  width: 40px;
+}
 
-  .btn-left {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-  }
+.btn-left {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
 
-  .btn-right {
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
+.btn-right {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}

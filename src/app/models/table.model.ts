@@ -7,6 +7,7 @@ export interface Table {
   users: User[],
   game: Game | undefined,
   round:RoundRow[]
+  specificData: string;
 }
 
 export function isTable(object: any): object is Table {
@@ -15,6 +16,7 @@ export function isTable(object: any): object is Table {
     object !== null &&
     'users' in object &&
     'game' in object &&
-    'round' in object
+    'round' in object &&
+    'specificData' in object
   )
 }

@@ -10,7 +10,7 @@ import { GameService } from './service/games.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'feuilleScore-angular';
+  title = 'Feuille de score';
 
   private gameService = inject(GameService);
 

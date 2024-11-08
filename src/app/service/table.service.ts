@@ -20,7 +20,8 @@ export class TableService {
       id: 0,
       users: [],
       game: undefined,
-      round: []
+      round: [],
+      specificData: ""
     };
     return table;
   }
@@ -55,6 +56,19 @@ export class TableService {
       switchMap((table) => {
         if (table) {
           table.round = round;
+          return this.updateTable(table);
+        } else {
+          throw new Error(`Table with id ${idTable} not found.`);
+        }
+      })
+    );
+  }
+
+  updateSpecificData(idTable: number,specificData : string): Observable<void> {
+    return this.getTable(idTable).pipe(
+      switchMap((table) => {
+        if (table) {
+          table.specificData = specificData;
           return this.updateTable(table);
         } else {
           throw new Error(`Table with id ${idTable} not found.`);

@@ -57,7 +57,8 @@ export class ConfigGameComponent {
         canEdit :true,
         minJoueur: undefined,
         maxJoueur: undefined,
-        sheet: "generic"
+        sheet: "generic",
+        specificConf: ""
       };
       if(this.gameForm.value.name) {
         gameToSend.name = this.gameForm.value.name;
