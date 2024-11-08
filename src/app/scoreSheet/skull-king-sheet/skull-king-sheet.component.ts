@@ -71,60 +71,137 @@ export class SkullKingSheetComponent {
   }
 
   private loadManche() {
-    if(this.table?.specificData !== undefined && this.table.specificData !== ""){
+    if (this.table?.specificData !== undefined && this.table.specificData !== "") {
       this.histoManche = JSON.parse(this.table.specificData);
-      console.log(this.histoManche);
       const maxId = Object.keys(this.histoManche).map(key => parseInt(key)).reduce((max, current) => (current > max ? current : max), -Infinity);
-      this.newRound(this.histoManche[maxId.toString()]);
+      this.openManche(maxId);
     } else {
-      this.newRound(undefined);
+      this.histoManche[1] = this.newRound(1);
+      this.openManche(1);
     }
   }
 
-  private newRound(oldManche: SkullKingRound | undefined) {
+  private newRound(manche : number) : SkullKingRound {
     const newManche: SkullKingRound = {
-      "manche": (oldManche === undefined)?1 : oldManche.manche + 1,
+      "manche": manche,
       "players": [],
     }
-    if(oldManche){
-      oldManche.players.forEach((player) => {
-        const playerBis: skullKingPlayer = {
-          user: player.user,
-          pari: 0,
-          pliGagne: 0,
-          scoreTotal: player.scoreTotal + player.scoreManche,
-          scoreManche: 0,
-          bonusAutre: 0,
-          bonusButin: 0,
-          bonusSkullKing: 0,
-          bonusSirene: 0,
-          bonusPirate: 0,
-          bonusDix: 0
-        }
-        newManche.players.push(playerBis)
-      });
-    } else {
-      this.table!.users.forEach((userRow) => {
-        const player: skullKingPlayer = {
-          user: userRow,
-          pari: 0,
-          pliGagne: 0,
-          scoreTotal: 0,
-          scoreManche: 0,
-          bonusAutre: 0,
-          bonusButin: 0,
-          bonusSkullKing: 0,
-          bonusSirene: 0,
-          bonusPirate: 0,
-          bonusDix: 0
-        }
-        newManche.players.push(player);
-      })
-    }
-    this.mancheEnCours = newManche;
-    this.numbers = this.numbers = Array.from({ length: this.mancheEnCours.manche + 1 }, (_, i) => i)
-    console.log(this.numbers);
+    this.table!.users.forEach((userRow) => {
+      const player: skullKingPlayer = {
+        user: userRow,
+        pari: 0,
+        pliGagne: 0,
+        scoreTotal: 0,
+        scoreManche: 0,
+        bonusAutre: 0,
+        bonusButin: 0,
+        bonusSkullKing: 0,
+        bonusSirene: 0,
+        bonusPirate: 0,
+        bonusDix: 0
+      }
+      newManche.players.push(player);
+    })
+    return newManche;
+  }
 
+
+  private calculerScoreManche(player: skullKingPlayer) {
+    var newScore = 0;
+    if (player.pari > 0) {
+      const dif = Math.abs(player.pari - player.pliGagne);
+      if (dif === 0) {
+        newScore = player.pliGagne * 20;
+        newScore += player.bonusAutre;
+        newScore += player.bonusButin * 20;
+        newScore += player.bonusSkullKing * 40;
+        newScore += player.bonusPirate * 20;
+        newScore += player.bonusSirene * 30;
+        newScore += player.bonusDix * 10;
+      } else {
+        newScore += dif * -10;
+      }
+    } else {
+      if (player.pari == player.pliGagne) {
+        newScore += this.mancheEnCours?.manche! * 10;
+      } else {
+        newScore += this.mancheEnCours?.manche! * -10;
+      }
+    }
+    player.scoreManche = newScore;
+  }
+
+  private openManche(mancheToOpen: number) {
+    this.mancheEnCours = this.histoManche[mancheToOpen.toString()];
+    this.numbers = this.numbers = Array.from({ length: this.mancheEnCours.manche + 1 }, (_, i) => i);
+    this.mancheEnCours.players.forEach((player) => {
+      this.inputScores?.forEach((input) => {
+        if (input.name === "bonusCarteMax_" + player.user.id) {
+          input.reinit(player.bonusDix);
+        }
+        if (input.name === "bonusSirene_" + player.user.id) {
+          input.reinit(player.bonusSirene)
+        }
+        if (input.name === "bonusPirate_" + player.user.id) {
+          input.reinit(player.bonusPirate)
+        }
+        if (input.name === "bonusSkullKing_" + player.user.id) {
+          input.reinit(player.bonusSkullKing)
+        }
+        if (input.name === "bonusButin_" + player.user.id) {
+          input.reinit(player.bonusButin)
+        }
+        if (input.name === "bonusAutre_" + player.user.id) {
+          input.reinit(player.bonusAutre)
+        }
+      });
+    });
+  }
+
+  private saveManche() {
+    this.histoManche[this.mancheEnCours!.manche.toString()] = this.mancheEnCours!;
+    this.table!.round = this.genererHistoRound();
+
+    this.table!.specificData = JSON.stringify(this.histoManche);
+    this.tableService.updateTable(this.table!).subscribe({
+      next: () => {
+      },
+      error: (error) => {
+        console.error("Error update table:", error);
+      }
+    });
+  }
+
+
+
+  private genererHistoRound(): RoundRow[] {
+    var round: RoundRow[] = [];
+    for (const id in this.histoManche) {
+      if (this.histoManche.hasOwnProperty(id)) {
+        const data = this.histoManche[id];
+        const roundRow: RoundRow = {
+          "row": data.manche,
+          "points": this.convertPlayerToCountRoundRow(data.players)
+        }
+        round.push(roundRow);
+      }
+    }
+    return round;
+  }
+
+  private convertPlayerToCountRoundRow(players: skullKingPlayer[]): CountRoundRow[] {
+    const retour: CountRoundRow[] = [];
+    players.forEach((player) => {
+      const countRoundRow: CountRoundRow = {
+        "value": player.scoreManche,
+        "user": {
+          position: 1,
+          user: player.user
+        }
+      }
+      retour.push(countRoundRow);
+    });
+    return retour;
   }
 
   isSelectedPari(player: skullKingPlayer, num: number) {
@@ -175,93 +252,17 @@ export class SkullKingSheetComponent {
     this.calculerScoreManche(player);
   }
 
-  private calculerScoreManche(player: skullKingPlayer) {
-    var newScore = 0;
-    if (player.pari > 0) {
-      const dif = Math.abs(player.pari - player.pliGagne);
-      if (dif === 0) {
-        newScore = player.pliGagne * 20;
-        newScore += player.bonusAutre;
-        newScore += player.bonusButin * 20;
-        newScore += player.bonusSkullKing * 40;
-        newScore += player.bonusPirate * 20;
-        newScore += player.bonusSirene * 30;
-        newScore += player.bonusDix * 10;
-      } else {
-        newScore += dif * -10;
-      }
-    } else {
-      if(player.pari == player.pliGagne){
-        newScore += this.mancheEnCours?.manche! * 10;
-      } else {
-        newScore += this.mancheEnCours?.manche! * -10;
-      }
-    }
-    player.scoreManche = newScore;
-  }
-
-  mancheSuivante(){
+  mancheSuivante() {
     this.saveManche();
-    this.newRound(this.mancheEnCours);
-    this.inputScores?.forEach(inputScore => {
-      inputScore.reinit(0);
-    });
-  }
-
-  manchePrecedente(){
-    this.saveManche();
-    this.openManche(this.mancheEnCours!.manche-1);
-  }
-
-  openManche(mancheToOpen : number){
-    this.mancheEnCours = this.histoManche[mancheToOpen.toString()];
-    this.numbers = this.numbers = Array.from({ length: this.mancheEnCours.manche +1 }, (_, i) => i);
-    console.log(this.mancheEnCours);
-  }
-
-  private saveManche(){
-    this.histoManche[this.mancheEnCours!.manche.toString()] = this.mancheEnCours!;
-    this.table!.round = this.genererHistoRound();
-
-    this.table!.specificData = JSON.stringify(this.histoManche);
-    this.tableService.updateTable(this.table!).subscribe({
-      next: () => {
-      },
-      error: (error) => {
-        console.error("Error update table:", error);
-      }
-    });
-  }
-
-
-
-  private genererHistoRound() : RoundRow[]{
-    var round : RoundRow[] = [];
-    for (const id in this.histoManche) {
-      if (this.histoManche.hasOwnProperty(id)) {
-        const data = this.histoManche[id];
-        const roundRow: RoundRow = {
-          "row" : data.manche,
-          "points" : this.convertPlayerToCountRoundRow(data.players)
-        }
-        round.push(roundRow);
-      }
+    if(!this.histoManche.hasOwnProperty(this.mancheEnCours!.manche+1)) {
+      this.histoManche[this.mancheEnCours!.manche+1] = this.newRound(this.mancheEnCours!.manche+1);
     }
-    return round;
+    this.openManche(this.mancheEnCours!.manche+1);
   }
 
-  private convertPlayerToCountRoundRow(players: skullKingPlayer[]) : CountRoundRow[]{
-    const retour : CountRoundRow[] = [];
-    players.forEach((player)  => {
-      const countRoundRow: CountRoundRow = {
-        "value" : player.scoreManche,
-        "user" : {
-          position : 1,
-          user : player.user
-        }
-      }
-      retour.push(countRoundRow);
-    });
-    return retour;
+  manchePrecedente() {
+    this.saveManche();
+    this.openManche(this.mancheEnCours!.manche - 1);
   }
+
 }
