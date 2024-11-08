@@ -58,7 +58,14 @@ export class SkullKingSheetComponent {
           next: (table: Table | undefined) => {
             if (table) {
               this.table = table;
-              this.loadManche();
+              if (this.table?.specificData !== undefined && this.table.specificData !== "") {
+                this.histoManche = JSON.parse(this.table.specificData);
+                const maxId = Object.keys(this.histoManche).map(key => parseInt(key)).reduce((max, current) => (current > max ? current : max), -Infinity);
+                this.openManche(maxId);
+              } else {
+                this.histoManche[1] = this.newRound(1);
+                this.openManche(1);
+              }
             }
           },
           error: (error) => {
@@ -67,17 +74,6 @@ export class SkullKingSheetComponent {
         });
       }
     });
-  }
-
-  private loadManche() {
-    if (this.table?.specificData !== undefined && this.table.specificData !== "") {
-      this.histoManche = JSON.parse(this.table.specificData);
-      const maxId = Object.keys(this.histoManche).map(key => parseInt(key)).reduce((max, current) => (current > max ? current : max), -Infinity);
-      this.openManche(maxId);
-    } else {
-      this.histoManche[1] = this.newRound(1);
-      this.openManche(1);
-    }
   }
 
   private newRound(manche : number) : SkullKingRound {
@@ -101,31 +97,6 @@ export class SkullKingSheetComponent {
       newManche.players.push(player);
     })
     return newManche;
-  }
-
-  private calculerScoreManche(player: skullKingPlayer) {
-    var newScore = 0;
-    if (player.pari > 0) {
-      const dif = Math.abs(player.pari - player.pliGagne);
-      if (dif === 0) {
-        newScore = player.pliGagne * 20;
-        newScore += player.bonusAutre;
-        newScore += player.bonusButin * 20;
-        newScore += player.bonusSkullKing * 40;
-        newScore += player.bonusPirate * 20;
-        newScore += player.bonusSirene * 30;
-        newScore += player.bonusDix * 10;
-      } else {
-        newScore += dif * -10;
-      }
-    } else {
-      if (player.pari == player.pliGagne) {
-        newScore += this.mancheEnCours?.manche! * 10;
-      } else {
-        newScore += this.mancheEnCours?.manche! * -10;
-      }
-    }
-    player.scoreManche = newScore;
   }
 
   private openManche(mancheToOpen: number) {
@@ -153,6 +124,31 @@ export class SkullKingSheetComponent {
         }
       });
     });
+  }
+
+  private calculerScoreManche(player: skullKingPlayer) {
+    var newScore = 0;
+    if (player.pari > 0) {
+      const dif = Math.abs(player.pari - player.pliGagne);
+      if (dif === 0) {
+        newScore = player.pliGagne * 20;
+        newScore += player.bonusAutre;
+        newScore += player.bonusButin * 20;
+        newScore += player.bonusSkullKing * 40;
+        newScore += player.bonusPirate * 20;
+        newScore += player.bonusSirene * 30;
+        newScore += player.bonusDix * 10;
+      } else {
+        newScore += dif * -10;
+      }
+    } else {
+      if (player.pari == player.pliGagne) {
+        newScore += this.mancheEnCours?.manche! * 10;
+      } else {
+        newScore += this.mancheEnCours?.manche! * -10;
+      }
+    }
+    player.scoreManche = newScore;
   }
 
   private saveManche() {
