@@ -2,11 +2,18 @@
   <h1 class="title">Manche {{ mancheEnCours?.manche}}</h1>
 </div>
 
+
+<div class="d-flex justify-content-between mt-4">
+  <button class="btn btn-navigate" [disabled]="mancheEnCours?.manche === 1" (click)="manchePrecedente()"><i class="fa-solid fa-arrow-left"></i></button>
+  <button class="btn btn-navigate" (click)="mancheSuivante()"><i class="fa-solid fa-arrow-right"></i></button>
+</div>
+
+
 @for(player of mancheEnCours?.players; track player.user.id) {
   <div class="user-card my-3 p-4">
     <div class="d-flex justify-content-between align-items-center">
       <h3 class="user-name">{{ player.user.name }}</h3>
-      <span class="score">{{ player.scoreTotal}}</span>
+      <span class="score">{{ getScoreTotal(player) }}</span>
     </div>
 
     <div class="text-left mt-2">
@@ -52,8 +59,3 @@
     </div>
   </div>
 }
-
-<div class="d-flex justify-content-between mt-4">
-  <button class="btn btn-navigate" [disabled]="mancheEnCours?.manche === 1" (click)="manchePrecedente()"><i class="fa-solid fa-arrow-left"></i></button>
-  <button class="btn btn-navigate" (click)="mancheSuivante()"><i class="fa-solid fa-arrow-right"></i></button>
-</div>

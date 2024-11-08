@@ -14,7 +14,6 @@ type skullKingPlayer = {
   user: User,
   pari: number,
   pliGagne: number,
-  scoreTotal: number,
   scoreManche: number,
   bonusAutre: number,
   bonusButin: number,
@@ -91,7 +90,6 @@ export class SkullKingSheetComponent {
         user: userRow,
         pari: 0,
         pliGagne: 0,
-        scoreTotal: 0,
         scoreManche: 0,
         bonusAutre: 0,
         bonusButin: 0,
@@ -104,7 +102,6 @@ export class SkullKingSheetComponent {
     })
     return newManche;
   }
-
 
   private calculerScoreManche(player: skullKingPlayer) {
     var newScore = 0;
@@ -201,6 +198,20 @@ export class SkullKingSheetComponent {
       }
       retour.push(countRoundRow);
     });
+    return retour;
+  }
+
+  getScoreTotal(playerToFind: skullKingPlayer) : number{
+    let retour = 0;
+    for (const key in this.histoManche) {
+      if (this.histoManche.hasOwnProperty(key) && Number(key) < this.mancheEnCours!.manche) {
+        this.histoManche[key].players.forEach((player) => {
+          if(player.user.id === playerToFind.user.id) {
+            retour += player.scoreManche;
+          }
+        });
+      }
+    }
     return retour;
   }
 
