@@ -49,10 +49,14 @@ export class GamesComponent {
 
   loadGames(): void {
     this.gameService.getAllGames().subscribe({
-      next: (games: Game[]) => {this.games = games},
+      next: (games: Game[]) => {
+        this.games = games.sort((a, b) => {
+          return a.name.localeCompare(b.name);
+        });
+      },
       error: (err) => console.log("Erreur lors du chargement des jeux : ", err)
     });
-  }
+}
 
   loadAllUsers(): void {
     this.userService.getAllUsers().subscribe({

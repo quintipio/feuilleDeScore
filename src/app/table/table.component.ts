@@ -29,11 +29,16 @@ export class TableComponent {
   loadTables() {
     this.tableService.getAllTables().subscribe({
       next: (tables: Table[]) => {
-        this.tables = tables
+        this.tables = tables.sort((a, b) => {
+          if (a.game?.name && b.game?.name) {
+            return a.game.name.localeCompare(b.game.name);
+          }
+          return 0;
+        });
       },
       error: (err) => console.error('Erreur lors du chargement des tables :', err)
     });
-  }
+}
 
   startSheet(sheet: string | undefined, idTable: number) {
     if(sheet){
@@ -86,6 +91,7 @@ export class TableComponent {
       const table = this.tables.find(table => table.id === this.lastTableSelected);
       if(table){
         table.game = game;
+        table.round = [];
         this.tableService.updateTable(table).subscribe({
           next: () => {
             this.loadTables();
