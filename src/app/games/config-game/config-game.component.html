@@ -33,11 +33,18 @@
       <label for="scoreNegatif">Score négatif autorisé :
         <input type="checkbox" name="scoreNegatif" formControlName="scoreNegatif" /></label>
     </div>
+
+    <app-skull-king-config *ngIf="gameReceived!.sheet === 'skullKing'"
+    [specificConfIn]="gameReceived!.specificConf"
+    (specificConfOut)="getSpecificConf($event)"
+    (okForSave)="getvalidator($event)"></app-skull-king-config>
   </div>
+
+
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i
         class="fa-solid fa-xmark"></i></button>
-    <button type="submit" class="btn btn-primary" [disabled]="!gameForm.valid" data-bs-dismiss="modal"><i
+    <button type="submit" class="btn btn-primary" [disabled]="!gameForm.valid || !conditionSpecificConf" data-bs-dismiss="modal"><i
         class="fa-solid fa-save"></i></button>
   </div>
 </form>
