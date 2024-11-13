@@ -5,7 +5,7 @@
         <div class="table-element">
           <div class="table-content">
             <div class="image-container">
-              <img [src]="table.game?.uuid ? '/assets/rsc/' + table.game?.uuid + '.png' : '/assets/rsc/generic.png'" alt="{{ table.game?.name }}" class="game-image">
+              <img [src]="environment.baseUrl + (table.game?.uuid ? '/assets/rsc/' + table.game?.uuid + '.png' : '/assets/rsc/generic.png')" alt="{{ table.game?.name }}" class="game-image">
             </div>
 
             <div class="table-info">

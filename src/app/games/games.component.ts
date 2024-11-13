@@ -8,6 +8,7 @@ import { TableService } from '../service/table.service';
 import { UserService } from '../service/users.service';
 import { FormsModule } from '@angular/forms';
 import { GameService } from '../service/games.service';
+import { environment } from './../../environments/environment'
 
 @Component({
   selector: 'app-games',
@@ -17,6 +18,7 @@ import { GameService } from '../service/games.service';
   styleUrl: './games.component.css'
 })
 export class GamesComponent {
+  environment = environment
   private gameService = inject(GameService);
   private tableService = inject(TableService);
   private userService = inject(UserService);

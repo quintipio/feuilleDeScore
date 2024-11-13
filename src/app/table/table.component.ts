@@ -5,6 +5,7 @@ import { Table } from '../models/table.model';
 import { Game } from '../models/game.model';
 import { ConfigGameComponent } from '../games/config-game/config-game.component';
 import { CommonModule } from '@angular/common';
+import { environment } from './../../environments/environment'
 
 @Component({
   selector: 'app-table',
@@ -14,6 +15,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './table.component.css'
 })
 export class TableComponent {
+  environment = environment;
   @ViewChild(ConfigGameComponent) configGameComponent: ConfigGameComponent | undefined;
   private tableService = inject(TableService);
 
