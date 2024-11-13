@@ -19,4 +19,12 @@ export class AppComponent {
       .then(() => console.log("Vérification et initialisation des jeux terminée."))
       .catch(error => console.error("Erreur lors de l'initialisation des jeux :", error));
   }
+
+  ngAfterViewInit() {
+    // Masquer l'icône de chargement
+    const loadingSpinner = document.getElementById('loading-spinner');
+    if (loadingSpinner) {
+      loadingSpinner.style.display = 'none';
+    }
+  }
 }

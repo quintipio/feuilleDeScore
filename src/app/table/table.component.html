@@ -5,14 +5,14 @@
         <div class="table-element">
           <div class="table-content">
             <div class="image-container">
-              <img [src]="table.game?.uuid ? '/rsc/' + table.game?.uuid + '.png' : '/rsc/generic.png'" alt="{{ table.game?.name }}" class="game-image">
+              <img [src]="table.game?.uuid ? '/assets/rsc/' + table.game?.uuid + '.png' : '/assets/rsc/generic.png'" alt="{{ table.game?.name }}" class="game-image">
             </div>
 
             <div class="table-info">
               <div class="table-title">{{ table.game?.name }}</div>
               <div class="table-user">(
                 @for(user of table.users; track user.id) {
-                  {{user?.name}},
+                  {{user?.name}}<span *ngIf="$index < table.users.length - 1">, </span>
                 })
               </div>
             </div>

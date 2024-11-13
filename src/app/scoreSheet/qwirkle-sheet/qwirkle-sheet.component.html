@@ -3,14 +3,14 @@
   (triggerSaveRound)="saveRoundInDb($event)"
   [isEndingGame]="isEndingGame"></app-sheet>
 
-  <div class="row align-items-center mb-3 espace-top">
+  <div class="row align-items-center mb-3">
     <!-- 9 symboles identiques -->
     <div class="col-4 d-flex justify-content-center">
-      <span class="mx-1">9 symboles identiques</span>
+      <span class="mx-1">Dernière tuile jouée : </span>
     </div>
 
     <!-- Liste déroulante des utilisateurs et bouton OK -->
-    <div class="col-6 d-flex align-items-center">
+    <div class="col-6 d-flex align-items-center espace-top">
       <select class="form-select me-2" [(ngModel)]="selectedUser" required>
         <option [ngValue]="null" disabled selected>Choisir un utilisateur</option>
         <option *ngFor="let user of table?.users" [ngValue]="user">{{ user.name }}</option>
