@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1730985578616,
+  "timestamp": 1731507073655,
   "index": "/feuilleDeScore/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/feuilleDeScore/favicon.ico",
         "/feuilleDeScore/index.html",
-        "/feuilleDeScore/main-42VEXXIG.js",
+        "/feuilleDeScore/main-SLHFUOIV.js",
         "/feuilleDeScore/manifest.webmanifest",
         "/feuilleDeScore/polyfills-FFHMD2TL.js",
         "/feuilleDeScore/scripts-5NJ5XBFO.js",
@@ -29,6 +29,18 @@
         "ignoreVary": true
       },
       "urls": [
+        "/feuilleDeScore/assets/rsc/09162e52-cca7-4fb5-89b4-76d85aa6c785.png",
+        "/feuilleDeScore/assets/rsc/5ca55918-f6be-460a-aacc-be5fbd782060.png",
+        "/feuilleDeScore/assets/rsc/7983f536-223e-420b-80f3-fac6a34342da.png",
+        "/feuilleDeScore/assets/rsc/7f2425ce-d96b-424b-81b1-ad6b60de1f30.png",
+        "/feuilleDeScore/assets/rsc/8e13d735-3349-481a-9fbd-ed564ee7abc8.png",
+        "/feuilleDeScore/assets/rsc/aa00ece5-d4e9-456e-be27-a96395079139.png",
+        "/feuilleDeScore/assets/rsc/cf402827-850b-44ff-a7ed-c757c48b7539.png",
+        "/feuilleDeScore/assets/rsc/d61fc9ea-9338-4d12-825f-5290609d2ebf.png",
+        "/feuilleDeScore/assets/rsc/e21b6919-ea1a-42f1-9b3d-29a02540fc45.png",
+        "/feuilleDeScore/assets/rsc/e822ef82-8c68-478c-b5d8-874accb3105b.png",
+        "/feuilleDeScore/assets/rsc/e989722b-cf42-42c9-bc4b-602e9c319726.png",
+        "/feuilleDeScore/assets/rsc/generic.png",
         "/feuilleDeScore/icons/icon-128x128.png",
         "/feuilleDeScore/icons/icon-144x144.png",
         "/feuilleDeScore/icons/icon-152x152.png",
@@ -47,10 +59,32 @@
         "/feuilleDeScore/media/fa-v4compatibility-TNIB7AHA.ttf"
       ],
       "patterns": []
+    },
+    {
+      "name": "rsc-assets",
+      "installMode": "lazy",
+      "updateMode": "lazy",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [],
+      "patterns": []
     }
   ],
   "dataGroups": [],
   "hashTable": {
+    "/feuilleDeScore/assets/rsc/09162e52-cca7-4fb5-89b4-76d85aa6c785.png": "a66d7107c5dcdf570824f740bb023333858004d3",
+    "/feuilleDeScore/assets/rsc/5ca55918-f6be-460a-aacc-be5fbd782060.png": "15f13712f66fdd39c41fadc0d272688bd4fa19fe",
+    "/feuilleDeScore/assets/rsc/7983f536-223e-420b-80f3-fac6a34342da.png": "a3b0ef0a7e69ed2883825300d0044bf643133e5a",
+    "/feuilleDeScore/assets/rsc/7f2425ce-d96b-424b-81b1-ad6b60de1f30.png": "91c6ea23c227a005cc22043831b381afba9b2364",
+    "/feuilleDeScore/assets/rsc/8e13d735-3349-481a-9fbd-ed564ee7abc8.png": "62b81a18cef1bc1177c6ed913ed2dede2439c8c9",
+    "/feuilleDeScore/assets/rsc/aa00ece5-d4e9-456e-be27-a96395079139.png": "db56e034ee9806723f9098e237b390a5cbfb0caf",
+    "/feuilleDeScore/assets/rsc/cf402827-850b-44ff-a7ed-c757c48b7539.png": "6dc41655091009c1f3d7786565267effe128834d",
+    "/feuilleDeScore/assets/rsc/d61fc9ea-9338-4d12-825f-5290609d2ebf.png": "20fcbe0ab3e21c359105d14fdec67277d40f0738",
+    "/feuilleDeScore/assets/rsc/e21b6919-ea1a-42f1-9b3d-29a02540fc45.png": "df2367e4214e1c1e6f84ab9593ce00572700871a",
+    "/feuilleDeScore/assets/rsc/e822ef82-8c68-478c-b5d8-874accb3105b.png": "45758eb7bb9314d63849bc79c45be583b29244bd",
+    "/feuilleDeScore/assets/rsc/e989722b-cf42-42c9-bc4b-602e9c319726.png": "86f965d56c0a98b9479015b94e44adc2d21ddce5",
+    "/feuilleDeScore/assets/rsc/generic.png": "68d9df07f7ad39f8c5aedace6d7de7949049a59e",
     "/feuilleDeScore/favicon.ico": "89a5d2fa8f7068e1aa94fc98f942a5df5965a681",
     "/feuilleDeScore/icons/icon-128x128.png": "8c7dfa00ef753e3b79a208b7cbdd2ae5394332fb",
     "/feuilleDeScore/icons/icon-144x144.png": "a2136122b8b88b9e48a0fcb7d69b16b5ddeea6e5",
@@ -60,8 +94,8 @@
     "/feuilleDeScore/icons/icon-512x512.png": "92a15ebe7c229dd440c1536eeb42ee1189f454c2",
     "/feuilleDeScore/icons/icon-72x72.png": "611c8503a3ac6f1cc77d5df4b0fc77f77ef62548",
     "/feuilleDeScore/icons/icon-96x96.png": "2e2ceb31f46854800ec5a3ade362ae733b90e7c2",
-    "/feuilleDeScore/index.html": "c1db370ceb924c6464505d22e355a2f65994f178",
-    "/feuilleDeScore/main-42VEXXIG.js": "12afa30bae0970b3941416cc485a2ae78bc6f2c8",
+    "/feuilleDeScore/index.html": "f0d65813f981a6a8643a39a72f9750031df706c5",
+    "/feuilleDeScore/main-SLHFUOIV.js": "9b6e6a1878889363ea286b579a8bdd1875317f95",
     "/feuilleDeScore/manifest.webmanifest": "e2fad806878bf59428071a4e703506980b5f1c31",
     "/feuilleDeScore/media/fa-brands-400-CNBICIQT.ttf": "7ce89c71d5a51ac65b159c71422783dd86529c66",
     "/feuilleDeScore/media/fa-brands-400-MDS4TU4L.woff2": "e948290773216dc1b50c2121314a8cf918c22b54",
