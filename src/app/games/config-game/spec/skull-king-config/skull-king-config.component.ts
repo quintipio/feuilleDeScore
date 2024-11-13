@@ -1,7 +1,7 @@
 import { CommonModule, JsonPipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-type SkullKingConf = {
+export type SkullKingConf = {
   rascalScore: boolean;
   rascalPoing: boolean;
   manche: number[];
@@ -42,6 +42,9 @@ export class SkullKingConfigComponent {
     const isChecked = (event.target as HTMLInputElement).checked;
     if (name === 'rascalScore') {
       this.isRascalScoreChecked = isChecked;
+      if(!isChecked){
+        this.isRascalScorePoingChecked = false;
+      }
     } else if (name === 'rascalScorePoing') {
       this.isRascalScorePoingChecked = isChecked;
     }
@@ -60,6 +63,7 @@ export class SkullKingConfigComponent {
     } else {
       this.checkedValues = this.checkedValues.filter(val => val !== value);
     }
+    this.checkedValues = this.checkedValues.sort((a, b) => a - b);
 
     this.isOkForSave = this.checkedValues.length > 0;
     if(this.isOkForSave){
@@ -72,8 +76,9 @@ export class SkullKingConfigComponent {
     const data: SkullKingConf = {
       rascalScore: this.isRascalScoreChecked,
       rascalPoing : this.isRascalScorePoingChecked,
-      manche : this.checkedValues
+      manche : this.checkedValues.sort((a, b) => a - b)
     }
+    console.log(data.manche);
     var retour = JSON.stringify(data);
     this.specificConfOut.emit(retour);
   }

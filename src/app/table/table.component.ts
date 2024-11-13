@@ -92,6 +92,7 @@ export class TableComponent {
       if(table){
         table.game = game;
         table.round = [];
+        table.specificData = "";
         this.tableService.updateTable(table).subscribe({
           next: () => {
             this.loadTables();

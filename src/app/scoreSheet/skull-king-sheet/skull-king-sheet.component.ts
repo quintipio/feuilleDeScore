@@ -6,7 +6,8 @@ import { CommonModule } from '@angular/common';
 import { WinnerComponent } from '../../components/winner/winner.component';
 import { User } from '../../models/user.model';
 import { InputScoreComponent } from '../../components/input-score/input-score.component';
-import { CountRoundRow, RoundRow } from '../../models/sheet';
+import { CountRoundRow, RoundRow, UserColumn } from '../../models/sheet';
+import { SkullKingConf } from '../../games/config-game/spec/skull-king-config/skull-king-config.component';
 
 
 
@@ -14,6 +15,7 @@ type skullKingPlayer = {
   user: User,
   pari: number,
   pliGagne: number,
+  poingferme: boolean,
   scoreManche: number,
   bonusAutre: number,
   bonusButin: number,
@@ -31,7 +33,7 @@ type SkullKingRound = {
 @Component({
   selector: 'app-skull-king-sheet',
   standalone: true,
-  imports: [CommonModule, InputScoreComponent],
+  imports: [CommonModule, InputScoreComponent, WinnerComponent],
   templateUrl: './skull-king-sheet.component.html',
   styleUrl: './skull-king-sheet.component.css'
 })
@@ -47,6 +49,11 @@ export class SkullKingSheetComponent {
   histoManche: { [id: string]: SkullKingRound } = {};
   numbers: number[] = [];
 
+  rascalScore = false;
+  rascalPoing = false;
+  mancheToPlay: number[] = [];
+  cursorMancheToPlay: number = 0;
+
   constructor(private route: ActivatedRoute, private router: Router) { }
 
 
@@ -58,13 +65,19 @@ export class SkullKingSheetComponent {
           next: (table: Table | undefined) => {
             if (table) {
               this.table = table;
+              this.loadSpecificConf(table.game!.specificConf);
               if (this.table?.specificData !== undefined && this.table.specificData !== "") {
+                console.log("Partie en cours");
                 this.histoManche = JSON.parse(this.table.specificData);
                 const maxId = Object.keys(this.histoManche).map(key => parseInt(key)).reduce((max, current) => (current > max ? current : max), -Infinity);
+                this.cursorMancheToPlay = this.mancheToPlay.indexOf(maxId);
+                this.cursorMancheToPlay = (this.cursorMancheToPlay === -1 ? 0 : this.cursorMancheToPlay)
                 this.openManche(maxId);
               } else {
-                this.histoManche[1] = this.newRound(1);
-                this.openManche(1);
+                console.log("Nouvelle partie");
+                this.cursorMancheToPlay = 0;
+                this.histoManche[this.mancheToPlay[this.cursorMancheToPlay]] = this.newRound(this.mancheToPlay[this.cursorMancheToPlay]);
+                this.openManche(this.mancheToPlay[this.cursorMancheToPlay]);
               }
             }
           },
@@ -76,7 +89,15 @@ export class SkullKingSheetComponent {
     });
   }
 
-  private newRound(manche : number) : SkullKingRound {
+  private loadSpecificConf(specificConf: string) {
+    const data = JSON.parse(specificConf) as SkullKingConf;
+    this.rascalScore = data.rascalScore;
+    this.rascalPoing = data.rascalPoing;
+    this.mancheToPlay = data.manche.sort((a, b) => a - b);
+
+  }
+
+  private newRound(manche: number): SkullKingRound {
     const newManche: SkullKingRound = {
       "manche": manche,
       "players": [],
@@ -86,6 +107,7 @@ export class SkullKingSheetComponent {
         user: userRow,
         pari: 0,
         pliGagne: 0,
+        poingferme: false,
         scoreManche: 0,
         bonusAutre: 0,
         bonusButin: 0,
@@ -123,31 +145,59 @@ export class SkullKingSheetComponent {
           input.reinit(player.bonusAutre)
         }
       });
+      this.calculerScoreManche(player);
     });
   }
 
   private calculerScoreManche(player: skullKingPlayer) {
     var newScore = 0;
-    if (player.pari > 0) {
+    if (this.rascalScore) {
       const dif = Math.abs(player.pari - player.pliGagne);
-      if (dif === 0) {
-        newScore = player.pliGagne * 20;
-        newScore += player.bonusAutre;
-        newScore += player.bonusButin * 20;
-        newScore += player.bonusSkullKing * 40;
-        newScore += player.bonusPirate * 20;
-        newScore += player.bonusSirene * 30;
-        newScore += player.bonusDix * 10;
-      } else {
-        newScore += dif * -10;
+      if (dif === 0 || dif === 1) {
+        var multiplicateur = (!this.rascalPoing || (this.rascalPoing && !player.poingferme) ? 10 : 15);
+        if (dif === 0 || (dif === 1 && !this.rascalPoing) ||  (dif === 1 && this.rascalPoing && !player.poingferme)) {
+          newScore = this.mancheEnCours!.manche * multiplicateur;
+          newScore += player.bonusAutre;
+          newScore += player.bonusButin * 20;
+          newScore += player.bonusSkullKing * 40;
+          newScore += player.bonusPirate * 20;
+          newScore += player.bonusSirene * 30;
+          newScore += player.bonusDix * 10;
+        }
+      }
+
+      if (dif === 1 && newScore !== 0) {
+        newScore = newScore / 2;
       }
     } else {
-      if (player.pari == player.pliGagne) {
-        newScore += this.mancheEnCours?.manche! * 10;
+      if (player.pari > 0) {
+        const dif = Math.abs(player.pari - player.pliGagne);
+        if (dif === 0) {
+          newScore = player.pliGagne * 20;
+          newScore += player.bonusAutre;
+          newScore += player.bonusButin * 20;
+          newScore += player.bonusSkullKing * 40;
+          newScore += player.bonusPirate * 20;
+          newScore += player.bonusSirene * 30;
+          newScore += player.bonusDix * 10;
+        } else {
+          newScore += dif * -10;
+        }
       } else {
-        newScore += this.mancheEnCours?.manche! * -10;
+        if (player.pari == player.pliGagne) {
+          newScore += this.mancheEnCours?.manche! * 10;
+          newScore += player.bonusAutre;
+          newScore += player.bonusButin * 20;
+          newScore += player.bonusSkullKing * 40;
+          newScore += player.bonusPirate * 20;
+          newScore += player.bonusSirene * 30;
+          newScore += player.bonusDix * 10;
+        } else {
+          newScore += this.mancheEnCours?.manche! * -10;
+        }
       }
     }
+
     player.scoreManche = newScore;
   }
 
@@ -197,12 +247,12 @@ export class SkullKingSheetComponent {
     return retour;
   }
 
-  getScoreTotal(playerToFind: skullKingPlayer) : number{
+  getScoreTotal(playerToFind: skullKingPlayer): number {
     let retour = 0;
     for (const key in this.histoManche) {
       if (this.histoManche.hasOwnProperty(key) && Number(key) < this.mancheEnCours!.manche) {
         this.histoManche[key].players.forEach((player) => {
-          if(player.user.id === playerToFind.user.id) {
+          if (player.user.id === playerToFind.user.id) {
             retour += player.scoreManche;
           }
         });
@@ -259,17 +309,70 @@ export class SkullKingSheetComponent {
     this.calculerScoreManche(player);
   }
 
+  changePoing(player: skullKingPlayer) {
+    player.poingferme = !player.poingferme
+    this.calculerScoreManche(player)
+  }
+
   mancheSuivante() {
     this.saveManche();
-    if(!this.histoManche.hasOwnProperty(this.mancheEnCours!.manche+1)) {
-      this.histoManche[this.mancheEnCours!.manche+1] = this.newRound(this.mancheEnCours!.manche+1);
+    this.cursorMancheToPlay = this.cursorMancheToPlay + 1;
+    var mancheToPlay = this.mancheToPlay[this.cursorMancheToPlay];
+    if (!this.histoManche.hasOwnProperty(mancheToPlay)) {
+      this.histoManche[mancheToPlay] = this.newRound(mancheToPlay);
     }
-    this.openManche(this.mancheEnCours!.manche+1);
+    this.openManche(mancheToPlay);
   }
 
   manchePrecedente() {
     this.saveManche();
-    this.openManche(this.mancheEnCours!.manche - 1);
+    this.cursorMancheToPlay = this.cursorMancheToPlay - 1;
+    var mancheToPlay = this.mancheToPlay[this.cursorMancheToPlay];
+    this.openManche(mancheToPlay);
   }
 
+  canGoBack(): boolean {
+    return this.cursorMancheToPlay > 0;
+  }
+
+  isFinish(): boolean {
+    return this.cursorMancheToPlay == this.mancheToPlay.length - 1;
+  }
+
+  openWinner() {
+    this.saveManche();
+    const userSums: { [userId: string]: { user: UserColumn, totalValue: number } } = {};
+
+    this.table!.round.forEach((roundRow) => {
+      roundRow.points.forEach((countRoundRow) => {
+        const userId = countRoundRow.user.user.id;
+        const value = countRoundRow.value;
+
+        if (userSums[userId]) {
+          userSums[userId].totalValue += value;
+        } else {
+          userSums[userId] = { user: countRoundRow.user, totalValue: value };
+        }
+      });
+    });
+
+    const winners: CountRoundRow[] = Object.keys(userSums).map(userId => ({
+      user: userSums[userId].user,
+      value: userSums[userId].totalValue
+    }));
+
+    if (this.table?.game?.scorePlusEleve) {
+      winners.sort((a, b) => b.value - a.value);
+    } else {
+      winners.sort((a, b) => a.value - b.value);
+    }
+    winners.forEach((winner, index) => {
+      winner.user.position = index + 1;
+    });
+    this.winnerComponent?.loadWinners(winners);
+  }
+
+  closeGame() {
+    this.router.navigate(["/tables"]);
+  }
 }
