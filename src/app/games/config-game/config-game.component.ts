@@ -38,6 +38,7 @@ export class ConfigGameComponent {
     this.gameReceived = {
       id: 0,
       name: '',
+      uuid: undefined,
       scorePlusEleve: true,
       scoreLimite: 0,
       mancheLimite: 0,
@@ -71,6 +72,7 @@ export class ConfigGameComponent {
   validateFormGame(): void {
       const gameToSend : Game = {
         id: this.gameReceived!.id,
+        uuid: this.gameReceived?.uuid,
         name: '',
         scorePlusEleve: this.editGameConditionWinScoreEleve,
         scoreLimite: 0,
