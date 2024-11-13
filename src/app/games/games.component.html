@@ -13,9 +13,13 @@
 </div>
 
 <div class="row">
-  @for(game of games; track game.id) {
-  <div [ngClass]="isSelectGame(game.id) ? 'gameElementSelected' : 'gameElement'" (click)="selectGame(game.id)">
-    {{game.name}}</div>
+  @for (game of games; track game.id) {
+    <div [ngClass]="isSelectGame(game.id) ? 'gameElementSelected' : 'gameElement'" (click)="selectGame(game.id)">
+      <div class="image-container">
+        <img [src]="game.uuid ? '/rsc/' + game.uuid + '.png' : '/rsc/generic.png'" alt="{{ game.name }}" class="game-image">
+      </div>
+      <div class="game-title">{{ game.name }}</div>
+    </div>
   }
 </div>
 

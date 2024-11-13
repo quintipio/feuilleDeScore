@@ -2,6 +2,33 @@
   width: 100%;
 }
 
+.table-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.image-container {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px; /* Ajoute un peu d'espace entre l'image et le texte */
+}
+
+.game-image {
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+  object-fit: contain;
+}
+
+.table-info {
+  flex: 1;
+}
+
 .table-title {
   font-size: 22px;
   font-weight: bold;
@@ -17,6 +44,7 @@
 .table-btn {
   display: flex;
   gap: 10px;
+  margin-top:15px;
   justify-content: flex-start;
 }
 
