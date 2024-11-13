@@ -7,15 +7,17 @@ import { InputPadComponent } from '../../components/input-pad/input-pad.componen
 import { WinnerComponent } from '../../components/winner/winner.component';
 import { SheetComponent } from '../../components/sheet/sheet.component';
 import { CountRoundRow, RoundRow, UserColumn } from '../../models/sheet';
+import { FormsModule } from '@angular/forms';
+import { User } from '../../models/user.model';
 
 @Component({
-  selector: 'app-generic-sheet',
+  selector: 'app-qwirkle-sheet',
   standalone: true,
-  imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent,SheetComponent],
-  templateUrl: './generic-sheet.component.html',
-  styleUrl: './generic-sheet.component.css'
+  imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent,SheetComponent, FormsModule],
+  templateUrl: './qwirkle-sheet.component.html',
+  styleUrl: './qwirkle-sheet.component.css'
 })
-export class GenericSheetComponent {
+export class QwirkleSheetComponent {
 
   @ViewChild(WinnerComponent) winnerComponent: WinnerComponent | undefined;
   @ViewChild(SheetComponent) sheetComponent: SheetComponent | undefined;
@@ -27,8 +29,10 @@ export class GenericSheetComponent {
 
   table: Table | undefined;
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  selectedUser: User | null = null;
 
+
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -56,6 +60,13 @@ export class GenericSheetComponent {
     }
   }
 
+  onOkClick() {
+    if (this.selectedUser) {
+     this.sheetComponent?.openWinner();
+    }
+  }
+
+
   saveRoundInDb(round : RoundRow[]){
     this.tableService.updateRound(this.table!.id, round).subscribe({
       next: () => {
@@ -64,25 +75,8 @@ export class GenericSheetComponent {
     });
   }
 
-
   checkEndingGame(round:RoundRow[], users:UserColumn[]) {
-    const maxRowValue = Math.max(...round.map(r => r.row));
-    if (this.table?.game?.mancheLimite && this.table?.game?.mancheLimite > 0 && maxRowValue >= this.table.game.mancheLimite) {
-      this.isEndingGame = true;
-      return;
-    }
-
-    if(this.table?.game?.scoreLimite && this.table?.game?.scoreLimite > 0){
-      for (const user of users) {
-        var score = this.getSum(round, user);
-        if(score >= this.table?.game?.scoreLimite){
-            this.isEndingGame = true;
-            return;
-        } else {
-          this.isEndingGame = false;
-        }
-      }
-    }
+    return;
   }
 
 
@@ -98,14 +92,13 @@ export class GenericSheetComponent {
     return totalValue;
   }
 
-
   openWinner(round:RoundRow[], users: UserColumn[]){
     const winners:CountRoundRow[] = [];
 
     for (const user of users) {
       const winner:CountRoundRow = {
         user: user,
-        value: this.getSum(round, user)
+        value: (user.user.id === this.selectedUser!.id)?this.getSum(round, user)+6:this.getSum(round, user)
       }
       winners.push(winner)
     }
@@ -118,6 +111,10 @@ export class GenericSheetComponent {
     winners.forEach((winner, index) => {
       winner.user.position = index + 1;
     });
+
+  winners.forEach((winner, index) => {
+    winner.user.position = index + 1;
+  });
     this.winnerComponent?.loadWinners(winners);
   }
 

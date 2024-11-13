@@ -30,7 +30,7 @@ export class GameService {
   addGame(game: Game): Observable<void> {
     return from(this.getHighestId()).pipe(
       switchMap((newId) => {
-        if(game.id !== 0){
+        if(game.id === 0){
           game.id = newId;
         }
         return from(this.indexedDbService.add("games", game));

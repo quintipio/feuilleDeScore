@@ -1,6 +1,6 @@
-import { Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Table } from '../../models/table.model';
-import { RouterLink, ActivatedRoute, Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { User } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
 import { InputPadComponent } from '../../components/input-pad/input-pad.component';

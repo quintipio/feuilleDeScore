@@ -10,7 +10,7 @@ import { GameService } from './service/games.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'feuilleScore-angular';
+  title = 'Feuille de score';
 
   private gameService = inject(GameService);
 
@@ -18,5 +18,13 @@ export class AppComponent {
     this.gameService.initializeGames()
       .then(() => console.log("Vérification et initialisation des jeux terminée."))
       .catch(error => console.error("Erreur lors de l'initialisation des jeux :", error));
+  }
+
+  ngAfterViewInit() {
+    // Masquer l'icône de chargement
+    const loadingSpinner = document.getElementById('loading-spinner');
+    if (loadingSpinner) {
+      loadingSpinner.style.display = 'none';
+    }
   }
 }

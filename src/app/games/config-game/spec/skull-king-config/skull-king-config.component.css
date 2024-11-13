@@ -1,0 +1,14 @@
+.section-spacing {
+  margin-top: 20px;
+}
+
+.tabulation{
+  padding-left : 50px;
+}
+
+.container {
+  max-width: 500px;
+}
+.errorMessage {
+  color:red;
+}

@@ -42,21 +42,39 @@
   background-color: rgb(194, 102, 194);
   border-radius: 10px;
   color: white;
-}
-
-
-.gameElement {
+}.gameElement, .gameElementSelected {
   width: 100px;
-  height: 100px;
-  background-color: seagreen;
   margin: 15px;
+  text-align: center;
 }
 
 .gameElementSelected {
-  width: 100px;
-  height: 100px;
-  background-color: seagreen;
-  margin: 15px;
   border: 4px solid black;
 }
+
+.image-container {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-image {
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+  padding-right: 35px;;
+  object-fit: contain;
+}
+
+.game-title {
+  margin-top: 5px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+}
+
+
+
 
