@@ -22,7 +22,7 @@ export const GameExisting: Game[] = [
   { "id": 5,"uuid":"e21b6919-ea1a-42f1-9b3d-29a02540fc45", "name": "Sea salt and paper", "scorePlusEleve": true, "scoreLimite": 40, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "minJoueur": 2, "maxJoueur": 4, "sheet": "seaSaltAndPaper", "specificConf":"" },
   { "id": 6,"uuid":"e822ef82-8c68-478c-b5d8-874accb3105b", "name": "Skull King", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 10, "scoreNegatif": true, "canEdit": false, "minJoueur": 2, "maxJoueur": 10, "sheet": "skullKing", "specificConf":"{\"rascalScore\":false,\"rascalPoing\":false,\"manche\":[2,3,1,4,5,6,7,8,9,10]}"},
   { "id": 7,"uuid":"cf402827-850b-44ff-a7ed-c757c48b7539", "name": "Odin", "scorePlusEleve": false, "scoreLimite": 15, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "generic", "specificConf":"" },
-  { "id": 1,"uuid":"aa00ece5-d4e9-456e-be27-a96395079139", "name": "Qwirlkle", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "qwirkle", "specificConf":"" }
+  { "id": 8,"uuid":"aa00ece5-d4e9-456e-be27-a96395079139", "name": "Qwirlkle", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "qwirkle", "specificConf":"" }
 ]
 
 export function isGame(object: any): object is Game {
