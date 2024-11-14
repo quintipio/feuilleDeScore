@@ -61,8 +61,7 @@ export class ConfigGameComponent {
       this.gameForm.patchValue({ name: "", mancheLimite: "0", pointLimite: "0", scoreNegatif: false });
       this.editGameConditionWinScoreEleve = true;
     }
-
-
+    this.updateInputState();
   }
 
   changeConditionWin(scoreEleve: boolean) {
@@ -104,6 +103,19 @@ export class ConfigGameComponent {
 
 
   /** CONFIG SPECIFIQUE */
+  updateInputState() {
+    if (this.isInputBlock()) {
+      this.gameForm.get('pointLimite')!.disable();
+      this.gameForm.get('mancheLimite')!.disable();
+    } else {
+      this.gameForm.get('pointLimite')!.enable();
+      this.gameForm.get('mancheLimite')!.enable();
+    }
+  }
+  isInputBlock(){
+    return this.gameReceived?.sheet === 'skullKing' || this.gameReceived?.sheet === 'seaSaltAndPaper';
+  }
+
   getSpecificConf(specificConf : string){
     this.gameReceived!.specificConf = specificConf;
   }

@@ -2,6 +2,7 @@ import { CommonModule, JsonPipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export type SkullKingConf = {
+  alwaysScore: boolean;
   rascalScore: boolean;
   rascalPoing: boolean;
   manche: number[];
@@ -27,10 +28,12 @@ export class SkullKingConfigComponent {
   checkedValues: number[] = [];
   isRascalScoreChecked = false;
   isRascalScorePoingChecked = false;
+  isAlwaysScore = false;
 
   ngOnChanges(){
     if(this.specificConfIn !== undefined){
       const data = JSON.parse(this.specificConfIn) as SkullKingConf;
+      this.isAlwaysScore = data.alwaysScore;
       this.isRascalScoreChecked = data.rascalScore;
       this.isRascalScorePoingChecked = data.rascalPoing;
       this.checkedValues = data.manche;
@@ -47,6 +50,8 @@ export class SkullKingConfigComponent {
       }
     } else if (name === 'rascalScorePoing') {
       this.isRascalScorePoingChecked = isChecked;
+    } else if(name === 'alwaysScore') {
+      this.isAlwaysScore = isChecked;
     }
 
     if(this.isOkForSave){
@@ -74,6 +79,7 @@ export class SkullKingConfigComponent {
 
   generateSpecificConf(){
     const data: SkullKingConf = {
+      alwaysScore: this.isAlwaysScore,
       rascalScore: this.isRascalScoreChecked,
       rascalPoing : this.isRascalScorePoingChecked,
       manche : this.checkedValues.sort((a, b) => a - b)

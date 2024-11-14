@@ -49,6 +49,7 @@ export class SkullKingSheetComponent {
   histoManche: { [id: string]: SkullKingRound } = {};
   numbers: number[] = [];
 
+  alwaysScore = false;
   rascalScore = false;
   rascalPoing = false;
   mancheToPlay: number[] = [];
@@ -91,6 +92,7 @@ export class SkullKingSheetComponent {
 
   private loadSpecificConf(specificConf: string) {
     const data = JSON.parse(specificConf) as SkullKingConf;
+    this.alwaysScore = data.alwaysScore;
     this.rascalScore = data.rascalScore;
     this.rascalPoing = data.rascalPoing;
     this.mancheToPlay = data.manche.sort((a, b) => a - b);
@@ -182,6 +184,14 @@ export class SkullKingSheetComponent {
           newScore += player.bonusDix * 10;
         } else {
           newScore += dif * -10;
+          if(this.alwaysScore){
+            newScore += player.bonusAutre;
+            newScore += player.bonusButin * 20;
+            newScore += player.bonusSkullKing * 40;
+            newScore += player.bonusPirate * 20;
+            newScore += player.bonusSirene * 30;
+            newScore += player.bonusDix * 10;
+          }
         }
       } else {
         if (player.pari == player.pliGagne) {
@@ -194,6 +204,14 @@ export class SkullKingSheetComponent {
           newScore += player.bonusDix * 10;
         } else {
           newScore += this.mancheEnCours?.manche! * -10;
+          if(this.alwaysScore){
+            newScore += player.bonusAutre;
+            newScore += player.bonusButin * 20;
+            newScore += player.bonusSkullKing * 40;
+            newScore += player.bonusPirate * 20;
+            newScore += player.bonusSirene * 30;
+            newScore += player.bonusDix * 10;
+          }
         }
       }
     }

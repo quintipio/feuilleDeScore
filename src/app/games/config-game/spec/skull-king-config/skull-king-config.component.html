@@ -1,4 +1,11 @@
 <div class="form-group checkbox-group  section-spacing">
+  <label for="alwaysScore">
+    <input type="checkbox" name="alwaysScore" [checked]="isAlwaysScore" (change)="onCheckboxModeScoringChange('alwaysScore', $event)" />
+    Toujours compter les points bonus (ne fonctionne pas en mode Rascal)
+  </label>
+</div>
+
+<div class="form-group checkbox-group  section-spacing">
   <label for="rascalScore">
     <input type="checkbox" name="rascalScore" [checked]="isRascalScoreChecked" (change)="onCheckboxModeScoringChange('rascalScore', $event)" />
     Variante de score de Rascal
