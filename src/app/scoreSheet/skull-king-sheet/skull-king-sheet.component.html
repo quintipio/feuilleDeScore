@@ -6,7 +6,7 @@
 <div class="d-flex justify-content-between mt-4">
   <button class="btn btn-navigate" [disabled]="!canGoBack()" (click)="manchePrecedente()"><i class="fa-solid fa-arrow-left"></i></button>
   <button class="btn btn-navigate" (click)="mancheSuivante()" *ngIf="!isFinish()"><i class="fa-solid fa-arrow-right"></i></button>
-  <button class="btn btn-navigate" (click)="openWinner()" *ngIf="isFinish()"><i class="fa-solid fa-skull-crossbones" data-bs-toggle="modal" data-bs-target="#winnerModal"></i></button>
+  <button class="btn btn-navigate" (click)="openWinner()" *ngIf="isFinish()" data-bs-toggle="modal" data-bs-target="#winnerModal"><i class="fa-solid fa-skull-crossbones" ></i></button>
 </div>
 
 

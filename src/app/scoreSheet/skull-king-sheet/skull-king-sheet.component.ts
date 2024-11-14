@@ -379,11 +379,7 @@ export class SkullKingSheetComponent {
       value: userSums[userId].totalValue
     }));
 
-    if (this.table?.game?.scorePlusEleve) {
-      winners.sort((a, b) => b.value - a.value);
-    } else {
-      winners.sort((a, b) => a.value - b.value);
-    }
+    winners.sort((a, b) => b.value - a.value);
     winners.forEach((winner, index) => {
       winner.user.position = index + 1;
     });

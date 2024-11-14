@@ -6,6 +6,7 @@ import { MilleSabordSheetComponent } from './scoreSheet/mille-sabord-sheet/mille
 import { SeaSaltAndPaperSheetComponent } from './scoreSheet/sea-salt-and-paper-sheet/sea-salt-and-paper-sheet.component';
 import { SkullKingSheetComponent } from './scoreSheet/skull-king-sheet/skull-king-sheet.component';
 import { QwirkleSheetComponent } from './scoreSheet/qwirkle-sheet/qwirkle-sheet.component';
+import { PixiesSheetComponent } from './scoreSheet/pixies-sheet/pixies-sheet.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/tables', pathMatch: 'full' },
@@ -43,5 +44,10 @@ export const routes: Routes = [
     path: 'sheet/skullKing',
     title: 'Skull King',
     component: SkullKingSheetComponent,
+  },
+  {
+    path: 'sheet/pixies',
+    title: 'Pixies',
+    component: PixiesSheetComponent,
   },
 ];

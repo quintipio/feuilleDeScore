@@ -1,0 +1,122 @@
+/* Encadré "Score total" */
+.score-card {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #eaf7ea;
+  border-radius: 15px;
+}
+
+.score-card h2 {
+  text-align: center;
+  color: #4d7a4d;
+  font-weight: bold;
+}
+
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+.player-name {
+  color: #2e5d2e;
+  font-weight: 500;
+}
+
+.player-score {
+  color: #4d7a4d;
+}
+
+/* Bouton "Manche suivante" et titre "Manche 1" */
+.round-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.round-container p {
+  margin-bottom: 10px;
+  color: #4d7a4d;
+}
+
+.next-round-btn {
+  background-color: #6b8f6b;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
+/* Encadré "Joueur 1" avec détails */
+.player-details-card {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #eaf7ea;
+  border-radius: 15px;
+}
+
+.player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.player-header h3 {
+  color: #4d7a4d;
+}
+
+.player-score-circle {
+  width: 40px;
+  height: 40px;
+  background-color: #ffa726;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Stats joueur */
+.player-stats {
+  margin-top: 15px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+.stat-row input {
+  width: 60px;
+  border: 1px solid #b2b2b2;
+  border-radius: 5px;
+  padding: 2px 5px;
+}
+
+/* Texte "Carte validées" */
+.validated-cards-text {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Grille des boutons */
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.button-grid button {
+  background-color: #8db38d;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 16px;
+}
+
+.btn-selected {
+  background-color: grey !important;
+  color: white !important;
+}
