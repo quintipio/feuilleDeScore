@@ -16,6 +16,11 @@ export interface CarteChateauCombo {
   providedIn: 'root',
 })
 export class CarteService {
+
+  loadCartes(): { [key: string]: CarteChateauCombo } {
+    return this.cartesJson as { [key: string]: CarteChateauCombo };
+  }
+
   private cartesJson = {
     "Bouffon": {
       "bouclier": ["bleu"],
@@ -875,8 +880,4 @@ export class CarteService {
       "conditionGagneElement": ["violet"]
     }
   };
-
-  loadCartes(): { [key: string]: CarteChateauCombo } {
-    return this.cartesJson as { [key: string]: CarteChateauCombo };
-  }
 }

@@ -31,10 +31,17 @@
   padding: 0 10px;
 }
 
+.scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .info-table {
   width: 100%;
   border-collapse: collapse;
   margin: 15px 0;
+  min-width: 400px;
 }
 
 .info-table td {
@@ -91,4 +98,23 @@ label {
 
 .title{
   font-weight: bolder;
+}
+
+
+
+.suggestions {
+  background-color: #f0f0f0;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+}
+.suggestions p {
+  margin: 5px 0;
+  padding: 5px;
+  cursor: pointer;
+}
+.suggestions p:hover {
+  background-color: #e0e0e0;
 }

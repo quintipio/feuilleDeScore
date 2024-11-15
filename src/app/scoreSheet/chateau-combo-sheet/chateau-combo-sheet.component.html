@@ -1,5 +1,4 @@
 <div class="medieval-theme">
-  <!-- Première Div -->
   <div class="rounded-box scores-container">
     <h2 class="title">Scores</h2>
     @for(joueur of joueurs ; track joueur.user.id) {
@@ -14,25 +13,35 @@
     }
   </div>
 
-  <!-- Deuxième Div -->
-  <div class="rounded-box player-info-container">
+  <div class="rounded-box player-info-container scroll-container">
     <h3 class="title">{{ joueurEnCours?.user?.name}}</h3>
     <table class="info-table">
       <tr>
         <td>
-          <input type="text" placeholder="Nom de la carte">
-          <label for="piece0_0">Pièces</label>
+          <div>
+            <input type="text" [formControl]="typeaheadA" placeholder="Nom de la carte" (input)="suggest('A')">
+            <div class="suggestions" *ngIf="suggestionsA.length">
+              <p *ngFor="let s of suggestionsA" (click)="getNomCarte(s,'A')">{{s}}</p>
+            </div>
+            <label for="piece0_0">Pièces</label>
+          </div>
           <app-input-score name="piece0_0" [min]="0" [max]="9"></app-input-score>
           <div class="circle">{{ joueurEnCours?.plateau?.[0]?.[0]?.score}}</div>
         </td>
         <td>
-          <input type="text" placeholder="Nom de la carte">
+          <input type="text" [formControl]="typeaheadB" placeholder="Nom de la carte" (input)="suggest('B')">
+            <div class="suggestions" *ngIf="suggestionsB.length">
+              <p *ngFor="let s of suggestionsB" (click)="getNomCarte(s,'B')">{{s}}</p>
+            </div>
           <label for="piece0_1">Pièces</label>
           <app-input-score name="piece0_1" [min]="0" [max]="9"></app-input-score>
           <div class="circle">{{ joueurEnCours?.plateau?.[0]?.[1]?.score}}</div>
         </td>
         <td>
-          <input type="text" placeholder="Nom de la carte">
+          <input type="text" [formControl]="typeaheadC" placeholder="Nom de la carte" (input)="suggest('C')">
+          <div class="suggestions" *ngIf="suggestionsC.length">
+            <p *ngFor="let s of suggestionsC" (click)="getNomCarte(s,'C')">{{s}}</p>
+          </div>
           <label for="piece0_2">Pièces</label>
           <app-input-score name="piece0_2" [min]="0" [max]="9"></app-input-score>
           <div class="circle">{{ joueurEnCours?.plateau?.[0]?.[2]?.score}}</div>
@@ -40,19 +49,28 @@
       </tr>
       <tr>
         <td>
-          <input type="text" placeholder="Nom de la carte">
+          <input type="text" [formControl]="typeaheadD" placeholder="Nom de la carte" (input)="suggest('D')">
+            <div class="suggestions" *ngIf="suggestionsD.length">
+              <p *ngFor="let s of suggestionsD" (click)="getNomCarte(s,'D')">{{s}}</p>
+            </div>
           <label for="piece1_1">Pièces</label>
           <app-input-score name="piece1_0" [min]="0" [max]="9"></app-input-score>
           <div class="circle">{{ joueurEnCours?.plateau?.[1]?.[0]?.score}}</div>
         </td>
         <td>
-          <input type="text" placeholder="Nom de la carte">
+          <input type="text" [formControl]="typeaheadE" placeholder="Nom de la carte" (input)="suggest('E')">
+            <div class="suggestions" *ngIf="suggestionsE.length">
+              <p *ngFor="let s of suggestionsE" (click)="getNomCarte(s,'E')">{{s}}</p>
+            </div>
           <label for="piece1_1">Pièces</label>
           <app-input-score name="piece1_1" [min]="0" [max]="9"></app-input-score>
           <div class="circle">{{ joueurEnCours?.plateau?.[1]?.[1]?.score}}</div>
         </td>
         <td>
-          <input type="text" placeholder="Nom de la carte">
+          <input type="text" [formControl]="typeaheadF" placeholder="Nom de la carte" (input)="suggest('F')">
+            <div class="suggestions" *ngIf="suggestionsF.length">
+              <p *ngFor="let s of suggestionsF" (click)="getNomCarte(s,'F')">{{s}}</p>
+            </div>
           <label for="piece1_2">Pièces</label>
           <app-input-score name="piece1_2" [min]="0" [max]="9"></app-input-score>
           <div class="circle">{{ joueurEnCours?.plateau?.[1]?.[2]?.score}}</div>
@@ -60,19 +78,28 @@
       </tr>
       <tr>
         <td>
-          <input type="text" placeholder="Nom de la carte">
+          <input type="text" [formControl]="typeaheadG" placeholder="Nom de la carte" (input)="suggest('G')">
+            <div class="suggestions" *ngIf="suggestionsG.length">
+              <p *ngFor="let s of suggestionsG" (click)="getNomCarte(s,'G')">{{s}}</p>
+            </div>
           <label for="piece2_0">Pièces</label>
           <app-input-score name="piece2_0" [min]="0" [max]="9"></app-input-score>
           <div class="circle">{{ joueurEnCours?.plateau?.[2]?.[0]?.score}}</div>
         </td>
         <td>
-          <input type="text" placeholder="Nom de la carte">
+          <input type="text" [formControl]="typeaheadH" placeholder="Nom de la carte" (input)="suggest('H')">
+            <div class="suggestions" *ngIf="suggestionsH.length">
+              <p *ngFor="let s of suggestionsH" (click)="getNomCarte(s,'H')">{{s}}</p>
+            </div>
           <label for="piece2_1">Pièces</label>
           <app-input-score name="piece2_1" [min]="0" [max]="9"></app-input-score>
           <div class="circle">{{ joueurEnCours?.plateau?.[2]?.[1]?.score}}</div>
         </td>
         <td>
-          <input type="text" placeholder="Nom de la carte">
+          <input type="text" [formControl]="typeaheadI" placeholder="Nom de la carte" (input)="suggest('I')">
+            <div class="suggestions" *ngIf="suggestionsI.length">
+              <p *ngFor="let s of suggestionsI" (click)="getNomCarte(s,'I')">{{s}}</p>
+            </div>
           <label for="piece2_2">Pièces</label>
           <app-input-score name="piece2_2" [min]="0" [max]="9"></app-input-score>
           <div class="circle">{{ joueurEnCours?.plateau?.[2]?.[2]?.score}}</div>
