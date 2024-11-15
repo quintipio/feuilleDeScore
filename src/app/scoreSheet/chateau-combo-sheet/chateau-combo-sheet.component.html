@@ -1,0 +1,84 @@
+<div class="medieval-theme">
+  <!-- Première Div -->
+  <div class="rounded-box scores-container">
+    <h2 class="title">Scores</h2>
+    @for(joueur of joueurs ; track joueur.user.id) {
+    <div class="row">
+      <div class="col">
+        <p><strong>{{ joueur.user.name }}</strong></p>
+      </div>
+      <div class="col">
+        <p>{{ joueur.scoreTotal }}</p>
+      </div>
+    </div>
+    }
+  </div>
+
+  <!-- Deuxième Div -->
+  <div class="rounded-box player-info-container">
+    <h3 class="title">{{ joueurEnCours?.user?.name}}</h3>
+    <table class="info-table">
+      <tr>
+        <td>
+          <input type="text" placeholder="Nom de la carte">
+          <label for="piece0_0">Pièces</label>
+          <app-input-score name="piece0_0" [min]="0" [max]="9"></app-input-score>
+          <div class="circle">{{ joueurEnCours?.plateau?.[0]?.[0]?.score}}</div>
+        </td>
+        <td>
+          <input type="text" placeholder="Nom de la carte">
+          <label for="piece0_1">Pièces</label>
+          <app-input-score name="piece0_1" [min]="0" [max]="9"></app-input-score>
+          <div class="circle">{{ joueurEnCours?.plateau?.[0]?.[1]?.score}}</div>
+        </td>
+        <td>
+          <input type="text" placeholder="Nom de la carte">
+          <label for="piece0_2">Pièces</label>
+          <app-input-score name="piece0_2" [min]="0" [max]="9"></app-input-score>
+          <div class="circle">{{ joueurEnCours?.plateau?.[0]?.[2]?.score}}</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="text" placeholder="Nom de la carte">
+          <label for="piece1_1">Pièces</label>
+          <app-input-score name="piece1_0" [min]="0" [max]="9"></app-input-score>
+          <div class="circle">{{ joueurEnCours?.plateau?.[1]?.[0]?.score}}</div>
+        </td>
+        <td>
+          <input type="text" placeholder="Nom de la carte">
+          <label for="piece1_1">Pièces</label>
+          <app-input-score name="piece1_1" [min]="0" [max]="9"></app-input-score>
+          <div class="circle">{{ joueurEnCours?.plateau?.[1]?.[1]?.score}}</div>
+        </td>
+        <td>
+          <input type="text" placeholder="Nom de la carte">
+          <label for="piece1_2">Pièces</label>
+          <app-input-score name="piece1_2" [min]="0" [max]="9"></app-input-score>
+          <div class="circle">{{ joueurEnCours?.plateau?.[1]?.[2]?.score}}</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="text" placeholder="Nom de la carte">
+          <label for="piece2_0">Pièces</label>
+          <app-input-score name="piece2_0" [min]="0" [max]="9"></app-input-score>
+          <div class="circle">{{ joueurEnCours?.plateau?.[2]?.[0]?.score}}</div>
+        </td>
+        <td>
+          <input type="text" placeholder="Nom de la carte">
+          <label for="piece2_1">Pièces</label>
+          <app-input-score name="piece2_1" [min]="0" [max]="9"></app-input-score>
+          <div class="circle">{{ joueurEnCours?.plateau?.[2]?.[1]?.score}}</div>
+        </td>
+        <td>
+          <input type="text" placeholder="Nom de la carte">
+          <label for="piece2_2">Pièces</label>
+          <app-input-score name="piece2_2" [min]="0" [max]="9"></app-input-score>
+          <div class="circle">{{ joueurEnCours?.plateau?.[2]?.[2]?.score}}</div>
+        </td>
+      </tr>
+    </table>
+    <button class="action-button">Calculer et passer au joueur suivant</button>
+  </div>
+</div>
