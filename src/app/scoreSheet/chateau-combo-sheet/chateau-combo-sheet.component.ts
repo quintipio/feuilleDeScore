@@ -9,6 +9,7 @@ import { User } from '../../models/user.model';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AutocompleteComponent } from '../../components/autocomplete/autocomplete.component';
+import { CountRoundRow, RoundRow } from '../../models/sheet';
 
 type CartePlateau = {
   carte: CarteChateauCombo | undefined,
@@ -34,15 +35,16 @@ type ChateauComboJoueur = {
 export class ChateauComboSheetComponent {
   @ViewChild(WinnerComponent) winnerComponent: WinnerComponent | undefined;
   @ViewChildren(InputScoreComponent) inputScores: QueryList<InputScoreComponent> | undefined;
+  @ViewChildren(AutocompleteComponent) autoCompletes: QueryList<AutocompleteComponent> | undefined;
 
   private tableService = inject(TableService);
+  listeCartes: string[] = [];
 
   cartes!: { [key: string]: CarteChateauCombo };
   table: Table | undefined;
   joueurs: ChateauComboJoueur[] = [];
   joueurEnCours: ChateauComboJoueur | undefined;
 
-  listeCartes: string[] = [];
 
   constructor(private carteService: CarteService, private route: ActivatedRoute, private router: Router) {
   }
@@ -59,6 +61,8 @@ export class ChateauComboSheetComponent {
               this.table = table;
               if (this.table?.specificData !== undefined && this.table.specificData !== "") {
                 console.log("Partie en cours");
+                this.joueurs = JSON.parse(this.table.specificData);
+                this.ouvrirPlateau(this.joueurs[0]);
               } else {
                 console.log("Nouvelle partie");
                 this.table.users.forEach((user) => {
@@ -79,35 +83,22 @@ export class ChateauComboSheetComponent {
 
   autoCompleteEvent(newCard: string, nameElement: string) {
     const carte = this.cartes[newCard];
-    switch (nameElement) {
-      case "0_0":
-        this.joueurEnCours!.plateau[0][0].carte = carte;
-        break;
-      case "0_1":
-        this.joueurEnCours!.plateau[0][1].carte = carte;
-        break;
-      case "0_2":
-        this.joueurEnCours!.plateau[0][2].carte = carte;
-        break;
-      case "1_0":
-        this.joueurEnCours!.plateau[1][0].carte = carte;
-        break;
-      case "1_1":
-        this.joueurEnCours!.plateau[1][1].carte = carte;
-        break;
-      case "1_2":
-        this.joueurEnCours!.plateau[1][2].carte = carte;
-        break;
-      case "2_0":
-        this.joueurEnCours!.plateau[2][0].carte = carte;
-        break;
-      case "2_1":
-        this.joueurEnCours!.plateau[2][1].carte = carte;
-        break;
-      case "2_2":
-        this.joueurEnCours!.plateau[2][2].carte = carte;
-        break;
-    }
+    let [i, j] = nameElement.split("_").map(Number);
+    this.joueurEnCours!.plateau[i][j].carte = carte;
+    this.joueurEnCours!.plateau[i][j].nomCarte = newCard;
+    this.joueurEnCours!.plateau[i][j].score += 1;
+    this.joueurEnCours!.plateau[i][j].nbPieces = 0;
+    const input = this.inputScores?.find(input => input.name === "piece_"+i+"_"+j);
+    input?.reinit(this.joueurEnCours!.plateau[i][j].nbPieces);
+  }
+
+  changePieceEvent(numberPiece : number,nameElement:string){
+    let [i, j] = nameElement.split("_").map(Number);
+    this.joueurEnCours!.plateau[i][j].nbPieces = numberPiece;
+  }
+
+  changeCleEvent(nbCles :number){
+    this.joueurEnCours!.cle = nbCles;
   }
 
   maxValue(element: string[] | undefined): number | undefined {
@@ -117,11 +108,86 @@ export class ChateauComboSheetComponent {
     return undefined;
   }
 
-  ouvrirPlateau(plateau: ChateauComboJoueur) {
-    this.joueurEnCours = plateau;
+  ouvrirJoueurSuivant(){
+    const joueur = this.joueurs.find(joueur => joueur.scoreTotal === 0);
+    if(!joueur){
+      this.ouvrirJoueur(this.joueurs[0].user.id);
+    }
+    this.ouvrirJoueur(joueur?.user.id)
   }
 
-  genererNewPlateau(user: User): ChateauComboJoueur {
+  isJoueurWithZero() : boolean{
+    return this.joueurs.some(joueur => joueur.scoreTotal === 0);
+  }
+
+  ouvrirJoueur(idJoueur: number | undefined) {
+    this.calculerScoreTotalJoueur();
+    this.updateJoueurEnCoursAndSave();
+    const newJoueur = this.joueurs.find(joueur => joueur.user.id === idJoueur);
+    if (newJoueur) {
+      this.ouvrirPlateau(newJoueur);
+    }
+  }
+
+  private calculerScoreTotalJoueur() {
+    let somme = 0;
+    for (let i = 0; i < this.joueurEnCours!.plateau.length; i++) {
+      for (let j = 0; j < this.joueurEnCours!.plateau[i].length; j++) {
+        somme += this.joueurEnCours!.plateau[i][j].score;
+      }
+    }
+    this.joueurEnCours!.scoreTotal = somme;
+  }
+
+  private updateJoueurEnCoursAndSave() {
+    const index = this.joueurs.findIndex(joueur => joueur.user.id === this.joueurEnCours?.user.id);
+    if (index !== -1) {
+      this.joueurs[index] = { ...this.joueurEnCours! };
+    }
+
+    const roundRow: CountRoundRow[] = [];
+    this.joueurs.forEach(joueur => {
+      const player :CountRoundRow = {
+        user : {
+          position : 0,
+          user : joueur.user
+        },
+        value : joueur.scoreTotal
+      }
+      roundRow.push(player);
+    });
+
+    const round : RoundRow[] = [{
+      points : roundRow,
+      row : 1
+    }]
+
+    this.table!.specificData = JSON.stringify(this.joueurs);
+    this.table!.round = round;
+    this.tableService.updateTable(this.table!).subscribe({
+      next: () => {
+      },
+      error: (error) => {
+        console.error("Error update table:", error);
+      }
+    });
+  }
+
+  private ouvrirPlateau(plateau: ChateauComboJoueur) {
+    this.joueurEnCours = plateau;
+    const inputCle = this.inputScores?.find(input => input.name === "inputCles");
+    inputCle?.reinit(this.joueurEnCours.cle);
+    for (let i = 0; i < this.joueurEnCours!.plateau.length; i++) {
+      for (let j = 0; j < this.joueurEnCours!.plateau[i].length; j++) {
+        const input = this.inputScores?.find(input => input.name === "piece_"+i+"_"+j);
+        input?.reinit(this.joueurEnCours!.plateau[i][j].nbPieces);
+        const autocomplete = this.autoCompletes?.find(autocomplete => autocomplete.name === "autocomplete_"+i+"_"+j);
+        autocomplete?.reinit(this.joueurEnCours!.plateau[i][j].nomCarte);
+      }
+    }
+  }
+
+  private genererNewPlateau(user: User): ChateauComboJoueur {
     const plateauCarte: CartePlateau[][] = Array.from({ length: 3 }, () =>
       Array.from({ length: 3 }, () => ({
         carte: undefined,

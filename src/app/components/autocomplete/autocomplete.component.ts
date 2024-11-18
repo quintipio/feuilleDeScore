@@ -41,4 +41,8 @@ export class AutocompleteComponent {
     this.suggestions = [];
     this.seletedElement.emit(element);
   }
+
+  reinit(value : string){
+    this.typeahead.setValue(value);
+  }
 }

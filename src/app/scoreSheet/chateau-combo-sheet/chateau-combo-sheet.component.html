@@ -4,7 +4,7 @@
     @for(joueur of joueurs ; track joueur.user.id) {
     <div class="row">
       <div class="col">
-        <button class="action-button">Voir</button>
+        <button class="action-button" (click)="ouvrirJoueur(joueur?.user?.id)">Voir</button>
       </div>
       <div class="col">
         <p><strong>{{ joueur.user.name }}</strong></p>
@@ -17,7 +17,9 @@
   </div>
 
   <div class="rounded-box player-info-container scroll-container">
-    <h3 class="title">{{ joueurEnCours?.user?.name}}</h3>
+    <h3 class="title">{{ joueurEnCours?.user?.name }}</h3>
+      <label for="nb_cles">Nombre de clés : </label>
+      <app-input-score name="inputCles" [min]="0" (valueChange)="changeCleEvent($event)" [initValue]="joueurEnCours?.cle"></app-input-score>
     <table class="info-table">
       <tr>
         <td>
@@ -25,7 +27,7 @@
             (seletedElement)="autoCompleteEvent($event,'0_0')"></app-autocomplete>
           <div *ngIf="joueurEnCours?.plateau?.[0]?.[0]?.carte?.conditionGagne === 'piece-bourse'">
             <label for="piece_0_0">Pièces</label>
-            <app-input-score name="piece_0_0" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[0]?.[0]?.carte?.conditionGagneElement)"></app-input-score>
+            <app-input-score name="piece_0_0" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[0]?.[0]?.carte?.conditionGagneElement)" (valueChange)="changePieceEvent($event,'0_0')" [initValue]="joueurEnCours?.plateau?.[0]?.[0]?.nbPieces"></app-input-score>
           </div>
           <div class="circle">{{ joueurEnCours?.plateau?.[0]?.[0]?.score}}</div>
         </td>
@@ -34,7 +36,7 @@
             (seletedElement)="autoCompleteEvent($event,'0_1')"></app-autocomplete>
           <div *ngIf="joueurEnCours?.plateau?.[0]?.[1]?.carte?.conditionGagne === 'piece-bourse'">
             <label for="piece_0_1">Pièces</label>
-            <app-input-score name="piece_0_1" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[0]?.[1]?.carte?.conditionGagneElement)"></app-input-score>
+            <app-input-score name="piece_0_1" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[0]?.[1]?.carte?.conditionGagneElement)" (valueChange)="changePieceEvent($event,'0_1')" [initValue]="joueurEnCours?.plateau?.[0]?.[1]?.nbPieces"></app-input-score>
           </div>
           <div class="circle">{{ joueurEnCours?.plateau?.[0]?.[1]?.score}}</div>
         </td>
@@ -43,7 +45,7 @@
             (seletedElement)="autoCompleteEvent($event,'0_2')"></app-autocomplete>
             <div *ngIf="joueurEnCours?.plateau?.[0]?.[2]?.carte?.conditionGagne === 'piece-bourse'">
               <label for="piece_0_2">Pièces</label>
-              <app-input-score name="piece_0_2" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[0]?.[2]?.carte?.conditionGagneElement)"></app-input-score>
+              <app-input-score name="piece_0_2" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[0]?.[2]?.carte?.conditionGagneElement)" (valueChange)="changePieceEvent($event,'0_2')" [initValue]="joueurEnCours?.plateau?.[0]?.[2]?.nbPieces"></app-input-score>
             </div>
           <div class="circle">{{ joueurEnCours?.plateau?.[0]?.[2]?.score}}</div>
         </td>
@@ -54,7 +56,7 @@
             (seletedElement)="autoCompleteEvent($event,'1_0')"></app-autocomplete>
             <div *ngIf="joueurEnCours?.plateau?.[1]?.[0]?.carte?.conditionGagne === 'piece-bourse'">
               <label for="piece_1_0">Pièces</label>
-              <app-input-score name="piece_1_0" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[1]?.[0]?.carte?.conditionGagneElement)"></app-input-score>
+              <app-input-score name="piece_1_0" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[1]?.[0]?.carte?.conditionGagneElement)" (valueChange)="changePieceEvent($event,'1_0')" [initValue]="joueurEnCours?.plateau?.[1]?.[0]?.nbPieces"></app-input-score>
             </div>
           <div class="circle">{{ joueurEnCours?.plateau?.[1]?.[0]?.score}}</div>
         </td>
@@ -63,7 +65,7 @@
             (seletedElement)="autoCompleteEvent($event,'1_1')"></app-autocomplete>
             <div *ngIf="joueurEnCours?.plateau?.[1]?.[1]?.carte?.conditionGagne === 'piece-bourse'">
               <label for="piece_1_1">Pièces</label>
-              <app-input-score name="piece_1_1" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[1]?.[1]?.carte?.conditionGagneElement)"></app-input-score>
+              <app-input-score name="piece_1_1" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[1]?.[1]?.carte?.conditionGagneElement)"  (valueChange)="changePieceEvent($event,'1_1')" [initValue]="joueurEnCours?.plateau?.[1]?.[1]?.nbPieces"></app-input-score>
             </div>
           <div class="circle">{{ joueurEnCours?.plateau?.[1]?.[1]?.score}}</div>
         </td>
@@ -72,7 +74,7 @@
             (seletedElement)="autoCompleteEvent($event,'1_2')"></app-autocomplete>
             <div *ngIf="joueurEnCours?.plateau?.[1]?.[2]?.carte?.conditionGagne === 'piece-bourse'">
               <label for="piece_1_2">Pièces</label>
-              <app-input-score name="piece_1_2" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[1]?.[2]?.carte?.conditionGagneElement)"></app-input-score>
+              <app-input-score name="piece_1_2" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[1]?.[2]?.carte?.conditionGagneElement)"  (valueChange)="changePieceEvent($event,'1_2')" [initValue]="joueurEnCours?.plateau?.[1]?.[2]?.nbPieces"></app-input-score>
             </div>
           <div class="circle">{{ joueurEnCours?.plateau?.[1]?.[2]?.score}}</div>
         </td>
@@ -83,7 +85,7 @@
             (seletedElement)="autoCompleteEvent($event,'2_0')"></app-autocomplete>
             <div *ngIf="joueurEnCours?.plateau?.[2]?.[0]?.carte?.conditionGagne === 'piece-bourse'">
               <label for="piece_2_0">Pièces</label>
-              <app-input-score name="piece_2_0" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[2]?.[0]?.carte?.conditionGagneElement)"></app-input-score>
+              <app-input-score name="piece_2_0" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[2]?.[0]?.carte?.conditionGagneElement)" (valueChange)="changePieceEvent($event,'2_0')" [initValue]="joueurEnCours?.plateau?.[2]?.[0]?.nbPieces"></app-input-score>
             </div>
           <div class="circle">{{ joueurEnCours?.plateau?.[2]?.[0]?.score}}</div>
         </td>
@@ -92,7 +94,7 @@
             (seletedElement)="autoCompleteEvent($event,'2_1')"></app-autocomplete>
             <div *ngIf="joueurEnCours?.plateau?.[2]?.[1]?.carte?.conditionGagne === 'piece-bourse'">
               <label for="piece_2_1">Pièces</label>
-              <app-input-score name="piece_2_1" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[2]?.[1]?.carte?.conditionGagneElement)"></app-input-score>
+              <app-input-score name="piece_2_1" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[2]?.[1]?.carte?.conditionGagneElement)" (valueChange)="changePieceEvent($event,'2_1')" [initValue]="joueurEnCours?.plateau?.[2]?.[1]?.nbPieces"></app-input-score>
             </div>
           <div class="circle">{{ joueurEnCours?.plateau?.[2]?.[1]?.score}}</div>
         </td>
@@ -101,12 +103,12 @@
             (seletedElement)="autoCompleteEvent($event,'2_2')"></app-autocomplete>
             <div *ngIf="joueurEnCours?.plateau?.[2]?.[2]?.carte?.conditionGagne === 'piece-bourse'">
               <label for="piece_2_2">Pièces</label>
-              <app-input-score name="piece_2_2" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[2]?.[2]?.carte?.conditionGagneElement)"></app-input-score>
+              <app-input-score name="piece_2_2" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[2]?.[2]?.carte?.conditionGagneElement)" (valueChange)="changePieceEvent($event,'2_2')" [initValue]="joueurEnCours?.plateau?.[2]?.[2]?.nbPieces"></app-input-score>
             </div>
           <div class="circle">{{ joueurEnCours?.plateau?.[2]?.[2]?.score}}</div>
         </td>
       </tr>
     </table>
-    <button class="action-button">Calculer et passer au joueur suivant</button>
+    <button class="action-button" (click)="ouvrirJoueurSuivant()" *ngIf="isJoueurWithZero()">Calculer et passer au joueur suivant</button>
   </div>
 </div>
