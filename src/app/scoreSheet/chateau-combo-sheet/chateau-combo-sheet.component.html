@@ -110,5 +110,14 @@
       </tr>
     </table>
     <button class="action-button" (click)="ouvrirJoueurSuivant()" *ngIf="isJoueurWithZero()">Calculer et passer au joueur suivant</button>
+    <button class="action-button" (click)="ouvrirJoueurSuivant()" *ngIf="!isJoueurWithZero()" data-bs-toggle="modal" data-bs-target="#winnerModal" (click)="openWinner()">Score final</button>
+  </div>
+</div>
+
+<div class="modal fade" id="winnerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <app-winner  (outWindow)="closeGame()"></app-winner>
+    </div>
   </div>
 </div>

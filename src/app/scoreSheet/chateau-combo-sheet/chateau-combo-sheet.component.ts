@@ -81,53 +81,7 @@ export class ChateauComboSheetComponent {
     });
   }
 
-  autoCompleteEvent(newCard: string, nameElement: string) {
-    const carte = this.cartes[newCard];
-    let [i, j] = nameElement.split("_").map(Number);
-    this.joueurEnCours!.plateau[i][j].carte = carte;
-    this.joueurEnCours!.plateau[i][j].nomCarte = newCard;
-    this.joueurEnCours!.plateau[i][j].score += 1;
-    this.joueurEnCours!.plateau[i][j].nbPieces = 0;
-    const input = this.inputScores?.find(input => input.name === "piece_"+i+"_"+j);
-    input?.reinit(this.joueurEnCours!.plateau[i][j].nbPieces);
-  }
 
-  changePieceEvent(numberPiece : number,nameElement:string){
-    let [i, j] = nameElement.split("_").map(Number);
-    this.joueurEnCours!.plateau[i][j].nbPieces = numberPiece;
-  }
-
-  changeCleEvent(nbCles :number){
-    this.joueurEnCours!.cle = nbCles;
-  }
-
-  maxValue(element: string[] | undefined): number | undefined {
-    if (element && element.length > 0) {
-      return Number(element[0]);
-    }
-    return undefined;
-  }
-
-  ouvrirJoueurSuivant(){
-    const joueur = this.joueurs.find(joueur => joueur.scoreTotal === 0);
-    if(!joueur){
-      this.ouvrirJoueur(this.joueurs[0].user.id);
-    }
-    this.ouvrirJoueur(joueur?.user.id)
-  }
-
-  isJoueurWithZero() : boolean{
-    return this.joueurs.some(joueur => joueur.scoreTotal === 0);
-  }
-
-  ouvrirJoueur(idJoueur: number | undefined) {
-    this.calculerScoreTotalJoueur();
-    this.updateJoueurEnCoursAndSave();
-    const newJoueur = this.joueurs.find(joueur => joueur.user.id === idJoueur);
-    if (newJoueur) {
-      this.ouvrirPlateau(newJoueur);
-    }
-  }
 
   private calculerScoreTotalJoueur() {
     let somme = 0;
@@ -204,6 +158,78 @@ export class ChateauComboSheetComponent {
     }
     return newPlateau;
 
+  }
+
+  autoCompleteEvent(newCard: string, nameElement: string) {
+    const carte = this.cartes[newCard];
+    let [i, j] = nameElement.split("_").map(Number);
+    this.joueurEnCours!.plateau[i][j].carte = carte;
+    this.joueurEnCours!.plateau[i][j].nomCarte = newCard;
+    this.joueurEnCours!.plateau[i][j].score += 1;
+    this.joueurEnCours!.plateau[i][j].nbPieces = 0;
+    const input = this.inputScores?.find(input => input.name === "piece_"+i+"_"+j);
+    input?.reinit(this.joueurEnCours!.plateau[i][j].nbPieces);
+  }
+
+  changePieceEvent(numberPiece : number,nameElement:string){
+    let [i, j] = nameElement.split("_").map(Number);
+    this.joueurEnCours!.plateau[i][j].nbPieces = numberPiece;
+  }
+
+  changeCleEvent(nbCles :number){
+    this.joueurEnCours!.cle = nbCles;
+  }
+
+  maxValue(element: string[] | undefined): number | undefined {
+    if (element && element.length > 0) {
+      return Number(element[0]);
+    }
+    return undefined;
+  }
+
+  ouvrirJoueurSuivant(){
+    const joueur = this.joueurs.find(joueur => joueur.scoreTotal === 0);
+    if(!joueur){
+      this.ouvrirJoueur(this.joueurs[0].user.id);
+    }
+    this.ouvrirJoueur(joueur?.user.id)
+  }
+
+  isJoueurWithZero() : boolean{
+    return this.joueurs.some(joueur => joueur.scoreTotal === 0);
+  }
+
+  ouvrirJoueur(idJoueur: number | undefined) {
+    this.calculerScoreTotalJoueur();
+    this.updateJoueurEnCoursAndSave();
+    const newJoueur = this.joueurs.find(joueur => joueur.user.id === idJoueur);
+    if (newJoueur) {
+      this.ouvrirPlateau(newJoueur);
+    }
+  }
+
+  openWinner() {
+    this.updateJoueurEnCoursAndSave();
+    const winners: CountRoundRow[] = this.table!.round[0].points;
+
+    winners.sort((a, b) => b.value - a.value);
+    winners.forEach((winner, index) => {
+      winner.user.position = index + 1;
+    });
+    this.winnerComponent?.loadWinners(winners);
+  }
+
+  closeGame() {
+    this.table!.specificData = "";
+    this.table!.round = [];
+    this.tableService.updateTable(this.table!).subscribe({
+      next: () => {
+        this.router.navigate(["/tables"]);
+      },
+      error: (error) => {
+        console.error("Error update table:", error);
+      }
+    });
   }
 
 }
