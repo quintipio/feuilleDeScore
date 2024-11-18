@@ -59,6 +59,15 @@
   background-color: #fffbe6;
 }
 
+.autocomplete{
+  margin: 5px auto;
+  padding: 5px;
+  width: 90%;
+  border: 1px solid #8b5e34;
+  border-radius: 5px;
+  background-color: #fffbe6;
+}
+
 label {
   display: block;
   margin-top: 5px;
@@ -98,23 +107,4 @@ label {
 
 .title{
   font-weight: bolder;
-}
-
-
-
-.suggestions {
-  background-color: #f0f0f0;
-  padding: 5px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  max-height: 200px;
-  overflow-y: auto;
-}
-.suggestions p {
-  margin: 5px 0;
-  padding: 5px;
-  cursor: pointer;
-}
-.suggestions p:hover {
-  background-color: #e0e0e0;
 }

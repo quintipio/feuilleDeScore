@@ -4,6 +4,9 @@
     @for(joueur of joueurs ; track joueur.user.id) {
     <div class="row">
       <div class="col">
+        <button class="action-button">Voir</button>
+      </div>
+      <div class="col">
         <p><strong>{{ joueur.user.name }}</strong></p>
       </div>
       <div class="col">
@@ -18,90 +21,88 @@
     <table class="info-table">
       <tr>
         <td>
-          <div>
-            <input type="text" [formControl]="typeaheadA" placeholder="Nom de la carte" (input)="suggest('A')">
-            <div class="suggestions" *ngIf="suggestionsA.length">
-              <p *ngFor="let s of suggestionsA" (click)="getNomCarte(s,'A')">{{s}}</p>
-            </div>
-            <label for="piece0_0">Pièces</label>
+          <app-autocomplete name="autocomplete_0_0" placeholder="Nom de la carte" [liste]="this.listeCartes"
+            (seletedElement)="autoCompleteEvent($event,'0_0')"></app-autocomplete>
+          <div *ngIf="joueurEnCours?.plateau?.[0]?.[0]?.carte?.conditionGagne === 'piece-bourse'">
+            <label for="piece_0_0">Pièces</label>
+            <app-input-score name="piece_0_0" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[0]?.[0]?.carte?.conditionGagneElement)"></app-input-score>
           </div>
-          <app-input-score name="piece0_0" [min]="0" [max]="9"></app-input-score>
           <div class="circle">{{ joueurEnCours?.plateau?.[0]?.[0]?.score}}</div>
         </td>
         <td>
-          <input type="text" [formControl]="typeaheadB" placeholder="Nom de la carte" (input)="suggest('B')">
-            <div class="suggestions" *ngIf="suggestionsB.length">
-              <p *ngFor="let s of suggestionsB" (click)="getNomCarte(s,'B')">{{s}}</p>
-            </div>
-          <label for="piece0_1">Pièces</label>
-          <app-input-score name="piece0_1" [min]="0" [max]="9"></app-input-score>
+          <app-autocomplete name="autocomplete_0_1" placeholder="Nom de la carte" [liste]="this.listeCartes"
+            (seletedElement)="autoCompleteEvent($event,'0_1')"></app-autocomplete>
+          <div *ngIf="joueurEnCours?.plateau?.[0]?.[1]?.carte?.conditionGagne === 'piece-bourse'">
+            <label for="piece_0_1">Pièces</label>
+            <app-input-score name="piece_0_1" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[0]?.[1]?.carte?.conditionGagneElement)"></app-input-score>
+          </div>
           <div class="circle">{{ joueurEnCours?.plateau?.[0]?.[1]?.score}}</div>
         </td>
         <td>
-          <input type="text" [formControl]="typeaheadC" placeholder="Nom de la carte" (input)="suggest('C')">
-          <div class="suggestions" *ngIf="suggestionsC.length">
-            <p *ngFor="let s of suggestionsC" (click)="getNomCarte(s,'C')">{{s}}</p>
-          </div>
-          <label for="piece0_2">Pièces</label>
-          <app-input-score name="piece0_2" [min]="0" [max]="9"></app-input-score>
+          <app-autocomplete name="autocomplete_0_2" placeholder="Nom de la carte" [liste]="this.listeCartes"
+            (seletedElement)="autoCompleteEvent($event,'0_2')"></app-autocomplete>
+            <div *ngIf="joueurEnCours?.plateau?.[0]?.[2]?.carte?.conditionGagne === 'piece-bourse'">
+              <label for="piece_0_2">Pièces</label>
+              <app-input-score name="piece_0_2" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[0]?.[2]?.carte?.conditionGagneElement)"></app-input-score>
+            </div>
           <div class="circle">{{ joueurEnCours?.plateau?.[0]?.[2]?.score}}</div>
         </td>
       </tr>
       <tr>
         <td>
-          <input type="text" [formControl]="typeaheadD" placeholder="Nom de la carte" (input)="suggest('D')">
-            <div class="suggestions" *ngIf="suggestionsD.length">
-              <p *ngFor="let s of suggestionsD" (click)="getNomCarte(s,'D')">{{s}}</p>
+          <app-autocomplete name="autocomplete_1_0" placeholder="Nom de la carte" [liste]="this.listeCartes"
+            (seletedElement)="autoCompleteEvent($event,'1_0')"></app-autocomplete>
+            <div *ngIf="joueurEnCours?.plateau?.[1]?.[0]?.carte?.conditionGagne === 'piece-bourse'">
+              <label for="piece_1_0">Pièces</label>
+              <app-input-score name="piece_1_0" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[1]?.[0]?.carte?.conditionGagneElement)"></app-input-score>
             </div>
-          <label for="piece1_1">Pièces</label>
-          <app-input-score name="piece1_0" [min]="0" [max]="9"></app-input-score>
           <div class="circle">{{ joueurEnCours?.plateau?.[1]?.[0]?.score}}</div>
         </td>
         <td>
-          <input type="text" [formControl]="typeaheadE" placeholder="Nom de la carte" (input)="suggest('E')">
-            <div class="suggestions" *ngIf="suggestionsE.length">
-              <p *ngFor="let s of suggestionsE" (click)="getNomCarte(s,'E')">{{s}}</p>
+          <app-autocomplete name="autocomplete_1_1" placeholder="Nom de la carte" [liste]="this.listeCartes"
+            (seletedElement)="autoCompleteEvent($event,'1_1')"></app-autocomplete>
+            <div *ngIf="joueurEnCours?.plateau?.[1]?.[1]?.carte?.conditionGagne === 'piece-bourse'">
+              <label for="piece_1_1">Pièces</label>
+              <app-input-score name="piece_1_1" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[1]?.[1]?.carte?.conditionGagneElement)"></app-input-score>
             </div>
-          <label for="piece1_1">Pièces</label>
-          <app-input-score name="piece1_1" [min]="0" [max]="9"></app-input-score>
           <div class="circle">{{ joueurEnCours?.plateau?.[1]?.[1]?.score}}</div>
         </td>
         <td>
-          <input type="text" [formControl]="typeaheadF" placeholder="Nom de la carte" (input)="suggest('F')">
-            <div class="suggestions" *ngIf="suggestionsF.length">
-              <p *ngFor="let s of suggestionsF" (click)="getNomCarte(s,'F')">{{s}}</p>
+          <app-autocomplete name="autocomplete_1_2" placeholder="Nom de la carte" [liste]="this.listeCartes"
+            (seletedElement)="autoCompleteEvent($event,'1_2')"></app-autocomplete>
+            <div *ngIf="joueurEnCours?.plateau?.[1]?.[2]?.carte?.conditionGagne === 'piece-bourse'">
+              <label for="piece_1_2">Pièces</label>
+              <app-input-score name="piece_1_2" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[1]?.[2]?.carte?.conditionGagneElement)"></app-input-score>
             </div>
-          <label for="piece1_2">Pièces</label>
-          <app-input-score name="piece1_2" [min]="0" [max]="9"></app-input-score>
           <div class="circle">{{ joueurEnCours?.plateau?.[1]?.[2]?.score}}</div>
         </td>
       </tr>
       <tr>
         <td>
-          <input type="text" [formControl]="typeaheadG" placeholder="Nom de la carte" (input)="suggest('G')">
-            <div class="suggestions" *ngIf="suggestionsG.length">
-              <p *ngFor="let s of suggestionsG" (click)="getNomCarte(s,'G')">{{s}}</p>
+          <app-autocomplete name="autocomplete_2_0" placeholder="Nom de la carte" [liste]="this.listeCartes"
+            (seletedElement)="autoCompleteEvent($event,'2_0')"></app-autocomplete>
+            <div *ngIf="joueurEnCours?.plateau?.[2]?.[0]?.carte?.conditionGagne === 'piece-bourse'">
+              <label for="piece_2_0">Pièces</label>
+              <app-input-score name="piece_2_0" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[2]?.[0]?.carte?.conditionGagneElement)"></app-input-score>
             </div>
-          <label for="piece2_0">Pièces</label>
-          <app-input-score name="piece2_0" [min]="0" [max]="9"></app-input-score>
           <div class="circle">{{ joueurEnCours?.plateau?.[2]?.[0]?.score}}</div>
         </td>
         <td>
-          <input type="text" [formControl]="typeaheadH" placeholder="Nom de la carte" (input)="suggest('H')">
-            <div class="suggestions" *ngIf="suggestionsH.length">
-              <p *ngFor="let s of suggestionsH" (click)="getNomCarte(s,'H')">{{s}}</p>
+          <app-autocomplete name="autocomplete_2_1" placeholder="Nom de la carte" [liste]="this.listeCartes"
+            (seletedElement)="autoCompleteEvent($event,'2_1')"></app-autocomplete>
+            <div *ngIf="joueurEnCours?.plateau?.[2]?.[1]?.carte?.conditionGagne === 'piece-bourse'">
+              <label for="piece_2_1">Pièces</label>
+              <app-input-score name="piece_2_1" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[2]?.[1]?.carte?.conditionGagneElement)"></app-input-score>
             </div>
-          <label for="piece2_1">Pièces</label>
-          <app-input-score name="piece2_1" [min]="0" [max]="9"></app-input-score>
           <div class="circle">{{ joueurEnCours?.plateau?.[2]?.[1]?.score}}</div>
         </td>
         <td>
-          <input type="text" [formControl]="typeaheadI" placeholder="Nom de la carte" (input)="suggest('I')">
-            <div class="suggestions" *ngIf="suggestionsI.length">
-              <p *ngFor="let s of suggestionsI" (click)="getNomCarte(s,'I')">{{s}}</p>
+          <app-autocomplete name="autocomplete_2_2" placeholder="Nom de la carte" [liste]="this.listeCartes"
+            (seletedElement)="autoCompleteEvent($event,'2_2')"></app-autocomplete>
+            <div *ngIf="joueurEnCours?.plateau?.[2]?.[2]?.carte?.conditionGagne === 'piece-bourse'">
+              <label for="piece_2_2">Pièces</label>
+              <app-input-score name="piece_2_2" [min]="0" [max]="maxValue(joueurEnCours?.plateau?.[2]?.[2]?.carte?.conditionGagneElement)"></app-input-score>
             </div>
-          <label for="piece2_2">Pièces</label>
-          <app-input-score name="piece2_2" [min]="0" [max]="9"></app-input-score>
           <div class="circle">{{ joueurEnCours?.plateau?.[2]?.[2]?.score}}</div>
         </td>
       </tr>
