@@ -1,0 +1,70 @@
+.bgcolor-foret {
+  background-color: #93c995;
+}
+
+.bgcolor-champ {
+  background-color: #e9c65e;
+}
+
+.bgcolor-village {
+  background-color: #c77c65;
+}
+
+.bgcolor-locomotive {
+  background-color: #c59b8c;
+}
+
+.bgcolor-riviere {
+  background-color: #76afdd;
+}
+
+.zone-card {
+  border: 1px solid #ccc;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.zone-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.zone-btn {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 40px;
+  height: 40px;
+  margin: 4px;
+  background-color: #f0f0f0;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.zone-btn.selected {
+  border-color: black;
+  background-color: #bbb;
+}
+
+input {
+  width: 60px;
+  padding: 5 px;
+}
+
+
+.centered-button {
+  display: block;
+  margin: 0 auto;
+  background-color: #d3d3d3;
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.centered-button:hover {
+  background-color: #b0b0b0;
+}

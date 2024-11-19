@@ -25,6 +25,7 @@ export const GameExisting: Game[] = [
   { "id": 8,"uuid":"aa00ece5-d4e9-456e-be27-a96395079139", "name": "Qwirlkle", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "qwirkle", "specificConf":"" },
   { "id": 9,"uuid":"7983f536-223e-420b-80f3-fac6a34342da", "name": "Pixies", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 3, "scoreNegatif": true, "canEdit": false, "sheet": "pixies", "specificConf":"" },
   { "id": 10,"uuid":"e989722b-cf42-42c9-bc4b-602e9c319726", "name": "Chateau combo", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "chateauCombo", "specificConf":"" },
+  { "id": 11,"uuid":"7f2425ce-d96b-424b-81b1-ad6b60de1f30", "name": "Dorf romantik", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "dorfromantik", "specificConf":"" }
 ]
 
 export function isGame(object: any): object is Game {

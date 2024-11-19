@@ -1,0 +1,290 @@
+<div class="container py-4">
+  <!-- Zones -->
+  <div class="card mb-4">
+    <div class="card-header">Zones</div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+          <div class="zone-card bgcolor-foret">
+            <div class="zone-title">Fôret</div>
+            <div class="zones">
+              <div class="d-flex flex-wrap">
+                <button class="zone-btn" (click)="selectZone('foret', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('foret', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('foret', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('foret', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('foret', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('foret', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('foret', 7)">7</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+          <div class="zone-card bgcolor-champ">
+            <div class="zone-title">Champ</div>
+            <div class="zones">
+              <div class="d-flex flex-wrap">
+                <button class="zone-btn" (click)="selectZone('champ', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('champ', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('champ', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('champ', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('champ', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('champ', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('champ', 7)">7</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+          <div class="zone-card bgcolor-village">
+            <div class="zone-title">Village</div>
+            <div class="zones">
+              <div class="d-flex flex-wrap">
+                <button class="zone-btn" (click)="selectZone('village', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('village', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('village', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('village', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('village', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('village', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('village', 7)">7</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+          <div class="zone-card bgcolor-riviere">
+            <div class="zone-title">Rivière</div>
+            <div class="zones">
+              <div class="d-flex flex-wrap">
+                <button class="zone-btn" (click)="selectZone('riviere', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('riviere', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('riviere', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('riviere', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('riviere', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('riviere', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('riviere', 7)">7</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+          <div class="zone-card bgcolor-locomotive">
+            <div class="zone-title">Chemin de fer</div>
+            <div class="zones">
+              <div class="d-flex flex-wrap">
+                <button class="zone-btn" (click)="selectZone('locomotive', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('locomotive', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('locomotive', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('locomotive', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('locomotive', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('locomotive', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('locomotive', 7)">7</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drapeau -->
+  <div class="card mb-4">
+    <div class="card-header">Drapeau</div>
+    <div class="card-body">
+      <div class="row mb-12">
+        <div class="col-12 col-md-4">
+          <label class="me-2">Forêt:</label>
+          <app-input-score name="inputForetA" [min]="0" [initValue]="dataPartie?.drapeauForetA"></app-input-score>
+          <app-input-score name="inputForetB" [min]="0" [initValue]="dataPartie?.drapeauForetB"></app-input-score>
+          <app-input-score name="inputForetC" [min]="0" [initValue]="dataPartie?.drapeauForetC"></app-input-score>
+          <app-input-score name="inputForetD" [min]="0" [initValue]="dataPartie?.drapeauForetD"></app-input-score>
+        </div>
+        <div class="col-12 col-md-4">
+          <label class="me-2">Champ:</label>
+          <app-input-score name="inputChampA" [min]="0" [initValue]="dataPartie?.drapeauChampA"></app-input-score>
+          <app-input-score name="inputChampB" [min]="0" [initValue]="dataPartie?.drapeauChampB"></app-input-score>
+          <app-input-score name="inputChampC" [min]="0" [initValue]="dataPartie?.drapeauChampC"></app-input-score>
+          <app-input-score name="inputChampD" [min]="0" [initValue]="dataPartie?.drapeauChampD"></app-input-score>
+        </div>
+        <div class="col-12 col-md-4">
+          <label >Village:</label>
+          <app-input-score name="inputVillageA" [min]="0" [initValue]="dataPartie?.drapeauVillageA"></app-input-score>
+          <app-input-score name="inputVillageB" [min]="0" [initValue]="dataPartie?.drapeauVillageB"></app-input-score>
+          <app-input-score name="inputVillageC" [min]="0" [initValue]="dataPartie?.drapeauVillageC"></app-input-score>
+          <app-input-score name="inputVillageD" [min]="0" [initValue]="dataPartie?.drapeauVillageD"></app-input-score>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Plus longue rivière/chemin de fer -->
+  <div class="card mb-4">
+    <div class="card-header">Plus longue rivière/chemin de fer</div>
+    <div class="card-body">
+      <div class="mb-3 d-flex align-items-center">
+        <label class="me-2">Plus longue rivière:</label>
+        <app-input-score name="inputLongueRiviere" [min]="0" [initValue]="dataPartie?.longueRiviere"></app-input-score>
+      </div>
+      <div class="d-flex align-items-center">
+        <label class="me-2">Plus long chemin de fer:</label>
+        <app-input-score name="inputLongCheminDeFer" [min]="0" [initValue]="dataPartie?.longCheminDeFer"></app-input-score>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Doublage des scores -->
+  <div class="card mb-4">
+    <div class="card-header">Doublage de zones</div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+          <div class="zone-card bgcolor-foret">
+            <div class="zone-title">Cabane dans les bois</div>
+            <div class="zones">
+              <div class="d-flex flex-wrap">
+                <button class="zone-btn" (click)="selectZone('foret', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('foret', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('foret', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('foret', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('foret', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('foret', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('foret', 7)">7</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+          <div class="zone-card bgcolor-champ">
+            <div class="zone-title">Fête des moissons</div>
+            <div class="zones">
+              <div class="d-flex flex-wrap">
+                <button class="zone-btn" (click)="selectZone('champ', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('champ', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('champ', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('champ', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('champ', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('champ', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('champ', 7)">7</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+          <div class="zone-card bgcolor-village">
+            <div class="zone-title">Tour de guet</div>
+            <div class="zones">
+              <div class="d-flex flex-wrap">
+                <button class="zone-btn" (click)="selectZone('village', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('village', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('village', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('village', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('village', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('village', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('village', 7)">7</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+          <div class="zone-card bgcolor-riviere">
+            <div class="zone-title">Bateau de plaisance</div>
+            <div class="zones">
+              <div class="d-flex flex-wrap">
+                <button class="zone-btn" (click)="selectZone('riviere', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('riviere', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('riviere', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('riviere', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('riviere', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('riviere', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('riviere', 7)">7</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+          <div class="zone-card bgcolor-locomotive">
+            <div class="zone-title">Locomotive</div>
+            <div class="zones">
+              <div class="d-flex flex-wrap">
+                <button class="zone-btn" (click)="selectZone('locomotive', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('locomotive', 4)">4</button>
+                <button class="zone-btn" (click)="selectZone('locomotive', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('locomotive', 5)">5</button>
+                <button class="zone-btn" (click)="selectZone('locomotive', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('locomotive', 6)">6</button>
+                <button class="zone-btn" (click)="selectZone('locomotive', 7)">7</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Déverrouille -->
+  <div class="card mb-4">
+    <div class="card-header">Déverrouille</div>
+    <div class="card-body">
+      <div class="mb-3">
+        <label>Cirque:</label>
+        <input type="checkbox" />
+      </div>
+      <div class="mb-3">
+        <label>Gare ferroviaire:</label>
+        <input type="checkbox" />
+      </div>
+      <div class="mb-3">
+        <label>Port de plaisance:</label>
+        <input type="checkbox" />
+      </div>
+      <div class="mb-3">
+        <label>Cœurs rouges :</label>
+        <app-input-score name="inputCoeurA" [min]="0" [initValue]="dataPartie?.coeurA"></app-input-score>
+        <app-input-score name="inputCoeurB" [min]="0" [initValue]="dataPartie?.coeurB"></app-input-score>
+        <app-input-score name="inputCoeurC" [min]="0" [initValue]="dataPartie?.coeurC"></app-input-score>
+        <app-input-score name="inputCoeurD" [min]="0" [initValue]="dataPartie?.coeurD"></app-input-score>
+      </div>
+      <div class="mb-3">
+        <label>Cœurs dorés :</label>
+        <app-input-score name="inputCoeurDore" [min]="0" [initValue]="dataPartie?.coeurDore"></app-input-score>
+      </div>
+      <div class="mb-3">
+        <label>Aiguilleur :</label>
+        <app-input-score name="inputAiguilleur" [min]="0" [initValue]="dataPartie?.aiguilleur"></app-input-score>
+      </div>
+      <div class="mb-3">
+        <label>Colinne : (nombre de tuile)</label>
+        <app-input-score name="inputColinne" [min]="0" [initValue]="dataPartie?.colinne"></app-input-score>
+      </div>
+      <div class="mb-3">
+        <label>Site de décollage :</label>
+        <app-input-score name="inputMongolfiere" [min]="0" [initValue]="dataPartie?.mongolfiere"></app-input-score>
+      </div>
+    </div>
+  </div>
+  <button class="centered-button">Calculer</button>
+
+  <!-- Résultat -->
+  <div class="card" style="margin-top:20px;">
+    <div class="card-header">Résultat</div>
+    <div class="card-body">
+      <div>Niveau: Agriculteur</div>
+      <div>Nombre de points: 999</div>
+      <ul>
+        <li>Coucou</li>
+        <li>TATA</li>
+        <li>TITI</li>
+      </ul>
+    </div>
+  </div>
+</div>
