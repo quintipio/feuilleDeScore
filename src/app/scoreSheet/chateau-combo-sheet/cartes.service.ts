@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 export interface CarteChateauCombo {
   bouclier: string[],
+  lieu: string,
   cout: number,
   nbPoint: number,
   reducVillage: boolean,
@@ -22,6 +23,26 @@ export class CarteService {
   }
 
   private cartesJson = {
+    "Retourné chateau": {
+      "bouclier": [],
+      "lieu": "",
+      "cout": -1,
+      "nbPoint": -1,
+      "reducVillage": false,
+      "reducChateau": false,
+      "conditionGagne": "",
+      "conditionGagneElement": []
+    },
+    "Retourné village": {
+      "bouclier": [],
+      "lieu": "",
+      "cout": -1,
+      "nbPoint": -1,
+      "reducVillage": false,
+      "reducChateau": false,
+      "conditionGagne": "",
+      "conditionGagneElement": []
+    },
     "Bouffon": {
       "bouclier": ["bleu"],
       "lieu": "chateau",
@@ -238,8 +259,8 @@ export class CarteService {
       "nbPoint": 4,
       "reducVillage": false,
       "reducChateau": false,
-      "conditionGagne": "bouclier-different-colonne",
-      "conditionGagneElement": []
+      "conditionGagne": "bouclier-colonne",
+      "conditionGagneElement": ["different"]
     },
 
     "Chevaleresse": {
@@ -261,7 +282,7 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "groupe-bouclier",
-      "conditionGagneElement": ["identique"]
+      "conditionGagneElement": ["identique:3"]
     },
 
     "Chatelaine": {
@@ -525,7 +546,7 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "groupe-lieu",
-      "conditionGagneElement": ["village", "village", "village"]
+      "conditionGagneElement": ["village:3"]
     },
 
     "Batard": {
@@ -590,8 +611,8 @@ export class CarteService {
       "nbPoint": 8,
       "reducVillage": false,
       "reducChateau": false,
-      "conditionGagne": "carte-retourne",
-      "conditionGagneElement": ["1-village|chateau"]
+      "conditionGagne": "carte-retourne-indif",
+      "conditionGagneElement": []
     },
 
     "Serrurier": {
@@ -700,8 +721,8 @@ export class CarteService {
       "nbPoint": 2,
       "reducVillage": false,
       "reducChateau": false,
-      "conditionGagne": "bouclier-different-colonne",
-      "conditionGagneElement": []
+      "conditionGagne": "bouclier-colonne",
+      "conditionGagneElement": ["different"]
     },
 
     "Apiculteur": {

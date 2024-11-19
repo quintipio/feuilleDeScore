@@ -1,5 +1,8 @@
 .table-element {
   width: 100%;
+  background-color: aliceblue;
+  padding: 20px;
+  border-radius: 30px;
 }
 
 .table-content {

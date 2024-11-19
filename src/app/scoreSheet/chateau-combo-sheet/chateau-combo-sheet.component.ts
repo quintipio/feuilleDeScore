@@ -81,8 +81,6 @@ export class ChateauComboSheetComponent {
     });
   }
 
-
-
   private calculerScoreTotalJoueur() {
     let somme = 0;
     for (let i = 0; i < this.joueurEnCours!.plateau.length; i++) {
@@ -90,7 +88,390 @@ export class ChateauComboSheetComponent {
         somme += this.joueurEnCours!.plateau[i][j].score;
       }
     }
+    somme += this.joueurEnCours!.cle
     this.joueurEnCours!.scoreTotal = somme;
+  }
+
+  private calculerTableau() {
+    for (let i = 0; i < this.joueurEnCours!.plateau.length; i++) {
+      for (let j = 0; j < this.joueurEnCours!.plateau[i].length; j++) {
+        this.calculerCarte(i, j)
+      }
+    }
+  }
+
+  private calculerCarte(i: number, j: number) {
+    const plateau = this.joueurEnCours!.plateau;
+    if (plateau[i][j].carte) {
+      let nbPoints = 0;
+      switch (plateau[i][j].carte?.conditionGagne) {
+        case "bouclier-ligne-colonne":
+          nbPoints += this.calculerBouclierLigneColonne(i, j, plateau[i][j].carte!.conditionGagneElement[0]);
+          break;
+        case "bouclier-ligne":
+          nbPoints += this.calculerBouclierLigne(i, plateau[i][j].carte!.conditionGagneElement[0]);
+          break;
+        case "bouclier-colonne":
+          nbPoints += this.calculerBouclierColonne(j, plateau[i][j].carte!.conditionGagneElement[0]);
+          break;
+        case "bouclier-absent":
+          nbPoints = this.controleBouclierAbsent(plateau[i][j].carte!.conditionGagneElement) ? 1 : 0;
+          break;
+        case "cout-cartes-plus":
+          nbPoints = this.compterCarteParCout(Number(plateau[i][j].carte!.conditionGagneElement[0]), true, false);
+          break;
+        case "cout-cartes":
+          nbPoints = this.compterCarteParCout(Number(plateau[i][j].carte!.conditionGagneElement[0]), false, true);
+          break;
+        case "groupe-bouclier":
+          nbPoints = this.calculerGroupeBouclier(plateau[i][j].carte!.conditionGagneElement);
+          break;
+        case "groupe-lieu":
+          nbPoints = this.calculerGroupeLieu(plateau[i][j].carte!.conditionGagneElement);
+          break;
+        case "emplacement-horizontal":
+          nbPoints = this.verfiierEmplacementHorizontal(i, plateau[i][j].carte!.conditionGagneElement[0]) ? 1 : 0;
+          break;
+        case "emplacement-vertical":
+          nbPoints = this.verfiierEmplacementVertical(j, plateau[i][j].carte!.conditionGagneElement[0]) ? 1 : 0;
+          break;
+        case "emplacement-bi":
+          nbPoints = this.verifierEmplacementSpeciaux(i, j, plateau[i][j].carte!.conditionGagneElement[0]) ? 1 : 0;
+          break;
+        case "bouclier-different-absent":
+          nbPoints = this.comtperBouclierDifferent(true);
+          break;
+        case "reduc":
+          nbPoints = this.comtperReduc(true, true);
+          break;
+        case "lieu":
+          nbPoints = this.comtperLieu(plateau[i][j].carte!.conditionGagneElement[0]);
+          break;
+        case "bouclier-different":
+          nbPoints = this.comtperBouclierDifferent(false);
+          break;
+        case "bouclier-double":
+          nbPoints = this.compterCarteBouclierDouble();
+          break;
+        case "piece-bourse":
+          nbPoints = plateau[i][j].nbPieces;
+          break;
+        case "carte-retourne-indif":
+          nbPoints = this.compteurCarteRetourne(true, true) >= 1 ? 1 : 0;
+          break;
+        case "bourse":
+          nbPoints = this.compterPieceEnBourse();
+          break;
+        case "cle":
+          nbPoints = this.joueurEnCours!.cle;
+          break;
+      }
+      plateau[i][j].score = nbPoints * plateau[i][j].carte!.nbPoint;
+    }
+  }
+
+  private verifierEmplacementSpeciaux(ligne: number, colonne: number, nomEmplacement: string) {
+    if (nomEmplacement === "croix") {
+      return ((ligne === 0 && colonne === 1) || (ligne === 1 && colonne === 0) || (ligne === 1 && colonne === 2) || (ligne === 2 && colonne === 1));
+    }
+    if (nomEmplacement === "extremite") {
+      return ((ligne === 0 && colonne === 0) || (ligne === 0 && colonne === 2) || (ligne === 2 && colonne === 0) || (ligne === 2 && colonne === 2));
+    }
+    return 0;
+  }
+
+  private compterCarteBouclierDouble(): number {
+    let inc = 0;
+    for (let i = 0; i <= 2; i++) {
+      for (let j = 0; j <= 2; j++) {
+        if (this.joueurEnCours!.plateau[i][j].carte && this.joueurEnCours!.plateau[i][j].carte!.bouclier.length === 2) {
+          inc += 1;
+        }
+      }
+    }
+    return inc;
+  }
+
+  private compteurCarteRetourne(village: boolean, chateau: boolean): number {
+    let inc = 0;
+    for (let i = 0; i <= 2; i++) {
+      for (let j = 0; j <= 2; j++) {
+        if (this.joueurEnCours!.plateau[i][j].carte) {
+          if (village && this.joueurEnCours!.plateau[i][j].nomCarte === "Retourné village") {
+            inc += 1;
+          } else if (chateau && this.joueurEnCours!.plateau[i][j].nomCarte === "Retourné chateau") {
+            inc += 1;
+          }
+        }
+      }
+    }
+    return inc;
+  }
+
+  private compterPieceEnBourse(): number {
+    let inc = 0;
+    for (let i = 0; i <= 2; i++) {
+      for (let j = 0; j <= 2; j++) {
+        if (this.joueurEnCours!.plateau[i][j].carte) {
+          if (this.joueurEnCours!.plateau[i][j].nbPieces) {
+            inc += this.joueurEnCours!.plateau[i][j].nbPieces;
+          }
+        }
+      }
+    }
+    return inc;
+  }
+
+  private comtperLieu(lieu: string): number {
+    let inc = 0;
+    for (let i = 0; i <= 2; i++) {
+      for (let j = 0; j <= 2; j++) {
+        if (this.joueurEnCours!.plateau[i][j].carte) {
+          if (this.joueurEnCours!.plateau[i][j].carte!.lieu === lieu) {
+            inc += 1;
+          }
+        }
+      }
+    }
+    return inc;
+  }
+
+  private comtperReduc(village: boolean, chateau: boolean): number {
+    let inc = 0;
+    for (let i = 0; i <= 2; i++) {
+      for (let j = 0; j <= 2; j++) {
+        if (this.joueurEnCours!.plateau[i][j].carte) {
+          if (village && this.joueurEnCours!.plateau[i][j].carte!.reducVillage) {
+            inc += 1;
+          } else if (chateau && this.joueurEnCours!.plateau[i][j].carte!.reducChateau) {
+            inc += 1;
+          }
+        }
+      }
+    }
+    return inc;
+  }
+
+  private comtperBouclierDifferent(absent: boolean) {
+    const seen = new Set<string>();
+    for (let i = 0; i <= 2; i++) {
+      for (let j = 0; j <= 2; j++) {
+        if (this.joueurEnCours!.plateau[i][j].carte) {
+          const boucliers = this.joueurEnCours!.plateau[i][j].carte!.bouclier;
+          for (const bouclier of boucliers) {
+            seen.add(bouclier);
+          }
+        }
+      }
+    }
+    return (absent) ? 6 - seen.size : seen.size;
+  }
+
+  private verfiierEmplacementHorizontal(ligne: number, condition: string): boolean {
+    switch (condition) {
+      case "haut":
+        return ligne === 0;
+      case "milieu":
+        return ligne === 1;
+      case "bas":
+        return ligne === 2;
+      default:
+        return false;
+    }
+  }
+
+  private verfiierEmplacementVertical(colonne: number, condition: string): boolean {
+    switch (condition) {
+      case "gauche":
+        return colonne === 0;
+      case "milieu":
+        return colonne === 1;
+      case "droite":
+        return colonne === 2;
+      default:
+        return false;
+    }
+  }
+
+  private calculerGroupeLieu(liste: string[]): number {
+    const tousLesLieux: string[] = [];
+    for (let i = 0; i <= 2; i++) {
+      for (let j = 0; j <= 2; j++) {
+        if (this.joueurEnCours?.plateau[i][j].carte !== undefined) {
+          tousLesLieux.push(this.joueurEnCours?.plateau[i][j].carte!.lieu)
+        }
+      }
+    }
+    let lieuxDispo = [...tousLesLieux];
+    let compteurGroupes = 0;
+
+    if (liste[0].includes(":")) {
+      let lieuToFind = liste[0].split(":")[0];
+      let valeur = liste[0].split(":")[1];
+      let tailleGroupe = parseInt(valeur, 10);
+
+      let compteur: { [key: string]: number } = {};
+      lieuxDispo.forEach(lieu => {
+        compteur[lieu] = (compteur[lieu] || 0) + 1;
+      });
+      compteurGroupes += Math.floor(compteur[lieuToFind] / tailleGroupe);
+    } else {
+      while (liste.every(lieu => lieuxDispo.includes(lieu))) {
+        for (const lieu of liste) {
+          const index = lieuxDispo.indexOf(lieu);
+          if (index !== -1) {
+            lieuxDispo.splice(index, 1);
+          }
+        }
+        compteurGroupes++;
+      }
+    }
+
+
+    return compteurGroupes;
+  }
+
+  private calculerGroupeBouclier(liste: string[]): number {
+    const tousLesBoucliers: string[] = [];
+    for (let i = 0; i <= 2; i++) {
+      for (let j = 0; j <= 2; j++) {
+        if (this.joueurEnCours?.plateau[i][j].carte !== undefined) {
+          this.joueurEnCours?.plateau[i][j].carte?.bouclier.forEach((bouclier) => {
+            tousLesBoucliers.push(bouclier);
+          });
+        }
+      }
+    }
+    let boucliersDisponibles = [...tousLesBoucliers];
+    let compteurGroupes = 0;
+    if (liste[0].startsWith("identique")) {
+      let valeur = liste[0].split(":")[1];
+      let tailleGroupe = parseInt(valeur, 10);
+      let compteur: { [key: string]: number } = {};
+      boucliersDisponibles.forEach(couleur => {
+        compteur[couleur] = (compteur[couleur] || 0) + 1;
+      });
+      let compteurGroupe = 0;
+      for (let couleur in compteur) {
+        compteurGroupe += Math.floor(compteur[couleur] / tailleGroupe);
+      }
+      return compteurGroupe;
+    } else {
+      while (liste.every(bouclier => boucliersDisponibles.includes(bouclier))) {
+        for (const bouclier of liste) {
+          const index = boucliersDisponibles.indexOf(bouclier);
+          if (index !== -1) {
+            boucliersDisponibles.splice(index, 1);
+          }
+        }
+        compteurGroupes++;
+      }
+    }
+    return compteurGroupes;
+  }
+
+  private compterCarteParCout(prix: number, superieurEgal: boolean, egal: boolean): number {
+    let inc = 0;
+    for (let i = 0; i <= 2; i++) {
+      for (let j = 0; j <= 2; j++) {
+        if (superieurEgal && this.joueurEnCours?.plateau[i][j].carte !== undefined && this.joueurEnCours?.plateau[i][j].carte!.cout >= prix) {
+          inc += 1;
+        } else if (egal && this.joueurEnCours?.plateau[i][j].carte !== undefined && this.joueurEnCours?.plateau[i][j].carte!.cout === prix) {
+          inc += 1;
+        }
+      }
+    }
+    return inc;
+  }
+
+  private controleBouclierAbsent(liste: string[]): boolean {
+    let valueRetour: boolean = true;
+    liste.forEach((bouclier) => {
+      for (let i = 0; i <= 2; i++) {
+        for (let j = 0; j <= 2; j++) {
+          if (this.joueurEnCours?.plateau[i][j].carte && this.joueurEnCours?.plateau[i][j].carte?.bouclier.indexOf(bouclier) !== -1) {
+            valueRetour = false;
+          }
+        }
+      }
+    });
+    return valueRetour;
+  }
+
+  private calculerBouclierLigneColonne(ligne: number, colonne: number, bouclierRecherche: string): number {
+    let nbBouclier = 0;
+    if (bouclierRecherche !== "different") {
+      for (let i = 0; i <= 2; i++) {
+        for (let j = 0; j <= 2; j++) {
+          if (i === ligne || j === colonne) {
+            if (this.joueurEnCours!.plateau[i][j].carte) {
+              nbBouclier += this.joueurEnCours!.plateau[i][j].carte!.bouclier.filter(item => item === bouclierRecherche).length;
+            }
+          }
+        }
+      }
+    } else {
+      const seen = new Set<string>();
+      for (let i = 0; i <= 2; i++) {
+        for (let j = 0; j <= 2; j++) {
+          if (i === ligne || j === colonne) {
+            const boucliers = this.joueurEnCours!.plateau[i][j].carte!.bouclier;
+            for (const bouclier of boucliers) {
+              seen.add(bouclier);
+            }
+          }
+        }
+      }
+      nbBouclier = seen.size;
+    }
+
+    return nbBouclier;
+  }
+
+  private calculerBouclierLigne(ligne: number, bouclierRecherche: string): number {
+    let nbBouclier = 0;
+    if (bouclierRecherche !== "different") {
+      for (let j = 0; j <= 2; j++) {
+        if (this.joueurEnCours!.plateau[ligne][j].carte) {
+          nbBouclier += this.joueurEnCours!.plateau[ligne][j].carte!.bouclier.filter(item => item === bouclierRecherche).length;
+        }
+      }
+    } else {
+      const seen = new Set<string>();
+      for (let j = 0; j <= 2; j++) {
+        if (this.joueurEnCours!.plateau[ligne][j].carte) {
+          const boucliers = this.joueurEnCours!.plateau[ligne][j].carte!.bouclier;
+          for (const bouclier of boucliers) {
+            seen.add(bouclier);
+          }
+        }
+      }
+      nbBouclier = seen.size;
+    }
+    return nbBouclier;
+  }
+
+  private calculerBouclierColonne(colonne: number, bouclierRecherche: string) {
+    let nbBouclier = 0;
+    if (bouclierRecherche !== "different") {
+      for (let i = 0; i <= 2; i++) {
+        if (this.joueurEnCours!.plateau[i][colonne].carte) {
+          nbBouclier += this.joueurEnCours!.plateau[i][colonne].carte!.bouclier.filter(item => item === bouclierRecherche).length;
+        }
+      }
+    } else {
+      const seen = new Set<string>();
+      for (let i = 0; i <= 2; i++) {
+        if (this.joueurEnCours!.plateau[i][colonne].carte) {
+          const boucliers = this.joueurEnCours!.plateau[i][colonne].carte!.bouclier;
+          for (const bouclier of boucliers) {
+            seen.add(bouclier);
+          }
+        }
+      }
+      nbBouclier = seen.size;
+    }
+    return nbBouclier;
   }
 
   private updateJoueurEnCoursAndSave() {
@@ -101,19 +482,19 @@ export class ChateauComboSheetComponent {
 
     const roundRow: CountRoundRow[] = [];
     this.joueurs.forEach(joueur => {
-      const player :CountRoundRow = {
-        user : {
-          position : 0,
-          user : joueur.user
+      const player: CountRoundRow = {
+        user: {
+          position: 0,
+          user: joueur.user
         },
-        value : joueur.scoreTotal
+        value: joueur.scoreTotal
       }
       roundRow.push(player);
     });
 
-    const round : RoundRow[] = [{
-      points : roundRow,
-      row : 1
+    const round: RoundRow[] = [{
+      points: roundRow,
+      row: 1
     }]
 
     this.table!.specificData = JSON.stringify(this.joueurs);
@@ -133,9 +514,9 @@ export class ChateauComboSheetComponent {
     inputCle?.reinit(this.joueurEnCours.cle);
     for (let i = 0; i < this.joueurEnCours!.plateau.length; i++) {
       for (let j = 0; j < this.joueurEnCours!.plateau[i].length; j++) {
-        const input = this.inputScores?.find(input => input.name === "piece_"+i+"_"+j);
+        const input = this.inputScores?.find(input => input.name === "piece_" + i + "_" + j);
         input?.reinit(this.joueurEnCours!.plateau[i][j].nbPieces);
-        const autocomplete = this.autoCompletes?.find(autocomplete => autocomplete.name === "autocomplete_"+i+"_"+j);
+        const autocomplete = this.autoCompletes?.find(autocomplete => autocomplete.name === "autocomplete_" + i + "_" + j);
         autocomplete?.reinit(this.joueurEnCours!.plateau[i][j].nomCarte);
       }
     }
@@ -167,17 +548,20 @@ export class ChateauComboSheetComponent {
     this.joueurEnCours!.plateau[i][j].nomCarte = newCard;
     this.joueurEnCours!.plateau[i][j].score += 1;
     this.joueurEnCours!.plateau[i][j].nbPieces = 0;
-    const input = this.inputScores?.find(input => input.name === "piece_"+i+"_"+j);
+    const input = this.inputScores?.find(input => input.name === "piece_" + i + "_" + j);
     input?.reinit(this.joueurEnCours!.plateau[i][j].nbPieces);
+    this.calculerTableau();
   }
 
-  changePieceEvent(numberPiece : number,nameElement:string){
+  changePieceEvent(numberPiece: number, nameElement: string) {
     let [i, j] = nameElement.split("_").map(Number);
     this.joueurEnCours!.plateau[i][j].nbPieces = numberPiece;
+    this.calculerTableau();
   }
 
-  changeCleEvent(nbCles :number){
+  changeCleEvent(nbCles: number) {
     this.joueurEnCours!.cle = nbCles;
+    this.calculerTableau();
   }
 
   maxValue(element: string[] | undefined): number | undefined {
@@ -187,15 +571,15 @@ export class ChateauComboSheetComponent {
     return undefined;
   }
 
-  ouvrirJoueurSuivant(){
+  ouvrirJoueurSuivant() {
     const joueur = this.joueurs.find(joueur => joueur.scoreTotal === 0);
-    if(!joueur){
+    if (!joueur) {
       this.ouvrirJoueur(this.joueurs[0].user.id);
     }
     this.ouvrirJoueur(joueur?.user.id)
   }
 
-  isJoueurWithZero() : boolean{
+  isJoueurWithZero(): boolean {
     return this.joueurs.some(joueur => joueur.scoreTotal === 0);
   }
 

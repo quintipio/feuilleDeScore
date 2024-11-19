@@ -42,10 +42,14 @@
   background-color: rgb(194, 102, 194);
   border-radius: 10px;
   color: white;
+
 }.gameElement, .gameElementSelected {
   width: 100px;
   margin: 15px;
   text-align: center;
+  background-color: aliceblue;
+  padding: 15px;
+  border-radius: 25px;
 }
 
 .gameElementSelected {
