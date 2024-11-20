@@ -5,6 +5,7 @@ import { TableService } from '../../service/table.service';
 import { Table } from '../../models/table.model';
 import { ActivatedRoute } from '@angular/router';
 import { InputScoreComponent } from '../../components/input-score/input-score.component';
+import { CountRoundRow, RoundRow } from '../../models/sheet';
 
 export type DataDorf = {
   listePointForet: string[],
@@ -48,6 +49,7 @@ export type DataDorf = {
   aiguilleur: number,
   mongolfiere: number,
   colinne: number,
+  bergere: number,
 }
 
 @Component({
@@ -64,7 +66,11 @@ export class DorfromantikSheetComponent {
   table: Table | undefined;
 
   dataPartie: DataDorf | undefined = undefined;
-  isScoreCalcule : boolean = false;
+  isScoreCalcule: boolean = false;
+  scoreFinal : number = 0;
+  nbCroix : number = 0;
+  libelleScore : string = "";
+  contenuDebloque : string[] = [];
 
   constructor(private route: ActivatedRoute) {
   }
@@ -82,6 +88,7 @@ export class DorfromantikSheetComponent {
                 console.log("Partie en cours");
                 this.dataPartie = JSON.parse(this.table.specificData);
                 this.refreshInputScore();
+                this.calculerScore();
               } else {
                 console.log("Nouvelle partie");
                 this.newPartie();
@@ -139,6 +146,7 @@ export class DorfromantikSheetComponent {
       aiguilleur: 0,
       colinne: 0,
       mongolfiere: 0,
+      bergere : 0
     }
 
     this.dataPartie = newPartie;
@@ -217,6 +225,9 @@ export class DorfromantikSheetComponent {
         case "inputMongolfiere":
           input.reinit(this.dataPartie!.mongolfiere);
           break;
+          case "inputBergere":
+            input.reinit(this.dataPartie!.bergere);
+            break;
         case "inputLongueRiviere":
           input.reinit(this.dataPartie!.longueRiviere);
           break;
@@ -230,14 +241,14 @@ export class DorfromantikSheetComponent {
     });
   }
 
-  changeCirque(){
-    if(this.dataPartie){
+  changeCirque() {
+    if (this.dataPartie) {
       this.dataPartie.isCirque = !this.dataPartie.isCirque;
     }
   }
 
   updateFromInputScore(value: number, name: string) {
-    if(this.dataPartie === undefined){
+    if (this.dataPartie === undefined) {
       return;
     }
 
@@ -311,6 +322,9 @@ export class DorfromantikSheetComponent {
       case "inputMongolfiere":
         this.dataPartie!.mongolfiere = value;
         break;
+        case "inputBergere":
+          this.dataPartie!.bergere = value;
+          break;
       case "inputLongueRiviere":
         this.dataPartie!.longueRiviere = value;
         break;
@@ -426,5 +440,102 @@ export class DorfromantikSheetComponent {
       default:
         return false;
     }
+  }
+
+  calculerScore() {
+    if (this.dataPartie) {
+      let resultat = 0;
+      resultat += this.getScoreTableau(this.dataPartie.listePointForet);
+      resultat += this.getScoreTableau(this.dataPartie.listePointChamp);
+      resultat += this.getScoreTableau(this.dataPartie.listePointVillage);
+      resultat += this.getScoreTableau(this.dataPartie.listePointRiviere);
+      resultat += this.getScoreTableau(this.dataPartie.listePointCheminDeFer);
+      resultat += this.getScoreTableau(this.dataPartie.doublageForet);
+      resultat += this.getScoreTableau(this.dataPartie.doublageChamp);
+      resultat += this.getScoreTableau(this.dataPartie.doublageVillage);
+      resultat += this.getScoreTableau(this.dataPartie.doublageRiviere);
+      resultat += this.getScoreTableau(this.dataPartie.doublageCheminDeFer);
+      resultat += this.dataPartie.longueRiviere;
+      resultat += this.dataPartie.longCheminDeFer;
+      resultat += this.dataPartie.drapeauChampA;
+      resultat += this.dataPartie.drapeauChampB;
+      resultat += this.dataPartie.drapeauChampC;
+      resultat += this.dataPartie.drapeauChampD;
+      resultat += this.dataPartie.drapeauForetA;
+      resultat += this.dataPartie.drapeauForetB;
+      resultat += this.dataPartie.drapeauForetC;
+      resultat += this.dataPartie.drapeauForetD;
+      resultat += this.dataPartie.drapeauVillageA;
+      resultat += this.dataPartie.drapeauVillageB;
+      resultat += this.dataPartie.drapeauVillageC;
+      resultat += this.dataPartie.drapeauVillageD;
+      resultat += this.dataPartie.coeurA;
+      resultat += this.dataPartie.coeurB;
+      resultat += this.dataPartie.coeurC;
+      resultat += this.dataPartie.coeurD;
+      resultat += this.dataPartie.coeurDore * 2;
+      resultat += this.dataPartie.colinne * 2;
+      resultat += this.dataPartie.aiguilleur * 2;
+      resultat += this.dataPartie.mongolfiere * 2;
+      resultat += this.dataPartie.bergere;
+      resultat += this.dataPartie.portDePlaisance;
+      resultat += this.dataPartie.gare;
+      resultat += this.dataPartie.chantier * 3;
+      resultat += this.dataPartie.isCirque?10:0;
+      this.scoreFinal = resultat;
+      var res = this.getLibelleScore(resultat);
+      this.libelleScore = res[0];
+      this.nbCroix = res[1];
+      this.getContenuDebloque();
+      this.savePartie();
+      this.isScoreCalcule = true;
+    }
+  }
+
+  private savePartie(){
+    const roundRow: CountRoundRow[] = [];
+    this.table!.users.forEach(joueur => {
+      const player: CountRoundRow = {
+        user: {
+          position: 0,
+          user: joueur
+        },
+        value: this.scoreFinal
+      }
+      roundRow.push(player);
+    });
+
+    const round: RoundRow[] = [{
+      points: roundRow,
+      row: 1
+    }]
+    this.table!.round = round;
+    this.table!.specificData = JSON.stringify(this.dataPartie);
+    this.tableService.updateTable(this.table!).subscribe({
+      next: () => {
+      },
+      error: (error) => {
+        console.error("Error update table:", error);
+      }
+    });
+  }
+
+  private getLibelleScore(score : number) : [string,number] {
+    if(score > 0 && score <= 10) {return ["libelleA",1];}
+    else if (score > 7 && score <= 40) {return ["libelleB",2]}
+    return ["",0];
+  }
+
+  private getContenuDebloque(){
+    this.contenuDebloque = [];
+    if(this.dataPartie){
+      if(this.getScoreTableau(this.dataPartie.listePointForet) == 30) {this.contenuDebloque.push("Cabane dans la fôret débloqué si disponible")}
+    }
+  }
+
+  private getScoreTableau(liste: string[]): number {
+    return liste
+      .map(item => parseInt(item.replace(/[^\d]/g, ''), 10))
+      .reduce((sum, num) => sum + num, 0);
   }
 }
