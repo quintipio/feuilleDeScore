@@ -6,47 +6,48 @@ import { Table } from '../../models/table.model';
 import { ActivatedRoute } from '@angular/router';
 import { InputScoreComponent } from '../../components/input-score/input-score.component';
 
-export type DataDorf  = {
-  listePointForet : number[],
-  listePointVillage : number[],
-  listePointChamp : number[],
-  listePointRiviere : number[],
-  listePointCheminDeFer : number[],
+export type DataDorf = {
+  listePointForet: string[],
+  listePointVillage: string[],
+  listePointChamp: string[],
+  listePointRiviere: string[],
+  listePointCheminDeFer: string[],
 
   longueRiviere: number,
   longCheminDeFer: number,
 
-  drapeauForetA : number,
-  drapeauForetB : number,
-  drapeauForetC : number,
-  drapeauForetD : number,
-  drapeauChampA : number,
-  drapeauChampB : number,
-  drapeauChampC : number,
-  drapeauChampD : number,
-  drapeauVillageA : number,
-  drapeauVillageB : number,
-  drapeauVillageC : number,
-  drapeauVillageD : number,
+  drapeauForetA: number,
+  drapeauForetB: number,
+  drapeauForetC: number,
+  drapeauForetD: number,
+  drapeauChampA: number,
+  drapeauChampB: number,
+  drapeauChampC: number,
+  drapeauChampD: number,
+  drapeauVillageA: number,
+  drapeauVillageB: number,
+  drapeauVillageC: number,
+  drapeauVillageD: number,
 
 
-  doublageForet : number[],
-  doublageVillage : number[],
-  doublageChamp : number[],
-  doublageRiviere : number[],
-  doublageCheminDeFer : number[],
+  doublageForet: string[],
+  doublageVillage: string[],
+  doublageChamp: string[],
+  doublageRiviere: string[],
+  doublageCheminDeFer: string[],
 
-  isCirque : boolean,
-  isGareFerroviere : boolean,
-  isPOrtDePlaisance : boolean,
-  coeurA : number,
-  coeurB : number,
-  coeurC : number,
-  coeurD : number,
-  coeurDore : number,
-  aiguilleur : number,
-  mongolfiere : number,
-  colinne : number,
+  isCirque: boolean,
+  gare: number,
+  portDePlaisance: number,
+  chantier: number,
+  coeurA: number,
+  coeurB: number,
+  coeurC: number,
+  coeurD: number,
+  coeurDore: number,
+  aiguilleur: number,
+  mongolfiere: number,
+  colinne: number,
 }
 
 @Component({
@@ -63,6 +64,7 @@ export class DorfromantikSheetComponent {
   table: Table | undefined;
 
   dataPartie: DataDorf | undefined = undefined;
+  isScoreCalcule : boolean = false;
 
   constructor(private route: ActivatedRoute) {
   }
@@ -79,6 +81,7 @@ export class DorfromantikSheetComponent {
               if (this.table?.specificData !== undefined && this.table.specificData !== "") {
                 console.log("Partie en cours");
                 this.dataPartie = JSON.parse(this.table.specificData);
+                this.refreshInputScore();
               } else {
                 console.log("Nouvelle partie");
                 this.newPartie();
@@ -94,83 +97,334 @@ export class DorfromantikSheetComponent {
   }
 
   private newPartie() {
-    const newPartie : DataDorf = {
-      listePointForet : [],
-      listePointVillage : [],
-      listePointChamp : [],
-      listePointRiviere : [],
-      listePointCheminDeFer : [],
+    const newPartie: DataDorf = {
+      listePointForet: [],
+      listePointVillage: [],
+      listePointChamp: [],
+      listePointRiviere: [],
+      listePointCheminDeFer: [],
 
       longueRiviere: 0,
       longCheminDeFer: 0,
 
-      drapeauForetA : 0,
-      drapeauForetB : 0,
-      drapeauForetC : 0,
-      drapeauForetD : 0,
-      drapeauChampA : 0,
-      drapeauChampB : 0,
-      drapeauChampC : 0,
-      drapeauChampD : 0,
-      drapeauVillageA : 0,
-      drapeauVillageB : 0,
-      drapeauVillageC : 0,
-      drapeauVillageD : 0,
+      drapeauForetA: 0,
+      drapeauForetB: 0,
+      drapeauForetC: 0,
+      drapeauForetD: 0,
+      drapeauChampA: 0,
+      drapeauChampB: 0,
+      drapeauChampC: 0,
+      drapeauChampD: 0,
+      drapeauVillageA: 0,
+      drapeauVillageB: 0,
+      drapeauVillageC: 0,
+      drapeauVillageD: 0,
 
 
-      doublageForet : [],
-      doublageVillage : [],
-      doublageChamp : [],
-      doublageRiviere : [],
-      doublageCheminDeFer : [],
+      doublageForet: [],
+      doublageVillage: [],
+      doublageChamp: [],
+      doublageRiviere: [],
+      doublageCheminDeFer: [],
 
-      isCirque : false,
-      isGareFerroviere : false,
-      isPOrtDePlaisance : false,
-      coeurA : 0,
-      coeurB : 0,
-      coeurC : 0,
-      coeurD : 0,
-      coeurDore : 0,
-      aiguilleur : 0,
-      colinne : 0,
-      mongolfiere : 0,
+      isCirque: false,
+      gare: 0,
+      portDePlaisance: 0,
+      chantier: 0,
+      coeurA: 0,
+      coeurB: 0,
+      coeurC: 0,
+      coeurD: 0,
+      coeurDore: 0,
+      aiguilleur: 0,
+      colinne: 0,
+      mongolfiere: 0,
     }
 
     this.dataPartie = newPartie;
     this.refreshInputScore();
   }
 
-  private refreshInputScore(){
+  private refreshInputScore() {
     this.inputScores?.forEach((input) => {
-      if(input.name === "inputForetA") {input.reinit(this.dataPartie!.drapeauForetA)}
-      if(input.name === "inputForetB") {input.reinit(this.dataPartie!.drapeauForetB)}
-      if(input.name === "inputForetC") {input.reinit(this.dataPartie!.drapeauForetC)}
-      if(input.name === "inputForetD") {input.reinit(this.dataPartie!.drapeauForetD)}
-      if(input.name === "inputChampA") {input.reinit(this.dataPartie!.drapeauChampA)}
-      if(input.name === "inputChampB") {input.reinit(this.dataPartie!.drapeauChampB)}
-      if(input.name === "inputChampC") {input.reinit(this.dataPartie!.drapeauChampC)}
-      if(input.name === "inputChampD") {input.reinit(this.dataPartie!.drapeauChampD)}
-      if(input.name === "inputVillageA") {input.reinit(this.dataPartie!.drapeauVillageA)}
-      if(input.name === "inputVillageB") {input.reinit(this.dataPartie!.drapeauVillageB)}
-      if(input.name === "inputVillageC") {input.reinit(this.dataPartie!.drapeauVillageC)}
-      if(input.name === "inputVillageD") {input.reinit(this.dataPartie!.drapeauVillageD)}
-      if(input.name === "inputCoeurA") {input.reinit(this.dataPartie!.coeurA)}
-      if(input.name === "inputCoeurB") {input.reinit(this.dataPartie!.coeurB)}
-      if(input.name === "inputCoeurC") {input.reinit(this.dataPartie!.coeurC)}
-      if(input.name === "inputCoeurD") {input.reinit(this.dataPartie!.coeurD)}
-      if(input.name === "inputCoeurDore") {input.reinit(this.dataPartie!.coeurDore)}
-      if(input.name === "inputAiguilleur") {input.reinit(this.dataPartie!.aiguilleur)}
-      if(input.name === "inputColinne") {input.reinit(this.dataPartie!.colinne)}
-      if(input.name === "inputMongolfiere") {input.reinit(this.dataPartie!.mongolfiere)}
-      if(input.name === "inputLongueRiviere") {input.reinit(this.dataPartie!.longueRiviere)}
-      if(input.name === "inputLongCheminDeFer") {input.reinit(this.dataPartie!.longCheminDeFer)}
+      switch (input.name) {
+        case "inputForetA":
+          input.reinit(this.dataPartie!.drapeauForetA);
+          break;
+        case "inputForetB":
+          input.reinit(this.dataPartie!.drapeauForetB);
+          break;
+        case "inputForetC":
+          input.reinit(this.dataPartie!.drapeauForetC);
+          break;
+        case "inputForetD":
+          input.reinit(this.dataPartie!.drapeauForetD);
+          break;
+        case "inputChampA":
+          input.reinit(this.dataPartie!.drapeauChampA);
+          break;
+        case "inputChampB":
+          input.reinit(this.dataPartie!.drapeauChampB);
+          break;
+        case "inputChampC":
+          input.reinit(this.dataPartie!.drapeauChampC);
+          break;
+        case "inputChampD":
+          input.reinit(this.dataPartie!.drapeauChampD);
+          break;
+        case "inputVillageA":
+          input.reinit(this.dataPartie!.drapeauVillageA);
+          break;
+        case "inputVillageB":
+          input.reinit(this.dataPartie!.drapeauVillageB);
+          break;
+        case "inputVillageC":
+          input.reinit(this.dataPartie!.drapeauVillageC);
+          break;
+        case "inputVillageD":
+          input.reinit(this.dataPartie!.drapeauVillageD);
+          break;
+        case "inputCoeurA":
+          input.reinit(this.dataPartie!.coeurA);
+          break;
+        case "inputCoeurB":
+          input.reinit(this.dataPartie!.coeurB);
+          break;
+        case "inputCoeurC":
+          input.reinit(this.dataPartie!.coeurC);
+          break;
+        case "inputCoeurD":
+          input.reinit(this.dataPartie!.coeurD);
+          break;
+        case "inputCoeurDore":
+          input.reinit(this.dataPartie!.coeurDore);
+          break;
+        case "inputAiguilleur":
+          input.reinit(this.dataPartie!.aiguilleur);
+          break;
+        case "inputChantier":
+          input.reinit(this.dataPartie!.chantier);
+          break;
+        case "inputGare":
+          input.reinit(this.dataPartie!.gare);
+          break;
+        case "inputPort":
+          input.reinit(this.dataPartie!.portDePlaisance);
+          break;
+        case "inputColinne":
+          input.reinit(this.dataPartie!.colinne);
+          break;
+        case "inputMongolfiere":
+          input.reinit(this.dataPartie!.mongolfiere);
+          break;
+        case "inputLongueRiviere":
+          input.reinit(this.dataPartie!.longueRiviere);
+          break;
+        case "inputLongCheminDeFer":
+          input.reinit(this.dataPartie!.longCheminDeFer);
+          break;
+        default:
+          console.warn(`Nom d'entrée inconnu : ${input.name}`);
+          break;
+      }
     });
   }
 
-  selectZone(nom: string, point: number){
-
+  changeCirque(){
+    if(this.dataPartie){
+      this.dataPartie.isCirque = !this.dataPartie.isCirque;
+    }
   }
 
+  updateFromInputScore(value: number, name: string) {
+    if(this.dataPartie === undefined){
+      return;
+    }
 
+    switch (name) {
+      case "inputForetA":
+        this.dataPartie!.drapeauForetA = value;
+        break;
+      case "inputForetB":
+        this.dataPartie!.drapeauForetB = value;
+        break;
+      case "inputForetC":
+        this.dataPartie!.drapeauForetC = value;
+        break;
+      case "inputForetD":
+        this.dataPartie!.drapeauForetD = value;
+        break;
+      case "inputChampA":
+        this.dataPartie!.drapeauChampA = value;
+        break;
+      case "inputChampB":
+        this.dataPartie!.drapeauChampB = value;
+        break;
+      case "inputChampC":
+        this.dataPartie!.drapeauChampC = value;
+        break;
+      case "inputChampD":
+        this.dataPartie!.drapeauChampD = value;
+        break;
+      case "inputVillageA":
+        this.dataPartie!.drapeauVillageA = value;
+        break;
+      case "inputVillageB":
+        this.dataPartie!.drapeauVillageB = value;
+        break;
+      case "inputVillageC":
+        this.dataPartie!.drapeauVillageC = value;
+        break;
+      case "inputVillageD":
+        this.dataPartie!.drapeauVillageD = value;
+        break;
+      case "inputCoeurA":
+        this.dataPartie!.coeurA = value;
+        break;
+      case "inputCoeurB":
+        this.dataPartie!.coeurB = value;
+        break;
+      case "inputCoeurC":
+        this.dataPartie!.coeurC = value;
+        break;
+      case "inputCoeurD":
+        this.dataPartie!.coeurD = value;
+        break;
+      case "inputCoeurDore":
+        this.dataPartie!.coeurDore = value;
+        break;
+      case "inputAiguilleur":
+        this.dataPartie!.aiguilleur = value;
+        break;
+      case "inputChantier":
+        this.dataPartie!.chantier = value;
+        break;
+      case "inputGare":
+        this.dataPartie!.gare = value;
+        break;
+      case "inputPort":
+        this.dataPartie!.portDePlaisance = value;
+        break;
+      case "inputColinne":
+        this.dataPartie!.colinne = value;
+        break;
+      case "inputMongolfiere":
+        this.dataPartie!.mongolfiere = value;
+        break;
+      case "inputLongueRiviere":
+        this.dataPartie!.longueRiviere = value;
+        break;
+      case "inputLongCheminDeFer":
+        this.dataPartie!.longCheminDeFer = value;
+        break;
+      default:
+        console.warn(`Nom d'entrée inconnu`);
+        break;
+    }
+  }
+
+  selectZone(zone: string, point: string) {
+    switch (zone) {
+      case "foret-double":
+        if (this.dataPartie!.doublageForet.indexOf(point) === -1) {
+          this.dataPartie!.doublageForet.push(point);
+        } else {
+          this.dataPartie!.doublageForet.splice(this.dataPartie!.doublageForet.indexOf(point));
+        }
+        break;
+      case "champ-double":
+        if (this.dataPartie!.doublageChamp.indexOf(point) === -1) {
+          this.dataPartie!.doublageChamp.push(point);
+        } else {
+          this.dataPartie!.doublageChamp.splice(this.dataPartie!.doublageChamp.indexOf(point));
+        }
+        break;
+      case "village-double":
+        if (this.dataPartie!.doublageVillage.indexOf(point) === -1) {
+          this.dataPartie!.doublageVillage.push(point);
+        } else {
+          this.dataPartie!.doublageVillage.splice(this.dataPartie!.doublageVillage.indexOf(point));
+        }
+        break;
+      case "riviere-double":
+        if (this.dataPartie!.doublageRiviere.indexOf(point) === -1) {
+          this.dataPartie!.doublageRiviere.push(point);
+        } else {
+          this.dataPartie!.doublageRiviere.splice(this.dataPartie!.doublageRiviere.indexOf(point));
+        }
+        break;
+      case "cheminDeFer-double":
+        if (this.dataPartie!.doublageCheminDeFer.indexOf(point) === -1) {
+          this.dataPartie!.doublageCheminDeFer.push(point);
+        } else {
+          this.dataPartie!.doublageCheminDeFer.splice(this.dataPartie!.doublageCheminDeFer.indexOf(point));
+        }
+        break;
+      case "foret":
+        if (this.dataPartie!.listePointForet.indexOf(point) === -1) {
+          this.dataPartie!.listePointForet.push(point);
+        } else {
+          this.dataPartie!.listePointForet.splice(this.dataPartie!.listePointForet.indexOf(point));
+        }
+        break;
+      case "champ":
+        if (this.dataPartie!.listePointChamp.indexOf(point) === -1) {
+          this.dataPartie!.listePointChamp.push(point);
+        } else {
+          this.dataPartie!.listePointChamp.splice(this.dataPartie!.listePointChamp.indexOf(point));
+        }
+        break;
+      case "village":
+        if (this.dataPartie!.listePointVillage.indexOf(point) === -1) {
+          this.dataPartie!.listePointVillage.push(point);
+        } else {
+          this.dataPartie!.listePointVillage.splice(this.dataPartie!.listePointVillage.indexOf(point));
+        }
+        break;
+      case "riviere":
+        if (this.dataPartie!.listePointRiviere.indexOf(point) === -1) {
+          this.dataPartie!.listePointRiviere.push(point);
+        } else {
+          this.dataPartie!.listePointRiviere.splice(this.dataPartie!.listePointRiviere.indexOf(point));
+        }
+        break;
+      case "cheminDeFer":
+        if (this.dataPartie!.listePointCheminDeFer.indexOf(point) === -1) {
+          this.dataPartie!.listePointCheminDeFer.push(point);
+        } else {
+          this.dataPartie!.listePointCheminDeFer.splice(this.dataPartie!.listePointCheminDeFer.indexOf(point));
+        }
+        break;
+    }
+  }
+
+  isSelectedBouton(zone: string, point: string): boolean {
+    if (this.dataPartie === undefined) {
+      return false;
+    }
+    switch (zone) {
+      case "foret-double":
+        return this.dataPartie!.doublageForet.indexOf(point) !== -1;
+      case "champ-double":
+        return this.dataPartie!.doublageChamp.indexOf(point) !== -1;
+      case "village-double":
+        return this.dataPartie!.doublageVillage.indexOf(point) !== -1;
+      case "riviere-double":
+        return this.dataPartie!.doublageRiviere.indexOf(point) !== -1;
+      case "cheminDeFer-double":
+        return this.dataPartie!.doublageCheminDeFer.indexOf(point) !== -1;
+      case "foret":
+        return this.dataPartie!.listePointForet.indexOf(point) !== -1;
+      case "champ":
+        return this.dataPartie!.listePointChamp.indexOf(point) !== -1;
+      case "village":
+        return this.dataPartie!.listePointVillage.indexOf(point) !== -1;
+      case "riviere":
+        return this.dataPartie!.listePointRiviere.indexOf(point) !== -1;
+      case "cheminDeFer":
+        return this.dataPartie!.listePointCheminDeFer.indexOf(point) !== -1;
+      default:
+        return false;
+    }
+  }
 }

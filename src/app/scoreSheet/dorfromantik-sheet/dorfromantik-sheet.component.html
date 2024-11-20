@@ -9,13 +9,13 @@
             <div class="zone-title">Fôret</div>
             <div class="zones">
               <div class="d-flex flex-wrap">
-                <button class="zone-btn" (click)="selectZone('foret', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('foret', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('foret', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('foret', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('foret', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('foret', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('foret', 7)">7</button>
+                <button class="zone-btn" (click)="selectZone('foret', '4a')" [ngClass]="{'selected': isSelectedBouton('foret', '4a')}" >4</button>
+                <button class="zone-btn" (click)="selectZone('foret', '4b')" [ngClass]="{'selected': isSelectedBouton('foret', '4b')}" >4</button>
+                <button class="zone-btn" (click)="selectZone('foret', '5a')" [ngClass]="{'selected': isSelectedBouton('foret', '5a')}">5</button>
+                <button class="zone-btn" (click)="selectZone('foret', '5b')" [ngClass]="{'selected': isSelectedBouton('foret', '5b')}">5</button>
+                <button class="zone-btn" (click)="selectZone('foret', '6a')" [ngClass]="{'selected': isSelectedBouton('foret', '6a')}">6</button>
+                <button class="zone-btn" (click)="selectZone('foret', '6b')" [ngClass]="{'selected': isSelectedBouton('foret', '6b')}">6</button>
+                <button class="zone-btn" (click)="selectZone('foret', '7a')" [ngClass]="{'selected': isSelectedBouton('foret', '7a')}">7</button>
               </div>
             </div>
           </div>
@@ -26,13 +26,13 @@
             <div class="zone-title">Champ</div>
             <div class="zones">
               <div class="d-flex flex-wrap">
-                <button class="zone-btn" (click)="selectZone('champ', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('champ', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('champ', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('champ', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('champ', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('champ', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('champ', 7)">7</button>
+                <button class="zone-btn" (click)="selectZone('champ', '4a')" [ngClass]="{'selected': isSelectedBouton('champ', '4a')}" >4</button>
+                <button class="zone-btn" (click)="selectZone('champ', '4b')" [ngClass]="{'selected': isSelectedBouton('champ', '4b')}" >4</button>
+                <button class="zone-btn" (click)="selectZone('champ', '5a')" [ngClass]="{'selected': isSelectedBouton('champ', '5a')}">5</button>
+                <button class="zone-btn" (click)="selectZone('champ', '5b')" [ngClass]="{'selected': isSelectedBouton('champ', '5b')}">5</button>
+                <button class="zone-btn" (click)="selectZone('champ', '6a')" [ngClass]="{'selected': isSelectedBouton('champ', '6a')}">6</button>
+                <button class="zone-btn" (click)="selectZone('champ', '6b')" [ngClass]="{'selected': isSelectedBouton('champ', '6b')}">6</button>
+                <button class="zone-btn" (click)="selectZone('champ', '7a')" [ngClass]="{'selected': isSelectedBouton('champ', '7a')}">7</button>
               </div>
             </div>
           </div>
@@ -43,13 +43,13 @@
             <div class="zone-title">Village</div>
             <div class="zones">
               <div class="d-flex flex-wrap">
-                <button class="zone-btn" (click)="selectZone('village', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('village', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('village', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('village', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('village', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('village', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('village', 7)">7</button>
+                <button class="zone-btn" (click)="selectZone('village', '4a')" [ngClass]="{'selected': isSelectedBouton('village', '4a')}" >4</button>
+                <button class="zone-btn" (click)="selectZone('village', '4b')" [ngClass]="{'selected': isSelectedBouton('village', '4b')}" >4</button>
+                <button class="zone-btn" (click)="selectZone('village', '5a')" [ngClass]="{'selected': isSelectedBouton('village', '5a')}">5</button>
+                <button class="zone-btn" (click)="selectZone('village', '5b')" [ngClass]="{'selected': isSelectedBouton('village', '5b')}">5</button>
+                <button class="zone-btn" (click)="selectZone('village', '6a')" [ngClass]="{'selected': isSelectedBouton('village', '6a')}">6</button>
+                <button class="zone-btn" (click)="selectZone('village', '6b')" [ngClass]="{'selected': isSelectedBouton('village', '6b')}">6</button>
+                <button class="zone-btn" (click)="selectZone('village', '7a')" [ngClass]="{'selected': isSelectedBouton('village', '7a')}">7</button>
               </div>
             </div>
           </div>
@@ -60,13 +60,13 @@
             <div class="zone-title">Rivière</div>
             <div class="zones">
               <div class="d-flex flex-wrap">
-                <button class="zone-btn" (click)="selectZone('riviere', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('riviere', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('riviere', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('riviere', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('riviere', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('riviere', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('riviere', 7)">7</button>
+                <button class="zone-btn" (click)="selectZone('riviere', '4a')" [ngClass]="{'selected': isSelectedBouton('riviere', '4a')}" >4</button>
+                <button class="zone-btn" (click)="selectZone('riviere', '4b')" [ngClass]="{'selected': isSelectedBouton('riviere', '4b')}" >4</button>
+                <button class="zone-btn" (click)="selectZone('riviere', '5a')" [ngClass]="{'selected': isSelectedBouton('riviere', '5a')}">5</button>
+                <button class="zone-btn" (click)="selectZone('riviere', '5b')" [ngClass]="{'selected': isSelectedBouton('riviere', '5b')}">5</button>
+                <button class="zone-btn" (click)="selectZone('riviere', '6a')" [ngClass]="{'selected': isSelectedBouton('riviere', '6a')}">6</button>
+                <button class="zone-btn" (click)="selectZone('riviere', '6b')" [ngClass]="{'selected': isSelectedBouton('riviere', '6b')}">6</button>
+                <button class="zone-btn" (click)="selectZone('riviere', '7a')" [ngClass]="{'selected': isSelectedBouton('riviere', '7a')}">7</button>
               </div>
             </div>
           </div>
@@ -77,13 +77,13 @@
             <div class="zone-title">Chemin de fer</div>
             <div class="zones">
               <div class="d-flex flex-wrap">
-                <button class="zone-btn" (click)="selectZone('locomotive', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('locomotive', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('locomotive', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('locomotive', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('locomotive', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('locomotive', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('locomotive', 7)">7</button>
+                <button class="zone-btn" (click)="selectZone('cheminDeFer', '4a')" [ngClass]="{'selected': isSelectedBouton('cheminDeFer', '4a')}" >4</button>
+                <button class="zone-btn" (click)="selectZone('cheminDeFer', '4b')" [ngClass]="{'selected': isSelectedBouton('cheminDeFer', '4b')}" >4</button>
+                <button class="zone-btn" (click)="selectZone('cheminDeFer', '5a')" [ngClass]="{'selected': isSelectedBouton('cheminDeFer', '5a')}">5</button>
+                <button class="zone-btn" (click)="selectZone('cheminDeFer', '5b')" [ngClass]="{'selected': isSelectedBouton('cheminDeFer', '5b')}">5</button>
+                <button class="zone-btn" (click)="selectZone('cheminDeFer', '6a')" [ngClass]="{'selected': isSelectedBouton('cheminDeFer', '6a')}">6</button>
+                <button class="zone-btn" (click)="selectZone('cheminDeFer', '6b')" [ngClass]="{'selected': isSelectedBouton('cheminDeFer', '6b')}">6</button>
+                <button class="zone-btn" (click)="selectZone('cheminDeFer', '7a')" [ngClass]="{'selected': isSelectedBouton('cheminDeFer', '7a')}">7</button>
               </div>
             </div>
           </div>
@@ -99,24 +99,24 @@
       <div class="row mb-12">
         <div class="col-12 col-md-4">
           <label class="me-2">Forêt:</label>
-          <app-input-score name="inputForetA" [min]="0" [initValue]="dataPartie?.drapeauForetA"></app-input-score>
-          <app-input-score name="inputForetB" [min]="0" [initValue]="dataPartie?.drapeauForetB"></app-input-score>
-          <app-input-score name="inputForetC" [min]="0" [initValue]="dataPartie?.drapeauForetC"></app-input-score>
-          <app-input-score name="inputForetD" [min]="0" [initValue]="dataPartie?.drapeauForetD"></app-input-score>
+          <app-input-score name="inputForetA" [min]="0" [initValue]="dataPartie?.drapeauForetA" (valueChange)="updateFromInputScore($event, 'inputForetA')"></app-input-score>
+          <app-input-score name="inputForetB" [min]="0" [initValue]="dataPartie?.drapeauForetB" (valueChange)="updateFromInputScore($event, 'inputForetB')"></app-input-score>
+          <app-input-score name="inputForetC" [min]="0" [initValue]="dataPartie?.drapeauForetC" (valueChange)="updateFromInputScore($event, 'inputForetC')"></app-input-score>
+          <app-input-score name="inputForetD" [min]="0" [initValue]="dataPartie?.drapeauForetD" (valueChange)="updateFromInputScore($event, 'inputForetD')"></app-input-score>
         </div>
         <div class="col-12 col-md-4">
           <label class="me-2">Champ:</label>
-          <app-input-score name="inputChampA" [min]="0" [initValue]="dataPartie?.drapeauChampA"></app-input-score>
-          <app-input-score name="inputChampB" [min]="0" [initValue]="dataPartie?.drapeauChampB"></app-input-score>
-          <app-input-score name="inputChampC" [min]="0" [initValue]="dataPartie?.drapeauChampC"></app-input-score>
-          <app-input-score name="inputChampD" [min]="0" [initValue]="dataPartie?.drapeauChampD"></app-input-score>
+          <app-input-score name="inputChampA" [min]="0" [initValue]="dataPartie?.drapeauChampA" (valueChange)="updateFromInputScore($event, 'inputChampA')"></app-input-score>
+          <app-input-score name="inputChampB" [min]="0" [initValue]="dataPartie?.drapeauChampB" (valueChange)="updateFromInputScore($event, 'inputChampB')"></app-input-score>
+          <app-input-score name="inputChampC" [min]="0" [initValue]="dataPartie?.drapeauChampC" (valueChange)="updateFromInputScore($event, 'inputChampC')"></app-input-score>
+          <app-input-score name="inputChampD" [min]="0" [initValue]="dataPartie?.drapeauChampD" (valueChange)="updateFromInputScore($event, 'inputChampD')"></app-input-score>
         </div>
         <div class="col-12 col-md-4">
           <label >Village:</label>
-          <app-input-score name="inputVillageA" [min]="0" [initValue]="dataPartie?.drapeauVillageA"></app-input-score>
-          <app-input-score name="inputVillageB" [min]="0" [initValue]="dataPartie?.drapeauVillageB"></app-input-score>
-          <app-input-score name="inputVillageC" [min]="0" [initValue]="dataPartie?.drapeauVillageC"></app-input-score>
-          <app-input-score name="inputVillageD" [min]="0" [initValue]="dataPartie?.drapeauVillageD"></app-input-score>
+          <app-input-score name="inputVillageA" [min]="0" [initValue]="dataPartie?.drapeauVillageA" (valueChange)="updateFromInputScore($event, 'inputVillageA')"></app-input-score>
+          <app-input-score name="inputVillageB" [min]="0" [initValue]="dataPartie?.drapeauVillageB" (valueChange)="updateFromInputScore($event, 'inputVillageB')"></app-input-score>
+          <app-input-score name="inputVillageC" [min]="0" [initValue]="dataPartie?.drapeauVillageC" (valueChange)="updateFromInputScore($event, 'inputVillageC')"></app-input-score>
+          <app-input-score name="inputVillageD" [min]="0" [initValue]="dataPartie?.drapeauVillageD" (valueChange)="updateFromInputScore($event, 'inputVillageD')"></app-input-score>
         </div>
       </div>
     </div>
@@ -128,11 +128,11 @@
     <div class="card-body">
       <div class="mb-3 d-flex align-items-center">
         <label class="me-2">Plus longue rivière:</label>
-        <app-input-score name="inputLongueRiviere" [min]="0" [initValue]="dataPartie?.longueRiviere"></app-input-score>
+        <app-input-score name="inputLongueRiviere" [min]="0" [initValue]="dataPartie?.longueRiviere" (valueChange)="updateFromInputScore($event, 'inputLongueRiviere')"></app-input-score>
       </div>
       <div class="d-flex align-items-center">
         <label class="me-2">Plus long chemin de fer:</label>
-        <app-input-score name="inputLongCheminDeFer" [min]="0" [initValue]="dataPartie?.longCheminDeFer"></app-input-score>
+        <app-input-score name="inputLongCheminDeFer" [min]="0" [initValue]="dataPartie?.longCheminDeFer" (valueChange)="updateFromInputScore($event, 'inputLongCheminDeFer')"></app-input-score>
       </div>
     </div>
   </div>
@@ -148,13 +148,13 @@
             <div class="zone-title">Cabane dans les bois</div>
             <div class="zones">
               <div class="d-flex flex-wrap">
-                <button class="zone-btn" (click)="selectZone('foret', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('foret', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('foret', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('foret', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('foret', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('foret', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('foret', 7)">7</button>
+                <button class="zone-btn" (click)="selectZone('foret-double', '4a')" [ngClass]="{'selected': isSelectedBouton('foret-double', '4a')}">4</button>
+                <button class="zone-btn" (click)="selectZone('foret-double', '4b')" [ngClass]="{'selected': isSelectedBouton('foret-double', '4b')}">4</button>
+                <button class="zone-btn" (click)="selectZone('foret-double', '5a')" [ngClass]="{'selected': isSelectedBouton('foret-double', '5a')}">5</button>
+                <button class="zone-btn" (click)="selectZone('foret-double', '5b')" [ngClass]="{'selected': isSelectedBouton('foret-double', '5b')}">5</button>
+                <button class="zone-btn" (click)="selectZone('foret-double', '6a')" [ngClass]="{'selected': isSelectedBouton('foret-double', '6a')}">6</button>
+                <button class="zone-btn" (click)="selectZone('foret-double', '6b')" [ngClass]="{'selected': isSelectedBouton('foret-double', '6b')}">6</button>
+                <button class="zone-btn" (click)="selectZone('foret-double', '7a')" [ngClass]="{'selected': isSelectedBouton('foret-double', '7a')}">7</button>
               </div>
             </div>
           </div>
@@ -165,13 +165,13 @@
             <div class="zone-title">Fête des moissons</div>
             <div class="zones">
               <div class="d-flex flex-wrap">
-                <button class="zone-btn" (click)="selectZone('champ', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('champ', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('champ', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('champ', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('champ', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('champ', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('champ', 7)">7</button>
+                <button class="zone-btn" (click)="selectZone('champ-double', '4a')" [ngClass]="{'selected': isSelectedBouton('champ-double', '4a')}">4</button>
+                <button class="zone-btn" (click)="selectZone('champ-double', '4b')" [ngClass]="{'selected': isSelectedBouton('champ-double', '4b')}">4</button>
+                <button class="zone-btn" (click)="selectZone('champ-double', '5a')" [ngClass]="{'selected': isSelectedBouton('champ-double', '5a')}">5</button>
+                <button class="zone-btn" (click)="selectZone('champ-double', '5b')" [ngClass]="{'selected': isSelectedBouton('champ-double', '5b')}">5</button>
+                <button class="zone-btn" (click)="selectZone('champ-double', '6a')" [ngClass]="{'selected': isSelectedBouton('champ-double', '6a')}">6</button>
+                <button class="zone-btn" (click)="selectZone('champ-double', '6b')" [ngClass]="{'selected': isSelectedBouton('champ-double', '6b')}">6</button>
+                <button class="zone-btn" (click)="selectZone('champ-double', '7a')" [ngClass]="{'selected': isSelectedBouton('champ-double', '7a')}">7</button>
               </div>
             </div>
           </div>
@@ -182,13 +182,13 @@
             <div class="zone-title">Tour de guet</div>
             <div class="zones">
               <div class="d-flex flex-wrap">
-                <button class="zone-btn" (click)="selectZone('village', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('village', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('village', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('village', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('village', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('village', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('village', 7)">7</button>
+                <button class="zone-btn" (click)="selectZone('village-double', '4a')" [ngClass]="{'selected': isSelectedBouton('village-double', '4a')}">4</button>
+                <button class="zone-btn" (click)="selectZone('village-double', '4b')" [ngClass]="{'selected': isSelectedBouton('village-double', '4b')}">4</button>
+                <button class="zone-btn" (click)="selectZone('village-double', '5a')" [ngClass]="{'selected': isSelectedBouton('village-double', '5a')}">5</button>
+                <button class="zone-btn" (click)="selectZone('village-double', '5b')" [ngClass]="{'selected': isSelectedBouton('village-double', '5b')}">5</button>
+                <button class="zone-btn" (click)="selectZone('village-double', '6a')" [ngClass]="{'selected': isSelectedBouton('village-double', '6a')}">6</button>
+                <button class="zone-btn" (click)="selectZone('village-double', '6b')" [ngClass]="{'selected': isSelectedBouton('village-double', '6b')}">6</button>
+                <button class="zone-btn" (click)="selectZone('village-double', '7a')" [ngClass]="{'selected': isSelectedBouton('village-double', '7a')}">7</button>
               </div>
             </div>
           </div>
@@ -199,13 +199,13 @@
             <div class="zone-title">Bateau de plaisance</div>
             <div class="zones">
               <div class="d-flex flex-wrap">
-                <button class="zone-btn" (click)="selectZone('riviere', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('riviere', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('riviere', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('riviere', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('riviere', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('riviere', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('riviere', 7)">7</button>
+                <button class="zone-btn" (click)="selectZone('riviere-double', '4a')" [ngClass]="{'selected': isSelectedBouton('riviere-double', '4a')}">4</button>
+                <button class="zone-btn" (click)="selectZone('riviere-double', '4b')" [ngClass]="{'selected': isSelectedBouton('riviere-double', '4b')}">4</button>
+                <button class="zone-btn" (click)="selectZone('riviere-double', '5a')" [ngClass]="{'selected': isSelectedBouton('riviere-double', '5a')}">5</button>
+                <button class="zone-btn" (click)="selectZone('riviere-double', '5b')" [ngClass]="{'selected': isSelectedBouton('riviere-double', '5b')}">5</button>
+                <button class="zone-btn" (click)="selectZone('riviere-double', '6a')" [ngClass]="{'selected': isSelectedBouton('riviere-double', '6a')}">6</button>
+                <button class="zone-btn" (click)="selectZone('riviere-double', '6b')" [ngClass]="{'selected': isSelectedBouton('riviere-double', '6b')}">6</button>
+                <button class="zone-btn" (click)="selectZone('riviere-double', '7a')" [ngClass]="{'selected': isSelectedBouton('riviere-double', '7a')}">7</button>
               </div>
             </div>
           </div>
@@ -216,13 +216,13 @@
             <div class="zone-title">Locomotive</div>
             <div class="zones">
               <div class="d-flex flex-wrap">
-                <button class="zone-btn" (click)="selectZone('locomotive', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('locomotive', 4)">4</button>
-                <button class="zone-btn" (click)="selectZone('locomotive', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('locomotive', 5)">5</button>
-                <button class="zone-btn" (click)="selectZone('locomotive', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('locomotive', 6)">6</button>
-                <button class="zone-btn" (click)="selectZone('locomotive', 7)">7</button>
+                <button class="zone-btn" (click)="selectZone('cheminDeFer-double', '4a')" [ngClass]="{'selected': isSelectedBouton('cheminDeFer-double', '4a')}">4</button>
+                <button class="zone-btn" (click)="selectZone('cheminDeFer-double', '4b')" [ngClass]="{'selected': isSelectedBouton('cheminDeFer-double', '4b')}">4</button>
+                <button class="zone-btn" (click)="selectZone('cheminDeFer-double', '5a')" [ngClass]="{'selected': isSelectedBouton('cheminDeFer-double', '5a')}">5</button>
+                <button class="zone-btn" (click)="selectZone('cheminDeFer-double', '5b')" [ngClass]="{'selected': isSelectedBouton('cheminDeFer-double', '5b')}">5</button>
+                <button class="zone-btn" (click)="selectZone('cheminDeFer-double', '6a')" [ngClass]="{'selected': isSelectedBouton('cheminDeFer-double', '6a')}">6</button>
+                <button class="zone-btn" (click)="selectZone('cheminDeFer-double', '6b')" [ngClass]="{'selected': isSelectedBouton('cheminDeFer-double', '6b')}">6</button>
+                <button class="zone-btn" (click)="selectZone('cheminDeFer-double', '7a')" [ngClass]="{'selected': isSelectedBouton('cheminDeFer-double', '7a')}">7</button>
               </div>
             </div>
           </div>
@@ -236,52 +236,56 @@
     <div class="card-header">Déverrouille</div>
     <div class="card-body">
       <div class="mb-3">
-        <label>Cirque:</label>
-        <input type="checkbox" />
+        <label>Cirque : </label>
+        <input type="checkbox"[checked]="dataPartie?.isCirque" (change)="changeCirque()"/>
       </div>
       <div class="mb-3">
-        <label>Gare ferroviaire:</label>
-        <input type="checkbox" />
-      </div>
-      <div class="mb-3">
-        <label>Port de plaisance:</label>
-        <input type="checkbox" />
-      </div>
-      <div class="mb-3">
-        <label>Cœurs rouges :</label>
-        <app-input-score name="inputCoeurA" [min]="0" [initValue]="dataPartie?.coeurA"></app-input-score>
-        <app-input-score name="inputCoeurB" [min]="0" [initValue]="dataPartie?.coeurB"></app-input-score>
-        <app-input-score name="inputCoeurC" [min]="0" [initValue]="dataPartie?.coeurC"></app-input-score>
-        <app-input-score name="inputCoeurD" [min]="0" [initValue]="dataPartie?.coeurD"></app-input-score>
+        <label>Cœurs rouges : </label>
+        <app-input-score name="inputCoeurA" [min]="0" [initValue]="dataPartie?.coeurA" (valueChange)="updateFromInputScore($event, 'inputCoeurA')"></app-input-score>
+        <app-input-score name="inputCoeurB" [min]="0" [initValue]="dataPartie?.coeurB" (valueChange)="updateFromInputScore($event, 'inputCoeurB')"></app-input-score>
+        <app-input-score name="inputCoeurC" [min]="0" [initValue]="dataPartie?.coeurC" (valueChange)="updateFromInputScore($event, 'inputCoeurC')"></app-input-score>
+        <app-input-score name="inputCoeurD" [min]="0" [initValue]="dataPartie?.coeurD" (valueChange)="updateFromInputScore($event, 'inputCoeurD')"></app-input-score>
       </div>
       <div class="mb-3">
         <label>Cœurs dorés :</label>
-        <app-input-score name="inputCoeurDore" [min]="0" [initValue]="dataPartie?.coeurDore"></app-input-score>
+        <app-input-score name="inputCoeurDore" [min]="0" [initValue]="dataPartie?.coeurDore" (valueChange)="updateFromInputScore($event, 'inputCoeurDore')"></app-input-score>
+      </div>
+      <div class="mb-3">
+        <label>Chantier de construction : </label>
+        <app-input-score name="inputChantier" [min]="0" [inc]="7" [max]="21" [initValue]="dataPartie?.chantier" (valueChange)="updateFromInputScore($event, 'inputChantier')"></app-input-score>
+      </div>
+      <div class="mb-3">
+        <label>Gare ferroviaire : </label>
+        <app-input-score name="inputGare" [min]="0" [initValue]="dataPartie?.gare" (valueChange)="updateFromInputScore($event, 'inputGare')"></app-input-score>
+      </div>
+      <div class="mb-3">
+        <label>Port de plaisance : </label>
+        <app-input-score name="inputPort" [min]="0" [initValue]="dataPartie?.portDePlaisance" (valueChange)="updateFromInputScore($event, 'inputPort')"></app-input-score>
       </div>
       <div class="mb-3">
         <label>Aiguilleur :</label>
-        <app-input-score name="inputAiguilleur" [min]="0" [initValue]="dataPartie?.aiguilleur"></app-input-score>
+        <app-input-score name="inputAiguilleur" [min]="0" [initValue]="dataPartie?.aiguilleur" (valueChange)="updateFromInputScore($event, 'inputAiguilleur')"></app-input-score>
       </div>
       <div class="mb-3">
         <label>Colinne : (nombre de tuile)</label>
-        <app-input-score name="inputColinne" [min]="0" [initValue]="dataPartie?.colinne"></app-input-score>
+        <app-input-score name="inputColinne" [min]="0" [initValue]="dataPartie?.colinne" (valueChange)="updateFromInputScore($event, 'inputColinne')"></app-input-score>
       </div>
       <div class="mb-3">
         <label>Site de décollage :</label>
-        <app-input-score name="inputMongolfiere" [min]="0" [initValue]="dataPartie?.mongolfiere"></app-input-score>
+        <app-input-score name="inputMongolfiere" [min]="0" [initValue]="dataPartie?.mongolfiere" (valueChange)="updateFromInputScore($event, 'inputMongolfiere')"></app-input-score>
       </div>
     </div>
   </div>
   <button class="centered-button">Calculer</button>
 
   <!-- Résultat -->
-  <div class="card" style="margin-top:20px;">
+  <div class="card" style="margin-top:20px;" *ngIf="isScoreCalcule">
     <div class="card-header">Résultat</div>
     <div class="card-body">
       <div>Niveau: Agriculteur</div>
       <div>Nombre de points: 999</div>
       <ul>
-        <li>Coucou</li>
+        <li>{{dataPartie?.isCirque}}</li>
         <li>TATA</li>
         <li>TITI</li>
       </ul>
