@@ -67,10 +67,10 @@ export class DorfromantikSheetComponent {
 
   dataPartie: DataDorf | undefined = undefined;
   isScoreCalcule: boolean = false;
-  scoreFinal : number = 0;
-  nbCroix : number = 0;
-  libelleScore : string = "";
-  contenuDebloque : string[] = [];
+  scoreFinal: number = 0;
+  nbCroix: number = 0;
+  libelleScore: string = "";
+  contenuDebloque: string[] = [];
 
   constructor(private route: ActivatedRoute) {
   }
@@ -146,7 +146,7 @@ export class DorfromantikSheetComponent {
       aiguilleur: 0,
       colinne: 0,
       mongolfiere: 0,
-      bergere : 0
+      bergere: 0
     }
 
     this.dataPartie = newPartie;
@@ -225,9 +225,9 @@ export class DorfromantikSheetComponent {
         case "inputMongolfiere":
           input.reinit(this.dataPartie!.mongolfiere);
           break;
-          case "inputBergere":
-            input.reinit(this.dataPartie!.bergere);
-            break;
+        case "inputBergere":
+          input.reinit(this.dataPartie!.bergere);
+          break;
         case "inputLongueRiviere":
           input.reinit(this.dataPartie!.longueRiviere);
           break;
@@ -322,9 +322,9 @@ export class DorfromantikSheetComponent {
       case "inputMongolfiere":
         this.dataPartie!.mongolfiere = value;
         break;
-        case "inputBergere":
-          this.dataPartie!.bergere = value;
-          break;
+      case "inputBergere":
+        this.dataPartie!.bergere = value;
+        break;
       case "inputLongueRiviere":
         this.dataPartie!.longueRiviere = value;
         break;
@@ -481,7 +481,7 @@ export class DorfromantikSheetComponent {
       resultat += this.dataPartie.portDePlaisance;
       resultat += this.dataPartie.gare;
       resultat += this.dataPartie.chantier * 3;
-      resultat += this.dataPartie.isCirque?10:0;
+      resultat += this.dataPartie.isCirque ? 10 : 0;
       this.scoreFinal = resultat;
       var res = this.getLibelleScore(resultat);
       this.libelleScore = res[0];
@@ -492,7 +492,7 @@ export class DorfromantikSheetComponent {
     }
   }
 
-  private savePartie(){
+  private savePartie() {
     const roundRow: CountRoundRow[] = [];
     this.table!.users.forEach(joueur => {
       const player: CountRoundRow = {
@@ -520,17 +520,74 @@ export class DorfromantikSheetComponent {
     });
   }
 
-  private getLibelleScore(score : number) : [string,number] {
-    if(score > 0 && score <= 10) {return ["libelleA",1];}
-    else if (score > 7 && score <= 40) {return ["libelleB",2]}
-    return ["",0];
+  private getLibelleScore(score: number): [string, number] {
+    if (score >= 0 && score < 100) { return ["Vagabonde", 1]; }
+    else if (score >= 100 && score < 110) { return ["Vendeur de journaux", 2] }
+    else if (score >= 110 && score < 120) { return ["Pêcheuse", 3] }
+    else if (score >= 120 && score < 130) { return ["Cocher", 3] }
+    else if (score >= 130 && score < 140) { return ["Surveillante de nuit", 4] }
+    else if (score >= 140 && score < 150) { return ["Acteur", 4] }
+    else if (score >= 150 && score < 160) { return ["Gouvernante", 5] }
+    else if (score >= 160 && score < 170) { return ["Garde forestier", 5] }
+    else if (score >= 170 && score < 180) { return ["Fermière", 6] }
+    else if (score >= 180 && score < 190) { return ["Ingénieur", 6] }
+    else if (score >= 190 && score < 200) { return ["Madame loyale", 7] }
+    else if (score >= 200 && score < 210) { return ["Capitaine", 7] }
+    else if (score >= 210 && score < 220) { return ["Contremaître", 8] }
+    else if (score >= 220 && score < 230) { return ["Chef de gare", 8] }
+    else if (score >= 230 && score < 240) { return ["Photographe", 9] }
+    else if (score >= 250 && score < 250) { return ["Marchand", 9] }
+    else if (score >= 250 && score < 260) { return ["Architecte", 10] }
+    else if (score >= 260 && score < 270) { return ["Inventeur", 10] }
+    else if (score >= 270 && score < 280) { return ["Astronome", 11] }
+    else if (score >= 280 && score < 290) { return ["Docteur", 11] }
+    else if (score >= 290 && score < 300) { return ["Diplomate", 12] }
+    else if (score >= 310 && score < 310) { return ["Aérostier", 12] }
+    else if (score >= 320 && score < 320) { return ["Industrielle", 13] }
+    else if (score >= 320 && score < 330) { return ["Maire", 13] }
+    else if (score >= 330 && score < 340) { return ["Conseillère", 14] }
+    else if (score >= 340 && score < 350) { return ["Magnat", 14] }
+    else if (score >= 350 && score < 375) { return ["Baronne", 15] }
+    else if (score >= 375 && score < 400) { return ["Prince", 15] }
+    else if (score >= 400) { return ["Impératrice", 15] }
+    return ["", 0];
   }
 
-  private getContenuDebloque(){
+  private getContenuDebloque() {
     this.contenuDebloque = [];
-    if(this.dataPartie){
-      if(this.getScoreTableau(this.dataPartie.listePointForet) == 30) {this.contenuDebloque.push("Cabane dans la fôret débloqué si disponible")}
+    if (this.dataPartie) {
+      if (this.getScoreTableau(this.dataPartie.listePointForet) == 30 && this.dataPartie.doublageForet.length == 0) { this.contenuDebloque.push("Succès Cabane dans la fôret débloqué si disponible") }
+      if (this.getScoreTableau(this.dataPartie.listePointChamp) == 30 && this.dataPartie.doublageChamp.length == 0) { this.contenuDebloque.push("Succès Fête des moissons débloqué si disponible") }
+      if (this.getScoreTableau(this.dataPartie.listePointVillage) == 30 && this.dataPartie.doublageVillage.length == 0) { this.contenuDebloque.push("Succès Tour de guet débloqué si disponible") }
+      if (this.getScoreTableau(this.dataPartie.listePointRiviere) == 30 && this.dataPartie.doublageRiviere.length == 0) { this.contenuDebloque.push("Succès Bateau de plaisance débloqué si disponible") }
+      if (this.getScoreTableau(this.dataPartie.listePointCheminDeFer) == 30 && this.dataPartie.doublageCheminDeFer.length == 0) { this.contenuDebloque.push("Succès Locomotive débloqué si disponible") }
+      if (this.checkFestivalDrapeau(this.dataPartie.drapeauForetA, this.dataPartie.drapeauForetB, this.dataPartie.drapeauForetC, this.dataPartie.drapeauForetD) ||
+        this.checkFestivalDrapeau(this.dataPartie.drapeauChampA, this.dataPartie.drapeauChampB, this.dataPartie.drapeauChampC, this.dataPartie.drapeauChampD) ||
+        this.checkFestivalDrapeau(this.dataPartie.drapeauVillageA, this.dataPartie.drapeauVillageB, this.dataPartie.drapeauVillageC, this.dataPartie.drapeauVillageD)) { this.contenuDebloque.push("Succès Festival de drapeaux débloqué si disponible") }
+      if (this.scoreFinal >= 300 && this.dataPartie.mongolfiere === 0) { this.contenuDebloque.push("Succès Site de décollage débloqué si disponible") }
+      if ((this.dataPartie.coeurA + this.dataPartie.coeurB + this.dataPartie.coeurC + this.dataPartie.coeurD) >= 18 && this.dataPartie.coeurDore === 0) { this.contenuDebloque.push("Succès Coeur doré débloqué si disponible") }
+      if ((this.getScoreTableau(this.dataPartie.listePointChamp) +
+        this.getScoreTableau(this.dataPartie.listePointForet) +
+        this.getScoreTableau(this.dataPartie.listePointVillage) +
+        this.getScoreTableau(this.dataPartie.listePointCheminDeFer) +
+        this.getScoreTableau(this.dataPartie.listePointRiviere) +
+        this.dataPartie.chantier === 0)) { this.contenuDebloque.push("Succès Chantier de construction débloqué si disponible") }
+      if(this.scoreFinal >= 180 && this.dataPartie.longueRiviere >= 12 && this.dataPartie.portDePlaisance === 0) {this.contenuDebloque.push("Succès Port de plaisance débloqué si disponible")}
+      if(this.scoreFinal >= 180 && this.dataPartie.longCheminDeFer >= 12 && this.dataPartie.gare === 0) {this.contenuDebloque.push("Succès Gare ferrovière débloqué si disponible")}
+      if(this.scoreFinal >= 200 && this.dataPartie.mongolfiere === 0 && this.dataPartie.coeurDore === 0 && this.dataPartie.chantier === 0 && this.dataPartie.portDePlaisance === 0 && this.dataPartie.gare === 0) {this.contenuDebloque.push("Succès La route du succès débloqué si disponible, vous pouvez ouvrir la bôite 5")}
     }
+  }
+
+  checkFestivalDrapeau(a: number, b: number, c: number, d: number): boolean {
+    const variables = [a, b, c, d];
+    const occurrences = new Map<number, number>();
+    for (const value of variables) {
+      occurrences.set(value, (occurrences.get(value) || 0) + 1);
+    }
+    const hasThreeSame = Array.from(occurrences.values()).includes(3);
+    const hasZero = variables.includes(0);
+    const sum = variables.reduce((acc, val) => acc + val, 0);
+    return hasThreeSame && hasZero && sum >= 40;
   }
 
   private getScoreTableau(liste: string[]): number {
