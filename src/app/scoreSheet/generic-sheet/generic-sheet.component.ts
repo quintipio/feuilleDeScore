@@ -64,6 +64,11 @@ export class GenericSheetComponent {
     });
   }
 
+  onFinClick(){
+      this.isEndingGame = true;
+      this.sheetComponent?.openWinner();
+  }
+
 
   checkEndingGame(round:RoundRow[], users:UserColumn[]) {
     const maxRowValue = Math.max(...round.map(r => r.row));
@@ -122,6 +127,10 @@ export class GenericSheetComponent {
   }
 
   closeGame(){
-    this.router.navigate(["/tables"]);
+    this.tableService.updateRound(this.table!.id, []).subscribe({
+      next: () => {
+        this.router.navigate(["/tables"]);
+      },
+    });
   }
 }

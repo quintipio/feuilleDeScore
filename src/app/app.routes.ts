@@ -9,6 +9,7 @@ import { QwirkleSheetComponent } from './scoreSheet/qwirkle-sheet/qwirkle-sheet.
 import { PixiesSheetComponent } from './scoreSheet/pixies-sheet/pixies-sheet.component';
 import { ChateauComboSheetComponent } from './scoreSheet/chateau-combo-sheet/chateau-combo-sheet.component';
 import { DorfromantikSheetComponent } from './scoreSheet/dorfromantik-sheet/dorfromantik-sheet.component';
+import { YamsSheetComponent } from './scoreSheet/yams-sheet/yams-sheet.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/tables', pathMatch: 'full' },
@@ -61,5 +62,10 @@ export const routes: Routes = [
     path: 'sheet/dorfromantik',
     title: 'Dorf romantik',
     component: DorfromantikSheetComponent,
+  },
+  {
+    path: 'sheet/yams',
+    title: 'Yam\'s',
+    component: YamsSheetComponent,
   },
 ];

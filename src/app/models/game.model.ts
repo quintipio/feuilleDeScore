@@ -25,7 +25,11 @@ export const GameExisting: Game[] = [
   { "id": 8,"uuid":"aa00ece5-d4e9-456e-be27-a96395079139", "name": "Qwirlkle", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "qwirkle", "specificConf":"" },
   { "id": 9,"uuid":"7983f536-223e-420b-80f3-fac6a34342da", "name": "Pixies", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 3, "scoreNegatif": true, "canEdit": false, "sheet": "pixies", "specificConf":"" },
   { "id": 10,"uuid":"e989722b-cf42-42c9-bc4b-602e9c319726", "name": "Chateau combo", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "chateauCombo", "specificConf":"" },
-  { "id": 11,"uuid":"7f2425ce-d96b-424b-81b1-ad6b60de1f30", "name": "Dorf romantik", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "dorfromantik", "specificConf":"" }
+  { "id": 11,"uuid":"7f2425ce-d96b-424b-81b1-ad6b60de1f30", "name": "Dorf romantik", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "dorfromantik", "specificConf":"" },
+  { "id": 12,"uuid":"1f87c1b5-9c62-4253-8476-bc8d0e91c337", "name": "Scrabble", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "generic", "specificConf":"" },
+  { "id": 13,"uuid":"8f277ffa-ccaa-4264-be4b-73ab0b2167e8", "name": "Rami", "scorePlusEleve": true, "scoreLimite": 250, "mancheLimite": 0, "scoreNegatif": true, "canEdit": false, "sheet": "generic", "specificConf":"" },
+  { "id": 14,"uuid":"988f1104-0a21-4fd5-95f3-4cebf1a08541", "name": "Belote", "scorePlusEleve": true, "scoreLimite": 1000, "mancheLimite": 0, "scoreNegatif": true, "canEdit": false, "minJoueur": 2, "maxJoueur": 4, "sheet": "generic", "specificConf":"" },
+  { "id": 15,"uuid":"f69c6723-8e46-45ad-8cc2-dc15e7ef76d8", "name": "Yam's", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "yams", "specificConf":"" }
 ]
 
 export function isGame(object: any): object is Game {

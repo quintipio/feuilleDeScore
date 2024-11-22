@@ -1,14 +1,20 @@
 <app-sheet (checkEndingGame)="checkEndingGame($event.round, $event.users)"
- (triggerOpenWinner)="openWinner($event.round, $event.users)"
-  (triggerSaveRound)="saveRoundInDb($event)"
- [isEndingGame]="isEndingGame"></app-sheet>
+  (triggerOpenWinner)="openWinner($event.round, $event.users)" (triggerSaveRound)="saveRoundInDb($event)"
+  [isEndingGame]="isEndingGame"></app-sheet>
 
+  <div class="row align-items-center mb-12 espace-top">
+    <div class="col-12 d-flex justify-content-center">
+      <button class="btn btn-primary" (click)="onFinClick()" data-bs-toggle="modal" data-bs-target="#winnerModal">
+        Fin de la partie
+      </button>
+    </div>
+  </div>
 
 
 <div class="modal fade" id="winnerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <app-winner  (outWindow)="closeGame()"></app-winner>
+      <app-winner (outWindow)="closeGame()"></app-winner>
     </div>
   </div>
 </div>
