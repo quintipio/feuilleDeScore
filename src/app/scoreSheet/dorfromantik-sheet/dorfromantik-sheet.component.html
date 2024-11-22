@@ -171,7 +171,7 @@
 
   <!-- Plus longue rivière/chemin de fer -->
   <div class="card mb-4">
-    <div class="card-header">Plus longue rivière/chemin de fer</div>
+    <div class="card-header">Plus longue rivière / long chemin de fer</div>
     <div class="card-body">
       <div class="mb-3 d-flex align-items-center">
         <label class="me-2">Plus longue rivière:</label>
@@ -189,7 +189,7 @@
 
   <!-- Doublage des scores -->
   <div class="card mb-4">
-    <div class="card-header">Doublage de zones</div>
+    <div class="card-header">Objectifs doublés</div>
     <div class="card-body">
       <div class="row">
         <div class="col-12 col-md-6 col-lg-4 mb-3">
@@ -325,27 +325,28 @@
       </div>
       <div class="mb-3">
         <label>Cœurs rouges (nombre de tuile): (1 point par bord correspondant)</label>
-        <app-input-score name="inputCoeurA" [min]="0" [initValue]="dataPartie?.coeurA"
+        <app-input-score name="inputCoeurA" [min]="0" [max]="6" [initValue]="dataPartie?.coeurA"
           (valueChange)="updateFromInputScore($event, 'inputCoeurA')"></app-input-score>
-        <app-input-score name="inputCoeurB" [min]="0" [initValue]="dataPartie?.coeurB"
+        <app-input-score name="inputCoeurB" [min]="0" [max]="6" [initValue]="dataPartie?.coeurB"
           (valueChange)="updateFromInputScore($event, 'inputCoeurB')"></app-input-score>
-        <app-input-score name="inputCoeurC" [min]="0" [initValue]="dataPartie?.coeurC"
+        <app-input-score name="inputCoeurC" [min]="0" [max]="6" [initValue]="dataPartie?.coeurC"
           (valueChange)="updateFromInputScore($event, 'inputCoeurC')"></app-input-score>
-        <app-input-score name="inputCoeurD" [min]="0" [initValue]="dataPartie?.coeurD"
+        <app-input-score name="inputCoeurD" [min]="0" [max]="6" [initValue]="dataPartie?.coeurD"
           (valueChange)="updateFromInputScore($event, 'inputCoeurD')"></app-input-score>
       </div>
       <div class="mb-3">
         <label>Cœurs dorés (nombre de tuile): (2 points par bord correspondant)</label>
-        <app-input-score name="inputCoeurDore" [min]="0" [initValue]="dataPartie?.coeurDore"
+        <app-input-score name="inputCoeurDore" [min]="0" [max]="6" [initValue]="dataPartie?.coeurDore"
           (valueChange)="updateFromInputScore($event, 'inputCoeurDore')"></app-input-score>
       </div>
       <div class="mb-3">
-        <label>Bergère (nombre de tuile): (1 point par mouton adjacent)</label>
+        <label>Bergère (nombre de moutons): (1 point par moutons adjacent ou relié à un mouton rapportant 1
+          point)</label>
         <app-input-score name="inputBergere" [min]="0" [initValue]="dataPartie?.chantier"
           (valueChange)="updateFromInputScore($event, 'inputBergere')"></app-input-score>
       </div>
       <div class="mb-3">
-        <label>Chantier de construction (nombre de territoire valide): (7 points par territoire de 7 tuilet ou
+        <label>Chantier de construction (nombre de territoire valide): (7 points par territoire de 7 tuile ou
           plus)</label>
         <app-input-score name="inputChantier" [min]="0" [max]="3" [initValue]="dataPartie?.chantier"
           (valueChange)="updateFromInputScore($event, 'inputChantier')"></app-input-score>
@@ -366,7 +367,7 @@
           (valueChange)="updateFromInputScore($event, 'inputAiguilleur')"></app-input-score>
       </div>
       <div class="mb-3">
-        <label>Colinne (nombre de tuile) : (2 points par tuile objectif à 2 cases)</label>
+        <label>Colinne (nombre de tuile) : (2 points par tuile objectif jusqu'à 2 cases de la colinne)</label>
         <app-input-score name="inputColinne" [min]="0" [initValue]="dataPartie?.colinne"
           (valueChange)="updateFromInputScore($event, 'inputColinne')"></app-input-score>
       </div>
@@ -391,6 +392,9 @@
           {{ contenu }}
         </li>
       </ul>
+
+      <button class="centered-button" (click)="closeGame()">Fermer</button>
     </div>
   </div>
+
 </div>

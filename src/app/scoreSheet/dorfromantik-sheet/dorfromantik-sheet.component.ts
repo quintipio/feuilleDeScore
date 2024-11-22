@@ -3,7 +3,7 @@ import { Component, inject, QueryList, ViewChildren } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableService } from '../../service/table.service';
 import { Table } from '../../models/table.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { InputScoreComponent } from '../../components/input-score/input-score.component';
 import { CountRoundRow, RoundRow } from '../../models/sheet';
 
@@ -72,7 +72,7 @@ export class DorfromantikSheetComponent {
   libelleScore: string = "";
   contenuDebloque: string[] = [];
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
   }
 
 
@@ -571,10 +571,15 @@ export class DorfromantikSheetComponent {
         this.getScoreTableau(this.dataPartie.listePointVillage) +
         this.getScoreTableau(this.dataPartie.listePointCheminDeFer) +
         this.getScoreTableau(this.dataPartie.listePointRiviere) +
-        this.dataPartie.chantier === 0)) { this.contenuDebloque.push("Succès Chantier de construction débloqué si disponible") }
+        this.dataPartie.longCheminDeFer + this.dataPartie.longueRiviere ) >= 157 &&
+        this.dataPartie.chantier === 0) { this.contenuDebloque.push("Succès Chantier de construction débloqué si disponible") }
       if(this.scoreFinal >= 180 && this.dataPartie.longueRiviere >= 12 && this.dataPartie.portDePlaisance === 0) {this.contenuDebloque.push("Succès Port de plaisance débloqué si disponible")}
       if(this.scoreFinal >= 180 && this.dataPartie.longCheminDeFer >= 12 && this.dataPartie.gare === 0) {this.contenuDebloque.push("Succès Gare ferrovière débloqué si disponible")}
-      if(this.scoreFinal >= 200 && this.dataPartie.mongolfiere === 0 && this.dataPartie.coeurDore === 0 && this.dataPartie.chantier === 0 && this.dataPartie.portDePlaisance === 0 && this.dataPartie.gare === 0) {this.contenuDebloque.push("Succès La route du succès débloqué si disponible, vous pouvez ouvrir la bôite 5")}
+      if((this.dataPartie.coeurA === 6 || this.dataPartie.coeurB === 6 ||this.dataPartie.coeurC === 6 ||this.dataPartie.coeurD === 6) &&
+       (this.dataPartie.doublageChamp.length === 0 && this.dataPartie.doublageCheminDeFer.length === 0 &&
+         this.dataPartie.doublageForet.length === 0 && this.dataPartie.doublageRiviere.length === 0 && this.dataPartie.doublageVillage.length === 0)) {this.contenuDebloque.push("Succès le coeur à ses raisons, vous pouvez ouvrir la bôite 4")}
+      if(this.scoreFinal >= 200 && this.dataPartie.mongolfiere === 0 && this.dataPartie.coeurDore === 0 &&
+         this.dataPartie.chantier === 0 && this.dataPartie.portDePlaisance === 0 && this.dataPartie.gare === 0) {this.contenuDebloque.push("Succès La route du succès débloqué si disponible, vous pouvez ouvrir la bôite 5")}
     }
   }
 
@@ -594,5 +599,18 @@ export class DorfromantikSheetComponent {
     return liste
       .map(item => parseInt(item.replace(/[^\d]/g, ''), 10))
       .reduce((sum, num) => sum + num, 0);
+  }
+
+  closeGame() {
+    this.table!.specificData = "";
+    this.table!.round = [];
+    this.tableService.updateTable(this.table!).subscribe({
+      next: () => {
+        this.router.navigate(["/tables"]);
+      },
+      error: (error) => {
+        console.error("Error update table:", error);
+      }
+    });
   }
 }

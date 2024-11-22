@@ -18,6 +18,14 @@
   background-color: #76afdd;
 }
 
+.card-header {
+  background : #8eca70;
+}
+
+.card-body {
+  background : aliceblue;
+}
+
 .zone-card {
   border: 1px solid #ccc;
   padding: 16px;
