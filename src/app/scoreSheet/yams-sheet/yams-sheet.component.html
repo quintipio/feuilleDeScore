@@ -1,1 +1,87 @@
-<p>yams-sheet works!</p>
+<div class="score-sheet">
+  <h1>Yam's</h1>
+
+  <div *ngIf="gameOver" class="game-over-message">
+    <p>🎉 La partie est finie ! 🎉</p>
+    <p>{{ winnersMessage }}</p>
+  </div>
+
+
+<div class="dice-container">
+  <div *ngFor="let die of dice; let index = index" class="die-row">
+    <span>Dé {{ index + 1 }} :</span>
+    <div class="die-buttons">
+      <button
+        *ngFor="let value of [1, 2, 3, 4, 5, 6]"
+        [class.active]="die === value"
+        (click)="setDieValue(index, value)"
+      >
+        <img [src]="'assets/rsc/' + getDieImage(value)" [alt]="value" />
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+  <div class="player-selector">
+    <button (click)="changePlayer('left')"><i class="fa-solid fa-arrow-left"></i></button>
+    <span>{{ players[activePlayerIndex] }}</span>
+    <button (click)="changePlayer('right')"><i class="fa-solid fa-arrow-right"></i></button>
+  </div>
+
+  <!-- Tableau des scores -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Catégories</th>
+          <th *ngFor="let player of players">{{ player }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Catégories -->
+        <tr *ngFor="let category of categories">
+          <td>{{ category }}</td>
+          <td *ngFor="let player of players" [ngClass]="{ 'locked-cell': locked[player][category] }">
+            <div class="score-cell"  [ngClass]="{ 'locked-cell': locked[player][category] }">
+              <!-- Si la case est verrouillée -->
+              <span *ngIf="locked[player][category]">
+                {{ scores[player][category] ?? '-' }}
+                <button
+                  *ngIf="isActivePlayer(player)"
+                  (click)="unlockScore(category)"
+                  class="edit-button"><i class="fa-solid fa-pen-to-square"></i>
+                </button>
+              </span>
+
+              <!-- Si la case est modifiable par le joueur actif -->
+              <div *ngIf="isActivePlayer(player) && !locked[player][category]">
+                <span>{{ scores[player][category] ?? calculatePoints(category) }}</span>
+                <button (click)="lockScore(category)" class="ok-button"><i class="fa-solid fa-check"></i></button>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Ligne bonus -->
+        <tr class="bonus-row">
+          <td><strong>Bonus</strong></td>
+          <td *ngFor="let player of players">
+            <strong>{{ getBonus(player) }}</strong>
+          </td>
+        </tr>
+
+        <!-- Total -->
+        <tr>
+          <td><strong>Total</strong></td>
+          <td *ngFor="let player of players">
+            <strong>{{ getTotal(player) }}</strong>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</div>

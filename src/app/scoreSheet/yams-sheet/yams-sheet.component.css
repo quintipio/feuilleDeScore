@@ -1,0 +1,256 @@
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+  border: 1px solid #ddd;
+  text-align: center;
+  padding: 8px;
+}
+
+.table-container th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+  min-width: 200px;
+  border-collapse: collapse;
+}
+
+.score-sheet {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  text-align: center;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  text-align: center;
+  padding: 8px;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+
+table th, table td {
+  width: 50px;
+  text-align: center;
+  padding: 5px;
+}
+
+
+table th {
+  width: 100px;
+  padding: 10px 5px;
+}
+
+table td span {
+  font-size: 12px;
+}
+
+table td {
+  max-width: 60px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 5px;
+}
+
+.bonus-row td {
+  background-color: #f0f8ff;
+  font-weight: bold;
+  text-align: center;
+}
+
+.score-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background-color: #fff;
+  color: #000;
+}
+
+.score-cell span {
+  font-size: 1rem;
+}
+
+.score-cell button {
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.score-cell button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.locked-cell {
+  background-color: #d9d9d9;
+  color: #333;
+  font-weight: bold;
+}
+
+button {
+  margin-left: 5px;
+  padding: 4px 8px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+.dice-section {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dice {
+  display: flex;
+  gap: 10px;
+}
+
+.dice input {
+  width: 50px;
+  padding: 4px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .dice {
+    flex-direction: column;
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
+
+  button {
+    padding: 2px 5px;
+  }
+}
+
+
+.dice-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.die-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.die-buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.die-buttons button {
+  width: 40px;
+  height: 40px;
+  background-color: #f4f4f4;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  object-fit: cover;
+}
+
+.die-buttons img {
+  width: 40px;
+  height: 40px;
+}
+
+.die-buttons .active img {
+  filter: brightness(1.2);
+}
+
+.die-buttons button:hover {
+  background-color: #e0e0e0;
+}
+
+.player-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.player-selector button {
+  padding: 5px 10px;
+  background-color: #4da9d3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.player-selector button:hover {
+  background-color: #0056b3;
+}
+
+.player-selector span {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.edit-button {
+  background-color: #f0ad4e;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+  background-color: #ec971f;
+}
+
+.edit-button:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(240, 173, 78, 0.8);
+}
+
+
+.ok-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.ok-button:hover {
+  background-color: #218838;
+}
+
+.ok-button:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(240, 173, 78, 0.8);
+}
+
