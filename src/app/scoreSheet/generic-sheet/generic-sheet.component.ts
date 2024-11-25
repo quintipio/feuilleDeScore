@@ -7,6 +7,7 @@ import { InputPadComponent } from '../../components/input-pad/input-pad.componen
 import { WinnerComponent } from '../../components/winner/winner.component';
 import { SheetComponent } from '../../components/sheet/sheet.component';
 import { CountRoundRow, RoundRow, UserColumn } from '../../models/sheet';
+import { formatDateNowToKey } from '../../Utils/Utils';
 
 @Component({
   selector: 'app-generic-sheet',
@@ -26,6 +27,7 @@ export class GenericSheetComponent {
   isEndingGame: boolean = false;
 
   table: Table | undefined;
+  winners : CountRoundRow[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router) { }
 
@@ -123,10 +125,12 @@ export class GenericSheetComponent {
     winners.forEach((winner, index) => {
       winner.user.position = index + 1;
     });
+    this.winners = winners
     this.winnerComponent?.loadWinners(winners);
   }
 
   closeGame() {
+    this.table!.historic[formatDateNowToKey()] = this.winners;
     this.table!.specificData = "";
     this.table!.round = [];
     this.tableService.updateTable(this.table!).subscribe({

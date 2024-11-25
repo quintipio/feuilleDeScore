@@ -6,6 +6,7 @@ import { Table } from '../../models/table.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InputScoreComponent } from '../../components/input-score/input-score.component';
 import { CountRoundRow, RoundRow } from '../../models/sheet';
+import { formatDateNowToKey } from '../../Utils/Utils';
 
 export type DataDorf = {
   listePointForet: string[],
@@ -493,6 +494,19 @@ export class DorfromantikSheetComponent {
   }
 
   private savePartie() {
+
+    this.table!.round = this.generateRound();
+    this.table!.specificData = JSON.stringify(this.dataPartie);
+    this.tableService.updateTable(this.table!).subscribe({
+      next: () => {
+      },
+      error: (error) => {
+        console.error("Error update table:", error);
+      }
+    });
+  }
+
+  private generateRound() : RoundRow[]{
     const roundRow: CountRoundRow[] = [];
     this.table!.users.forEach(joueur => {
       const player: CountRoundRow = {
@@ -509,15 +523,7 @@ export class DorfromantikSheetComponent {
       points: roundRow,
       row: 1
     }]
-    this.table!.round = round;
-    this.table!.specificData = JSON.stringify(this.dataPartie);
-    this.tableService.updateTable(this.table!).subscribe({
-      next: () => {
-      },
-      error: (error) => {
-        console.error("Error update table:", error);
-      }
-    });
+    return round;
   }
 
   private getLibelleScore(score: number): [string, number] {
@@ -602,6 +608,7 @@ export class DorfromantikSheetComponent {
   }
 
   closeGame() {
+    this.table!.historic[formatDateNowToKey()] = this.generateRound()[0].points;
     this.table!.specificData = "";
     this.table!.round = [];
     this.tableService.updateTable(this.table!).subscribe({

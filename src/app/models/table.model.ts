@@ -1,13 +1,14 @@
 import { Game } from "./game.model";
-import { RoundRow } from "./sheet";
+import { CountRoundRow, RoundRow } from "./sheet";
 import { User } from "./user.model";
 
 export interface Table {
-  id: number;
+  id: number,
   users: User[],
   game: Game | undefined,
   round:RoundRow[]
-  specificData: string;
+  specificData: string,
+  historic: Record<string, CountRoundRow[]>,
 }
 
 export function isTable(object: any): object is Table {
@@ -17,6 +18,7 @@ export function isTable(object: any): object is Table {
     'users' in object &&
     'game' in object &&
     'round' in object &&
-    'specificData' in object
+    'specificData' in object &&
+    'historic' in object
   )
 }

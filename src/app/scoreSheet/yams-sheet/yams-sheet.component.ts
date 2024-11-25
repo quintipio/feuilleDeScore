@@ -6,7 +6,7 @@ import { Table } from '../../models/table.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models/user.model';
 import { CountRoundRow, RoundRow, UserColumn } from '../../models/sheet';
-
+import { formatDateNowToKey } from '../../Utils/Utils';
 @Component({
   selector: 'app-yams-sheet',
   standalone: true,
@@ -288,6 +288,7 @@ export class YamsSheetComponent {
   closeGame() {
     this.table!.specificData = "";
     this.table!.round = [];
+    this.table!.historic[formatDateNowToKey()] = this.getRound(true)[0].points;
     this.tableService.updateTable(this.table!).subscribe({
       next: () => {
         this.router.navigate(["/tables"]);

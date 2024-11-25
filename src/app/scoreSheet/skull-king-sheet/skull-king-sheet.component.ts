@@ -8,6 +8,7 @@ import { User } from '../../models/user.model';
 import { InputScoreComponent } from '../../components/input-score/input-score.component';
 import { CountRoundRow, RoundRow, UserColumn } from '../../models/sheet';
 import { SkullKingConf } from '../../games/config-game/spec/skull-king-config/skull-king-config.component';
+import { formatDateNowToKey } from '../../Utils/Utils';
 
 
 
@@ -54,6 +55,7 @@ export class SkullKingSheetComponent {
   rascalPoing = false;
   mancheToPlay: number[] = [];
   cursorMancheToPlay: number = 0;
+  winners : CountRoundRow[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router) { }
 
@@ -383,10 +385,12 @@ export class SkullKingSheetComponent {
     winners.forEach((winner, index) => {
       winner.user.position = index + 1;
     });
+    this.winners = winners
     this.winnerComponent?.loadWinners(winners);
   }
 
   closeGame() {
+    this.table!.historic[formatDateNowToKey()] = this.winners;
     this.table!.specificData = "";
     this.table!.round = [];
     this.tableService.updateTable(this.table!).subscribe({

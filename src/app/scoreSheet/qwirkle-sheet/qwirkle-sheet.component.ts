@@ -9,11 +9,12 @@ import { SheetComponent } from '../../components/sheet/sheet.component';
 import { CountRoundRow, RoundRow, UserColumn } from '../../models/sheet';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../models/user.model';
+import { formatDateNowToKey } from '../../Utils/Utils';
 
 @Component({
   selector: 'app-qwirkle-sheet',
   standalone: true,
-  imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent,SheetComponent, FormsModule],
+  imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent, SheetComponent, FormsModule],
   templateUrl: './qwirkle-sheet.component.html',
   styleUrl: './qwirkle-sheet.component.css'
 })
@@ -30,6 +31,8 @@ export class QwirkleSheetComponent {
   table: Table | undefined;
 
   selectedUser: User | null = null;
+
+  winners : CountRoundRow[] = [];
 
 
   constructor(private route: ActivatedRoute, private router: Router) { }
@@ -62,12 +65,12 @@ export class QwirkleSheetComponent {
 
   onOkClick() {
     if (this.selectedUser) {
-     this.sheetComponent?.openWinner();
+      this.sheetComponent?.openWinner();
     }
   }
 
 
-  saveRoundInDb(round : RoundRow[]){
+  saveRoundInDb(round: RoundRow[]) {
     this.tableService.updateRound(this.table!.id, round).subscribe({
       next: () => {
       },
@@ -75,12 +78,12 @@ export class QwirkleSheetComponent {
     });
   }
 
-  checkEndingGame(round:RoundRow[], users:UserColumn[]) {
+  checkEndingGame(round: RoundRow[], users: UserColumn[]) {
     return;
   }
 
 
-  getSum(round:RoundRow[], user: UserColumn): number {
+  getSum(round: RoundRow[], user: UserColumn): number {
     let totalValue = 0;
     round.forEach(roundRow => {
       roundRow.points.forEach(countRoundRow => {
@@ -92,18 +95,18 @@ export class QwirkleSheetComponent {
     return totalValue;
   }
 
-  openWinner(round:RoundRow[], users: UserColumn[]){
-    const winners:CountRoundRow[] = [];
+  openWinner(round: RoundRow[], users: UserColumn[]) {
+    const winners: CountRoundRow[] = [];
 
     for (const user of users) {
-      const winner:CountRoundRow = {
+      const winner: CountRoundRow = {
         user: user,
-        value: (user.user.id === this.selectedUser!.id)?this.getSum(round, user)+6:this.getSum(round, user)
+        value: (user.user.id === this.selectedUser!.id) ? this.getSum(round, user) + 6 : this.getSum(round, user)
       }
       winners.push(winner)
     }
 
-    if(this.table?.game?.scorePlusEleve){
+    if (this.table?.game?.scorePlusEleve) {
       winners.sort((a, b) => b.value - a.value);
     } else {
       winners.sort((a, b) => a.value - b.value);
@@ -112,13 +115,14 @@ export class QwirkleSheetComponent {
       winner.user.position = index + 1;
     });
 
-  winners.forEach((winner, index) => {
-    winner.user.position = index + 1;
-  });
+    winners.forEach((winner, index) => {
+      winner.user.position = index + 1;
+    });
+    this.winners = winners
     this.winnerComponent?.loadWinners(winners);
   }
-
   closeGame() {
+    this.table!.historic[formatDateNowToKey()] = this.winners;
     this.table!.specificData = "";
     this.table!.round = [];
     this.tableService.updateTable(this.table!).subscribe({

@@ -21,7 +21,8 @@ export class TableService {
       users: [],
       game: undefined,
       round: [],
-      specificData: ""
+      specificData: "",
+      historic: {}
     };
     return table;
   }

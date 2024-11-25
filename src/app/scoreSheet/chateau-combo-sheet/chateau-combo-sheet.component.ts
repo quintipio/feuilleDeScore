@@ -10,6 +10,7 @@ import {  ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AutocompleteComponent } from '../../components/autocomplete/autocomplete.component';
 import { CountRoundRow, RoundRow } from '../../models/sheet';
+import { formatDateNowToKey } from '../../Utils/Utils';
 
 type CartePlateau = {
   carte: CarteChateauCombo | undefined,
@@ -594,16 +595,22 @@ export class ChateauComboSheetComponent {
 
   openWinner() {
     this.updateJoueurEnCoursAndSave();
+    this.winnerComponent?.loadWinners(this.generateRound());
+  }
+
+  private generateRound() : CountRoundRow[] {
+    console.log(this.table);
     const winners: CountRoundRow[] = this.table!.round[0].points;
 
     winners.sort((a, b) => b.value - a.value);
     winners.forEach((winner, index) => {
       winner.user.position = index + 1;
     });
-    this.winnerComponent?.loadWinners(winners);
+    return winners;
   }
 
   closeGame() {
+    this.table!.historic[formatDateNowToKey()] = this.generateRound();
     this.table!.specificData = "";
     this.table!.round = [];
     this.tableService.updateTable(this.table!).subscribe({

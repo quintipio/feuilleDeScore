@@ -10,6 +10,7 @@ import { PixiesSheetComponent } from './scoreSheet/pixies-sheet/pixies-sheet.com
 import { ChateauComboSheetComponent } from './scoreSheet/chateau-combo-sheet/chateau-combo-sheet.component';
 import { DorfromantikSheetComponent } from './scoreSheet/dorfromantik-sheet/dorfromantik-sheet.component';
 import { YamsSheetComponent } from './scoreSheet/yams-sheet/yams-sheet.component';
+import { HistoricComponent } from './table/historic/historic.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/tables', pathMatch: 'full' },
@@ -22,6 +23,11 @@ export const routes: Routes = [
     path: 'tables',
     title: 'Tables',
     component: TableComponent,
+  },
+  {
+    path: 'tables/historic',
+    title: 'Historique',
+    component: HistoricComponent,
   },
   {
     path: 'sheet/generic',

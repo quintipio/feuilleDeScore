@@ -64,9 +64,13 @@ export class TableComponent {
         },
         error: (err) => console.error('Erreur lors de la réinitialisation de la table:', err)
       });
-
     }
   }
+
+  openHistoric(idTable: number) {
+    this.router.navigate(['tables/historic'], { queryParams: { idTable: idTable } });
+  }
+
 
   deleteTable(id :number){
     this.tableService.deleteTable(id).subscribe({

@@ -7,6 +7,7 @@ import { TableService } from '../../service/table.service';
 import { Table } from '../../models/table.model';
 import { User } from '../../models/user.model';
 import { CountRoundRow, RoundRow } from '../../models/sheet';
+import { formatDateNowToKey } from '../../Utils/Utils';
 
 type PixiesPlayer = {
   user: User,
@@ -256,6 +257,11 @@ export class PixiesSheetComponent {
       });
     }
     this.winnerAlreadyOpen = true;
+
+    this.winnerComponent?.loadWinners(this.generateRound());
+  }
+
+  private generateRound():CountRoundRow[]{
     const winners: CountRoundRow[] = []
     this.partie!.players.forEach((player) => {
       const winner : CountRoundRow = {
@@ -269,12 +275,13 @@ export class PixiesSheetComponent {
     winners.forEach((winner, index) => {
       winner.user.position = index + 1;
     });
-    this.winnerComponent?.loadWinners(winners);
+    return winners;
   }
 
   closeGame() {
     this.table!.specificData = "";
     this.table!.round = [];
+    this.table!.historic[formatDateNowToKey()] = this.generateRound();
     this.tableService.updateTable(this.table!).subscribe({
       next: () => {
         this.router.navigate(["/tables"]);

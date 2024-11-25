@@ -1,0 +1,90 @@
+/* Styles généraux */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.no-data {
+  text-align: center;
+  color: #555;
+  margin-top: 20px;
+}
+
+.history-card {
+  background-color: aliceblue;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.history-card:hover {
+  transform: translateY(-5px);
+}
+
+.history-header {
+  margin: 0;
+  font-size: 1.5em;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+/* Table styles */
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1em;
+}
+
+.history-table thead {
+  background-color: #f0f8ff;
+}
+
+.history-table th,
+.history-table td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.history-table th {
+  font-weight: bold;
+  color: #444;
+}
+
+.history-table td i {
+  font-style: italic;
+  color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .history-card {
+    padding: 15px;
+  }
+
+  .history-header {
+    font-size: 1.2em;
+  }
+
+  .history-table th,
+  .history-table td {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .history-card {
+    margin: 10px;
+  }
+
+  .history-table {
+    font-size: 0.9em;
+  }
+}
