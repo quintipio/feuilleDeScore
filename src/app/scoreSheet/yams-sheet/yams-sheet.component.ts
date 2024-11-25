@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { WinnerComponent } from '../../components/winner/winner.component';
+import { TableService } from '../../service/table.service';
+import { Table } from '../../models/table.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from '../../models/user.model';
+import { CountRoundRow, RoundRow, UserColumn } from '../../models/sheet';
 
 @Component({
   selector: 'app-yams-sheet',
@@ -11,7 +16,11 @@ import { WinnerComponent } from '../../components/winner/winner.component';
 })
 export class YamsSheetComponent {
 
-  players: string[] = ['Joueur 1', 'Joueur 2'];
+  @ViewChild(WinnerComponent) winnerComponent: WinnerComponent | undefined;
+  private tableService = inject(TableService);
+  table: Table | undefined;
+
+  players: User[] = [];
   activePlayerIndex = 0;
   categories: string[] = [
     'As',
@@ -34,83 +43,94 @@ export class YamsSheetComponent {
   gameOver = false;
   winnersMessage: string = '';
 
-  constructor() {
-    this.players.forEach((player) => {
-      this.scores[player] = {};
-      this.locked[player] = {};
-      this.categories.forEach((category) => {
-        this.scores[player][category] = null;
-        this.locked[player][category] = false;
-      });
+  constructor(private route: ActivatedRoute, private router: Router) {
+
+  }
+
+  ngOnInit(){
+    this.table?.game?.mancheLimite
+    this.route.queryParams.subscribe(params => {
+      const idTable = +params['idTable'];
+      if (idTable) {
+        this.tableService.getTable(idTable).subscribe({
+          next: (table: Table | undefined) => {
+            if (table) {
+              this.table = table;
+              if (this.table?.specificData !== undefined && this.table.specificData !== "") {
+                this.loadGame();
+
+              } else {
+                this.players = table.users;
+                this.players.forEach((player) => {
+                  this.scores[player.id] = {};
+                  this.locked[player.id] = {};
+                  this.categories.forEach((category) => {
+                    this.scores[player.id][category] = null;
+                    this.locked[player.id][category] = false;
+                  });
+                });
+              }
+
+            }
+          },
+        });
+      }
     });
   }
 
-  getDieImage(value: number): string {
-    switch (value) {
-      case 1:
-        return 'un.png';
-      case 2:
-        return 'deux.png';
-      case 3:
-        return 'trois.png';
-      case 4:
-        return 'quatre.png';
-      case 5:
-        return 'cinq.png';
-      case 6:
-        return 'six.png';
-      default:
-        return 'un.png';
+  private saveGame(){
+    if(this.table){
+      const specificData = [this.scores, this.locked, this.players, this.activePlayerIndex, this.dice];
+      this.table.specificData = JSON.stringify(specificData);
+      this.table.round = this.getRound(false);
+      this.tableService.updateTable(this.table).subscribe({
+        next:() => {
+        },
+      });
     }
   }
 
+  private getRound(tri : boolean) : RoundRow[]{
 
-  setDieValue(index: number, value: number): void {
-    this.dice[index] = value;
-  }
+    const points : CountRoundRow[]= [];
+    this.players.forEach((user) => {
+      const joueur : UserColumn = {
+        position : 0,
+        user : user
+      }
+      points.push({
+        user : joueur,
+        value : this.getTotal(user.id)
+      })
+    });
 
-  updateDice(index: number, event: Event) {
-    const input = event.target as HTMLInputElement;
-    const face = parseInt(input.value, 10);
-    this.dice[index] = isNaN(face) ? 1 : Math.min(6, Math.max(1, face));
-  }
-
-  updateScore(event: Event, player: string, category: string): void {
-    const input = event.target as HTMLInputElement;
-    const value = parseInt(input.value, 10);
-    this.scores[player][category] = isNaN(value) ? null : value;
-  }
-
-  changePlayer(direction: 'left' | 'right') {
-    if (direction === 'left') {
-      this.activePlayerIndex = (this.activePlayerIndex - 1 + this.players.length) % this.players.length;
-    } else {
-      this.activePlayerIndex = (this.activePlayerIndex + 1) % this.players.length;
+    if(tri) {
+      points.sort((a, b) => b.value - a.value);
+      points.forEach((winner, index) => {
+        winner.user.position = index + 1;
+      });
     }
+
+    const data : RoundRow[] = [];
+    const element : RoundRow = {
+      row : 1,
+      points : points
+    };
+
+    data.push(element);
+    return data;
   }
 
-  checkGameOver(): void {
-    this.gameOver = this.players.every(player =>
-      this.categories.every(category => this.locked[player][category])
-    );
 
-    if (this.gameOver) {
-      const playerScores = this.players.map(player => ({
-        name: player,
-        total: this.getTotal(player)
-      }));
-
-      playerScores.sort((a, b) => b.total - a.total);
-
-      this.winnersMessage = playerScores
-        .map((player, index) => `${index + 1}. ${player.name} - ${player.total} points`)
-        .join(' | ');
+  private loadGame(){
+    if(this.table){
+      const data = JSON.parse(this.table.specificData);
+      this.scores = data[0];
+      this.locked = data[1];
+      this.players = data[2];
+      this.activePlayerIndex = data[3];
+      this.dice = data[4];
     }
-  }
-
-
-  isActivePlayer(player: string): boolean {
-    return this.players[this.activePlayerIndex] === player;
   }
 
   calculatePoints(category: string): number {
@@ -162,8 +182,68 @@ export class YamsSheetComponent {
     }
   }
 
+  getDieImage(value: number): string {
+    switch (value) {
+      case 1:
+        return 'un.png';
+      case 2:
+        return 'deux.png';
+      case 3:
+        return 'trois.png';
+      case 4:
+        return 'quatre.png';
+      case 5:
+        return 'cinq.png';
+      case 6:
+        return 'six.png';
+      default:
+        return 'un.png';
+    }
+  }
 
-  getBonus(player: string): string {
+
+  setDieValue(index: number, value: number): void {
+    this.dice[index] = value;
+  }
+
+  updateDice(index: number, event: Event) {
+    const input = event.target as HTMLInputElement;
+    const face = parseInt(input.value, 10);
+    this.dice[index] = isNaN(face) ? 1 : Math.min(6, Math.max(1, face));
+  }
+
+  updateScore(event: Event, player: string, category: string): void {
+    const input = event.target as HTMLInputElement;
+    const value = parseInt(input.value, 10);
+    this.scores[player][category] = isNaN(value) ? null : value;
+  }
+
+  changePlayer(direction: 'left' | 'right') {
+    if (direction === 'left') {
+      this.activePlayerIndex = (this.activePlayerIndex - 1 + this.players.length) % this.players.length;
+    } else {
+      this.activePlayerIndex = (this.activePlayerIndex + 1) % this.players.length;
+    }
+    this.saveGame();
+  }
+
+  checkGameOver(): void {
+    this.gameOver = this.players.every(player =>
+      this.categories.every(category => this.locked[player.id][category])
+    );
+
+    if (this.gameOver) {
+      const winners = this.getRound(true)[0].points;
+      this.winnerComponent?.loadWinners(winners);
+    }
+  }
+
+
+  isActivePlayer(player: number): boolean {
+    return this.players[this.activePlayerIndex].id === player;
+  }
+
+  getBonus(player: number): string {
     const bonusCategories = ['As', 'Deux', 'Trois', 'Quatre', 'Cinq', 'Six'];
     let totalUpperSection = 0;
 
@@ -184,12 +264,12 @@ export class YamsSheetComponent {
 
 
   unlockScore(category: string): void {
-    const activePlayer = this.players[this.activePlayerIndex];
+    const activePlayer = this.players[this.activePlayerIndex].id;
     this.locked[activePlayer][category] = false;
   }
 
   lockScore(category: string): void {
-    const activePlayer = this.players[this.activePlayerIndex];
+    const activePlayer = this.players[this.activePlayerIndex].id;
     if (this.scores[activePlayer][category] === null) {
       this.scores[activePlayer][category] = this.calculatePoints(category);
     }
@@ -197,11 +277,26 @@ export class YamsSheetComponent {
     this.checkGameOver();
   }
 
-  getTotal(player: string): number {
+  getTotal(player: number): number {
     let total = Object.values(this.scores[player])
       .filter(score => score !== null)
       .reduce((total, score) => total + (score as number), 0);
     const bonus = this.getBonus(player).startsWith('35 ') ? 35 : 0;
     return total + bonus;
   }
+
+  closeGame() {
+    this.table!.specificData = "";
+    this.table!.round = [];
+    this.tableService.updateTable(this.table!).subscribe({
+      next: () => {
+        this.router.navigate(["/tables"]);
+      },
+      error: (error) => {
+        console.error("Error update table:", error);
+      }
+    });
+  }
+
+
 }

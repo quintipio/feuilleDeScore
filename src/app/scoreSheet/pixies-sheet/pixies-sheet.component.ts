@@ -273,7 +273,16 @@ export class PixiesSheetComponent {
   }
 
   closeGame() {
-    this.router.navigate(["/tables"]);
+    this.table!.specificData = "";
+    this.table!.round = [];
+    this.tableService.updateTable(this.table!).subscribe({
+      next: () => {
+        this.router.navigate(["/tables"]);
+      },
+      error: (error) => {
+        console.error("Error update table:", error);
+      }
+    });
   }
 
 }

@@ -151,11 +151,16 @@ export class MilleSabordSheetComponent {
     this.winnerComponent?.loadWinners(winners);
   }
 
-  closeGame(){
-    this.tableService.updateRound(this.table!.id, []).subscribe({
+  closeGame() {
+    this.table!.specificData = "";
+    this.table!.round = [];
+    this.tableService.updateTable(this.table!).subscribe({
       next: () => {
         this.router.navigate(["/tables"]);
       },
+      error: (error) => {
+        console.error("Error update table:", error);
+      }
     });
   }
 }
