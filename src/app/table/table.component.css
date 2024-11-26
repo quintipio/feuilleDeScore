@@ -18,8 +18,38 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 15px; /* Ajoute un peu d'espace entre l'image et le texte */
+  margin-right: 15px;
 }
+
+
+
+
+.vertical-list{
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.vertical-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.vertical-list li.selected {
+  background-color: #d3f9d8;
+}
+
+.vertical-list li .align-left {
+  display: inline-block;
+}
+
+.vertical-list li .align-right {
+  display: flex;
+  gap: 10px;
+}
+
 
 .game-image {
   max-width: 100%;

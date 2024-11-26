@@ -1,17 +1,19 @@
-<div class="container-fluid nav-panel ">
-  <nav>
-    <ul class="horizontal-list">
+<div class="app-container">
+  <div class="container-fluid nav-panel">
+    <nav>
+      <ul class="horizontal-list">
         <li><a routerLink="/tables"><i class="fa-solid fa-gamepad"></i> Tables</a></li>
         <li><a routerLink="/games"><i class="fa-solid fa-dice"></i> Jeux</a></li>
-    </ul>
-  </nav>
+      </ul>
+    </nav>
+  </div>
+
+  <main class="container">
+    <section>
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+
+  <footer>
+  </footer>
 </div>
-
-
-<main class="container">
-  <section>
-    <router-outlet />
-  </section>
-</main>
-
-<footer></footer>

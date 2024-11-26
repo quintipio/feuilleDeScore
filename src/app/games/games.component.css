@@ -89,4 +89,22 @@
 
 
 
+.align-element-right {
+  display: flex;
+  float: right;
+}
+
+.align-element-left {
+  display: flex;
+  float: left;
+}
+
+.align-element-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
 
