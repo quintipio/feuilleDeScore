@@ -36,7 +36,7 @@ export class YamsSheetComponent {
     'Full',
     'Petite Suite',
     'Grande Suite',
-    'Yam',
+    'Yathzee',
     'Chance',
   ];
   scores: { [player: string]: { [category: string]: number | null } } = {};
@@ -184,7 +184,7 @@ export class YamsSheetComponent {
         return [1, 2, 3, 4].every((n) => counts[n]) || [2, 3, 4, 5].every((n) => counts[n]) || [3, 4, 5, 6].every((n) => counts[n]) ? 30 : 0;
       case 'Grande Suite':
         return [1, 2, 3, 4, 5].every((n) => counts[n]) || [2, 3, 4, 5, 6].every((n) => counts[n]) ? 40 : 0;
-      case 'Yam':
+      case 'Yathzee':
         return counts.some((count) => count === 5) ? 50 : 0;
       case 'Chance':
         return this.dice.reduce((sum, die) => sum + die, 0);
