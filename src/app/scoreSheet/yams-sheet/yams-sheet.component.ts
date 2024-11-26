@@ -50,7 +50,7 @@ export class YamsSheetComponent {
 
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.table?.game?.mancheLimite
     this.route.queryParams.subscribe(params => {
       const idTable = +params['idTable'];
@@ -81,43 +81,43 @@ export class YamsSheetComponent {
     });
   }
 
-  private saveGame(){
-    if(this.table){
+  private saveGame() {
+    if (this.table) {
       const specificData = [this.scores, this.locked, this.players, this.activePlayerIndex, this.dice];
       this.table.specificData = JSON.stringify(specificData);
       this.table.round = this.getRound(false);
       this.tableService.updateTable(this.table).subscribe({
-        next:() => {
+        next: () => {
         },
       });
     }
   }
 
-  private getRound(tri : boolean) : RoundRow[]{
+  private getRound(tri: boolean): RoundRow[] {
 
-    const points : CountRoundRow[]= [];
+    const points: CountRoundRow[] = [];
     this.players.forEach((user) => {
-      const joueur : UserColumn = {
-        position : 0,
-        user : user
+      const joueur: UserColumn = {
+        position: 0,
+        user: user
       }
       points.push({
-        user : joueur,
-        value : this.getTotal(user.id)
+        user: joueur,
+        value: this.getTotal(user.id)
       })
     });
 
-    if(tri) {
+    if (tri) {
       points.sort((a, b) => b.value - a.value);
       points.forEach((winner, index) => {
         winner.user.position = index + 1;
       });
     }
 
-    const data : RoundRow[] = [];
-    const element : RoundRow = {
-      row : 1,
-      points : points
+    const data: RoundRow[] = [];
+    const element: RoundRow = {
+      row: 1,
+      points: points
     };
 
     data.push(element);
@@ -125,8 +125,8 @@ export class YamsSheetComponent {
   }
 
 
-  private loadGame(){
-    if(this.table){
+  private loadGame() {
+    if (this.table) {
       const data = JSON.parse(this.table.specificData);
       this.scores = data[0];
       this.locked = data[1];
@@ -136,7 +136,7 @@ export class YamsSheetComponent {
     }
   }
 
-  changeDiceValue(data: number[]){
+  changeDiceValue(data: number[]) {
     this.dice = data;
   }
 
@@ -235,7 +235,7 @@ export class YamsSheetComponent {
     } else {
       this.activePlayerIndex = (this.activePlayerIndex + 1) % this.players.length;
     }
-    this.dice = [1,1,1,1,1]
+    this.dice = [1, 1, 1, 1, 1]
     this.dicesComponent?.initializeDice();
     this.saveGame();
   }
@@ -281,8 +281,20 @@ export class YamsSheetComponent {
     this.locked[activePlayer][category] = false;
   }
 
+  private checkYathzeeAlreadyGagne(activePlayer: number): boolean {
+    if (this.scores[activePlayer]["Yathzee"] !== null && this.scores[activePlayer]["Yathzee"] >= 50) {
+      const counts = Array(7).fill(0);
+      this.dice.forEach((die) => counts[die]++);
+      return counts.some((count) => count === 5);
+    }
+    return false;
+  }
+
   lockScore(category: string): void {
     const activePlayer = this.players[this.activePlayerIndex].id;
+    if(this.scores[activePlayer]["Yathzee"] != null && this.checkYathzeeAlreadyGagne(activePlayer)){
+      this.scores[activePlayer]["Yathzee"] += 100;
+    }
     if (this.scores[activePlayer][category] === null) {
       this.scores[activePlayer][category] = this.calculatePoints(category);
     }
