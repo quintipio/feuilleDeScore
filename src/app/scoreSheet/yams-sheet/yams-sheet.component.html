@@ -1,20 +1,34 @@
 <div class="score-sheet">
-  <h1>Yam's</h1>
+  <h1>Yathzee</h1>
 
-<div class="dice-container">
-  <div *ngFor="let die of dice; let index = index" class="die-row">
-    <span>Dé {{ index + 1 }} :</span>
-    <div class="die-buttons">
-      <button
-        *ngFor="let value of [1, 2, 3, 4, 5, 6]"
-        [class.active]="die === value"
-        (click)="setDieValue(index, value)"
-      >
-        <img [src]="'assets/rsc/' + getDieImage(value)" [alt]="value" />
-      </button>
+  <div class="button-group">
+    <button
+      [ngClass]="{'active': desVirtuel}"
+      (click)="toggleButtonsDes()">
+      Faire des lancés de dés
+    </button>
+    <button
+      [ngClass]="{'active': !desVirtuel}"
+      (click)="toggleButtonsDes()">
+      Sélectionner les valeurs des dés
+    </button>
+  </div>
+
+  <div class="roll-dice-container" *ngIf="desVirtuel">
+    <app-dices [maxRolls]="3" [numberOfDice]="5" (diceRolled)="changeDiceValue($event)"></app-dices>
+  </div>
+
+  <div class="dice-container" *ngIf="!desVirtuel">
+    <div *ngFor="let die of dice; let index = index" class="die-row">
+      <span>Dé {{ index + 1 }} :</span>
+      <div class="die-buttons">
+        <button *ngFor="let value of [1, 2, 3, 4, 5, 6]" [class.active]="die === value"
+          (click)="setDieValue(index, value)">
+          <img [src]="'assets/rsc/' + getDieImage(value)" [alt]="value" />
+        </button>
+      </div>
     </div>
   </div>
-</div>
 
 
 
@@ -38,14 +52,12 @@
         <tr *ngFor="let category of categories">
           <td>{{ category }}</td>
           <td *ngFor="let player of players" [ngClass]="{ 'locked-cell': locked[player.id][category] }">
-            <div class="score-cell"  [ngClass]="{ 'locked-cell': locked[player.id][category] }">
+            <div class="score-cell" [ngClass]="{ 'locked-cell': locked[player.id][category] }">
               <!-- Si la case est verrouillée -->
               <span *ngIf="locked[player.id][category]">
                 {{ scores[player.id][category] ?? '-' }}
-                <button
-                  *ngIf="isActivePlayer(player.id)"
-                  (click)="unlockScore(category)"
-                  class="edit-button"><i class="fa-solid fa-pen-to-square"></i>
+                <button *ngIf="isActivePlayer(player.id)" (click)="unlockScore(category)" class="edit-button"><i
+                    class="fa-solid fa-pen-to-square"></i>
                 </button>
               </span>
 
@@ -78,14 +90,15 @@
   </div>
 
   <div *ngIf="gameOver" class="game-over-message" style="margin-top : 30px;">
-    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#winnerModal">Finir la partie</button>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#winnerModal">Finir la
+      partie</button>
   </div>
 </div>
 
 <div class="modal fade" id="winnerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <app-winner  (outWindow)="closeGame()"></app-winner>
+      <app-winner (outWindow)="closeGame()"></app-winner>
     </div>
   </div>
 </div>

@@ -71,7 +71,7 @@ export const routes: Routes = [
   },
   {
     path: 'sheet/yams',
-    title: 'Yam\'s',
+    title: 'Yathzee',
     component: YamsSheetComponent,
   },
 ];

@@ -21,6 +21,7 @@ export class TableComponent {
 
   tables:Table[] = [];
   private lastTableSelected = 0;
+  private selectedTableToDelete: number = -1;
 
   constructor(private router: Router) { }
 
@@ -71,11 +72,15 @@ export class TableComponent {
     this.router.navigate(['tables/historic'], { queryParams: { idTable: idTable } });
   }
 
+  prepareDeleteTable(id :number){
+    this.selectedTableToDelete = id;
+  }
 
-  deleteTable(id :number){
-    this.tableService.deleteTable(id).subscribe({
+  deleteTable(){
+    this.tableService.deleteTable(this.selectedTableToDelete).subscribe({
       next: () => {
         this.loadTables();
+        this.selectedTableToDelete = -1;
       },
       error: (err) => console.error('Erreur lors de la suppression de la table :', err)
     });

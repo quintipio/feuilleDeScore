@@ -28,7 +28,7 @@ export const GameExisting: Game[] = [
   { "id": 11,"uuid":"7f2425ce-d96b-424b-81b1-ad6b60de1f30", "name": "Dorf romantik", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "dorfromantik", "specificConf":"" },
   { "id": 12,"uuid":"1f87c1b5-9c62-4253-8476-bc8d0e91c337", "name": "Scrabble", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "generic", "specificConf":"" },
   { "id": 13,"uuid":"8f277ffa-ccaa-4264-be4b-73ab0b2167e8", "name": "Rami", "scorePlusEleve": true, "scoreLimite": 250, "mancheLimite": 0, "scoreNegatif": true, "canEdit": false, "sheet": "generic", "specificConf":"" },
-  { "id": 14,"uuid":"f69c6723-8e46-45ad-8cc2-dc15e7ef76d8", "name": "Yam's", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "yams", "specificConf":"" }
+  { "id": 14,"uuid":"f69c6723-8e46-45ad-8cc2-dc15e7ef76d8", "name": "Yahtzee", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "yams", "specificConf":"" }
 ]
 
 export function isGame(object: any): object is Game {

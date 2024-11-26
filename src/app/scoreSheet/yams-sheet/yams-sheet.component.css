@@ -254,3 +254,37 @@ button:hover {
   box-shadow: 0 0 10px rgba(240, 173, 78, 0.8);
 }
 
+.button-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.button-group button {
+  border: 1px solid black;
+  padding: 10px 20px;
+  margin-bottom: 30px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.button-group button:first-child {
+  border-radius: 10px 0 0 10px; /* Bords arrondis gauche */
+}
+
+.button-group button:last-child {
+  border-radius: 0 10px 10px 0;
+}
+
+.button-group button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.button-group button:not(.active):hover {
+  background-color: #e0e0e0;
+}
+
+

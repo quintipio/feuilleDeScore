@@ -1,0 +1,29 @@
+<div class="dice-container">
+  <h2 class="title">
+    Nombre de lancés : {{ currentRoll }}<ng-container *ngIf="maxRolls > 0">/{{ maxRolls }}</ng-container>
+  </h2>
+
+  <p *ngIf="getSelectedDiceValues().length > 0" class="selected-dice-info">
+    Dés retenus : {{ getSelectedDiceValues().join(', ') }}
+  </p>
+
+  <div class="dice-box">
+    <ng-container *ngIf="hasDiceValues(); else noDiceMessage">
+      <img *ngFor="let value of diceValues; let i = index"
+           [src]="'assets/rsc/' + getImageName(value)"
+           alt="Dés"
+           class="dice-image animate"
+           [class.selected]="diceSelected[i]"
+           (click)="toggleDiceSelection(i)">
+    </ng-container>
+    <ng-template #noDiceMessage>
+      <p>Appuyez sur le bouton de lancé</p>
+    </ng-template>
+  </div>
+
+  <button (click)="rollDice()"
+          [disabled]="!canRoll()"
+          class="roll-button">
+    Lancer les dés
+  </button>
+</div>

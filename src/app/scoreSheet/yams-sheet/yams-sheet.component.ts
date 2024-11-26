@@ -7,16 +7,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models/user.model';
 import { CountRoundRow, RoundRow, UserColumn } from '../../models/sheet';
 import { formatDateNowToKey } from '../../Utils/Utils';
+import { DicesComponent } from '../../components/dices/dices.component';
 @Component({
   selector: 'app-yams-sheet',
   standalone: true,
-  imports: [CommonModule, WinnerComponent],
+  imports: [CommonModule, WinnerComponent, DicesComponent],
   templateUrl: './yams-sheet.component.html',
   styleUrl: './yams-sheet.component.css'
 })
 export class YamsSheetComponent {
 
   @ViewChild(WinnerComponent) winnerComponent: WinnerComponent | undefined;
+  @ViewChild(DicesComponent) dicesComponent: DicesComponent | undefined;
   private tableService = inject(TableService);
   table: Table | undefined;
 
@@ -42,6 +44,7 @@ export class YamsSheetComponent {
   dice: number[] = [1, 1, 1, 1, 1];
   gameOver = false;
   winnersMessage: string = '';
+  desVirtuel: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router) {
 
@@ -133,6 +136,14 @@ export class YamsSheetComponent {
     }
   }
 
+  changeDiceValue(data: number[]){
+    this.dice = data;
+  }
+
+  toggleButtonsDes(): void {
+    this.desVirtuel = !this.desVirtuel;
+  }
+
   calculatePoints(category: string): number {
     const counts = Array(7).fill(0);
     this.dice.forEach((die) => counts[die]++);
@@ -153,18 +164,18 @@ export class YamsSheetComponent {
       case 'Brelan':
         const brelanValue = counts.findIndex(count => count >= 3);
         if (brelanValue !== -1) {
-          return brelanValue * 3;
+          return this.dice.reduce((sum, die) => sum + die, 0);
         }
         return 0;
       case 'Carré':
         const carreValue = counts.findIndex(count => count >= 4);
         if (carreValue !== -1) {
-          return carreValue * 4;
+          return this.dice.reduce((sum, die) => sum + die, 0);
         }
         return 0;
       case 'Full':
-        const threeOfAKind = counts.findIndex(count => count >= 3);
-        const twoOfAKind = counts.findIndex(count => count >= 2);
+        const threeOfAKind = counts.findIndex(count => count === 3);
+        const twoOfAKind = counts.findIndex(count => count === 2);
         if (threeOfAKind !== -1 && twoOfAKind !== -1 && threeOfAKind !== twoOfAKind) {
           return 25;
         }
@@ -224,6 +235,8 @@ export class YamsSheetComponent {
     } else {
       this.activePlayerIndex = (this.activePlayerIndex + 1) % this.players.length;
     }
+    this.dice = [1,1,1,1,1]
+    this.dicesComponent?.initializeDice();
     this.saveGame();
   }
 
