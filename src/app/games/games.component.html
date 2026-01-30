@@ -26,12 +26,6 @@
       <i class="fa-solid fa-trash"></i>
     </button>
   </div>
-
-  <div class="col">
-    <button *ngIf="isReadyToCreateTable()" (click)="createTable()" class="btn btn-outline-success align-element-right" type="button">
-      Créer une table
-    </button>
-  </div>
 </div>
 
 <div class="row">
@@ -45,7 +39,7 @@
   }
 </div>
 
-<div class="row" style="margin-top: 10px;">
+<div class="row" style="margin-top: 10px; margin-bottom: 120px;">
   <div class="col align-element-center">
     <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#gameModal"
       (click)="openNewGameModal()">
@@ -110,6 +104,14 @@
         </button>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="row fixed-bottom-button">
+  <div class="col-12 d-flex justify-content-center">
+    <button *ngIf="isReadyToCreateTable()" (click)="createTable()" class="btn btn-outline-success" type="button">
+      Créer une table
+    </button>
   </div>
 </div>
 

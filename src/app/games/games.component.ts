@@ -143,8 +143,10 @@ export class GamesComponent {
       const newUser: User = { id: Date.now(), name: this.newUser };
       this.userService.addUser(newUser).subscribe({
         next: () => {
+          this.selectedUsers.push(newUser);
           this.newUser = '';
           this.loadAllUsers();
+          this.checkUserForTable();
         },
         error: (err) => console.error('Erreur lors de l’ajout du joueur :', err)
       });

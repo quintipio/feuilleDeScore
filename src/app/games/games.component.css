@@ -105,6 +105,21 @@
   align-items: center;
 }
 
+.fixed-bottom-button {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 10px;
+  background-color: white;
+  border-top: 1px solid #ddd;
+  z-index: 999;
+}
+
+.fixed-bottom-button button {
+  min-width: 200px;
+}
+
 
 
 
