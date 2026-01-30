@@ -51,7 +51,7 @@
       </div>
       <div class="d-flex flex-column align-items-center p-2">
         <span class="small-label">Pirate capturé : </span>
-        <app-input-score name="bonusPirate_{{player.user.id}}" (valueChange)="getBonusPirate(player, $event)" [min]="0" [max]="6" [initValue]="player.bonusPirate"></app-input-score>
+        <app-input-score name="bonusPirate_{{player.user.id}}" (valueChange)="getBonusPirate(player, $event)" [min]="0" [max]="extension ? 7 : 6" [initValue]="player.bonusPirate"></app-input-score>
       </div>
       <div class="d-flex flex-column align-items-center p-2">
         <span class="small-label">Sirène capturée : </span>
@@ -60,6 +60,14 @@
       <div class="d-flex flex-column align-items-center p-2">
         <span class="small-label">Skull King capturé : </span>
         <app-input-score name="bonusSkullKing_{{player.user.id}}" (valueChange)="getBonusSkullKing(player, $event)" [min]="0" [max]="1" [initValue]="player.bonusSkullKing"></app-input-score>
+      </div>
+            <div class="d-flex flex-column align-items-center p-2" *ngIf="extension">
+        <span class="small-label">Second capturé: </span>
+        <app-input-score name="bonusSecond_{{player.user.id}}" (valueChange)="getSecond(player, $event)" [min]="0" [max]="1" [initValue]="player.bonusSecond"></app-input-score>
+      </div>
+      <div class="d-flex flex-column align-items-center p-2" *ngIf="extension">
+        <span class="small-label">Léviathan capturé : </span>
+        <app-input-score name="bonusLeviathan_{{player.user.id}}" (valueChange)="getLeviathan(player, $event)" [min]="0" [max]="3" [initValue]="player.bonusLeviathan"></app-input-score>
       </div>
       <div class="d-flex flex-column align-items-center p-2">
         <span class="small-label">Bonus butin : </span>

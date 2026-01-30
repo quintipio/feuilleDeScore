@@ -5,6 +5,7 @@ export type SkullKingConf = {
   alwaysScore: boolean;
   rascalScore: boolean;
   rascalPoing: boolean;
+  extension: boolean;
   manche: number[];
 }
 
@@ -29,6 +30,7 @@ export class SkullKingConfigComponent {
   isRascalScoreChecked = false;
   isRascalScorePoingChecked = false;
   isAlwaysScore = false;
+  isExtensionChecked = false;
 
   ngOnChanges(){
     if(this.specificConfIn !== undefined){
@@ -36,6 +38,7 @@ export class SkullKingConfigComponent {
       this.isAlwaysScore = data.alwaysScore;
       this.isRascalScoreChecked = data.rascalScore;
       this.isRascalScorePoingChecked = data.rascalPoing;
+      this.isExtensionChecked = data.extension;
       this.checkedValues = data.manche;
       this.isOkForSave = this.checkedValues.length > 0;
     }
@@ -52,6 +55,8 @@ export class SkullKingConfigComponent {
       this.isRascalScorePoingChecked = isChecked;
     } else if(name === 'alwaysScore') {
       this.isAlwaysScore = isChecked;
+    } else if(name === 'extension') {
+      this.isExtensionChecked = isChecked;
     }
 
     if(this.isOkForSave){
@@ -82,6 +87,7 @@ export class SkullKingConfigComponent {
       alwaysScore: this.isAlwaysScore,
       rascalScore: this.isRascalScoreChecked,
       rascalPoing : this.isRascalScorePoingChecked,
+      extension: this.isExtensionChecked,
       manche : this.checkedValues.sort((a, b) => a - b)
     }
     console.log(data.manche);

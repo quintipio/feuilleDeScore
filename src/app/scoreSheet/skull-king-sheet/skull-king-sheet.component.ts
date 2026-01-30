@@ -23,6 +23,8 @@ type skullKingPlayer = {
   bonusSkullKing: number,
   bonusSirene: number,
   bonusPirate: number,
+  bonusSecond: number,
+  bonusLeviathan: number,
   bonusDix: number
 }
 
@@ -53,6 +55,7 @@ export class SkullKingSheetComponent {
   alwaysScore = false;
   rascalScore = false;
   rascalPoing = false;
+  extension = false;
   mancheToPlay: number[] = [];
   cursorMancheToPlay: number = 0;
   winners : CountRoundRow[] = [];
@@ -97,6 +100,7 @@ export class SkullKingSheetComponent {
     this.alwaysScore = data.alwaysScore;
     this.rascalScore = data.rascalScore;
     this.rascalPoing = data.rascalPoing;
+    this.extension = data.extension;
     this.mancheToPlay = data.manche.sort((a, b) => a - b);
 
   }
@@ -118,7 +122,9 @@ export class SkullKingSheetComponent {
         bonusSkullKing: 0,
         bonusSirene: 0,
         bonusPirate: 0,
-        bonusDix: 0
+        bonusDix: 0,
+        bonusSecond: 0,
+        bonusLeviathan: 0
       }
       newManche.players.push(player);
     })
@@ -147,6 +153,12 @@ export class SkullKingSheetComponent {
         }
         if (input.name === "bonusAutre_" + player.user.id) {
           input.reinit(player.bonusAutre)
+        }
+        if (input.name === "bonusSecond_" + player.user.id) {
+          input.reinit(player.bonusSecond)
+        }
+        if (input.name === "bonusLeviathan_" + player.user.id) {
+          input.reinit(player.bonusLeviathan)
         }
       });
       this.calculerScoreManche(player);
@@ -184,6 +196,8 @@ export class SkullKingSheetComponent {
           newScore += player.bonusPirate * 20;
           newScore += player.bonusSirene * 30;
           newScore += player.bonusDix * 10;
+          newScore += player.bonusSecond * 30;
+          newScore += player.bonusLeviathan * 20;
         } else {
           newScore += dif * -10;
           if(this.alwaysScore){
@@ -193,6 +207,8 @@ export class SkullKingSheetComponent {
             newScore += player.bonusPirate * 20;
             newScore += player.bonusSirene * 30;
             newScore += player.bonusDix * 10;
+            newScore += player.bonusSecond * 30;
+            newScore += player.bonusLeviathan * 20;
           }
         }
       } else {
@@ -204,6 +220,8 @@ export class SkullKingSheetComponent {
           newScore += player.bonusPirate * 20;
           newScore += player.bonusSirene * 30;
           newScore += player.bonusDix * 10;
+          newScore += player.bonusSecond * 30;
+          newScore += player.bonusLeviathan * 20;
         } else {
           newScore += this.mancheEnCours?.manche! * -10;
           if(this.alwaysScore){
@@ -213,6 +231,8 @@ export class SkullKingSheetComponent {
             newScore += player.bonusPirate * 20;
             newScore += player.bonusSirene * 30;
             newScore += player.bonusDix * 10;
+            newScore += player.bonusSecond * 30;
+            newScore += player.bonusLeviathan * 20;
           }
         }
       }
@@ -326,6 +346,16 @@ export class SkullKingSheetComponent {
 
   getBonusDix(player: skullKingPlayer, value: number) {
     player.bonusDix = value;
+    this.calculerScoreManche(player);
+  }
+
+  getSecond(player: skullKingPlayer, value: number) {
+    player.bonusSecond = value;
+    this.calculerScoreManche(player);
+  }
+
+  getLeviathan(player: skullKingPlayer, value: number) {
+    player.bonusLeviathan = value;
     this.calculerScoreManche(player);
   }
 
