@@ -9,6 +9,7 @@ export interface CarteChateauCombo {
   reducChateau: boolean,
   conditionGagne: string,
   conditionGagneElement: string[],
+  cadenas: boolean,
 }
 
 
@@ -31,7 +32,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "",
-      "conditionGagneElement": []
+      "conditionGagneElement": [],
+      "cadenas": false
     },
     "Retourné village": {
       "bouclier": [],
@@ -41,7 +43,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "",
-      "conditionGagneElement": []
+      "conditionGagneElement": [],
+      "cadenas": false
     },
     "Bouffon": {
       "bouclier": ["bleu"],
@@ -51,7 +54,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-ligne-colonne",
-      "conditionGagneElement": ["bleu"]
+      "conditionGagneElement": ["bleu"],
+      "cadenas": false
     },
 
     "Baron": {
@@ -62,7 +66,8 @@ export class CarteService {
       "reducVillage": true,
       "reducChateau": true,
       "conditionGagne": "bouclier-absent",
-      "conditionGagneElement": ["jaune"]
+      "conditionGagneElement": ["jaune"],
+      "cadenas": false
     },
 
     "Garde royal": {
@@ -73,7 +78,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-colonne",
-      "conditionGagneElement": ["bleu"]
+      "conditionGagneElement": ["bleu"],
+      "cadenas": false
     },
 
     "Mécène": {
@@ -84,7 +90,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "cout-cartes-plus",
-      "conditionGagneElement": ["5"]
+      "conditionGagneElement": ["5"],
+      "cadenas": false
     },
 
     "Souffleur de verre": {
@@ -95,7 +102,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "groupe-bouclier",
-      "conditionGagneElement": ["violet", "orange"]
+      "conditionGagneElement": ["violet", "orange"],
+      "cadenas": false
     },
 
     "Nonne": {
@@ -106,7 +114,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-colonne",
-      "conditionGagneElement": ["violet"]
+      "conditionGagneElement": ["violet"],
+      "cadenas": false
     },
 
     "Juge": {
@@ -117,7 +126,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "groupe-lieu",
-      "conditionGagneElement": ["village", "chateau"]
+      "conditionGagneElement": ["village", "chateau"],
+      "cadenas": false
     },
 
     "Intendant": {
@@ -128,7 +138,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "piece-bourse",
-      "conditionGagneElement": ["3"]
+      "conditionGagneElement": ["3"],
+      "cadenas": false
     },
 
     "Son altesse": {
@@ -139,7 +150,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-colonne",
-      "conditionGagneElement": ["bleu"]
+      "conditionGagneElement": ["bleu"],
+      "cadenas": false
     },
 
     "Mère supérieure": {
@@ -150,7 +162,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "emplacement-horizontal",
-      "conditionGagneElement": ["haut"]
+      "conditionGagneElement": ["haut"],
+      "cadenas": false
     },
 
     "Sa sainteté": {
@@ -161,7 +174,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-different-absent",
-      "conditionGagneElement": []
+      "conditionGagneElement": [],
+      "cadenas": false
     },
 
     "Capitaine": {
@@ -172,7 +186,8 @@ export class CarteService {
       "reducVillage": true,
       "reducChateau": false,
       "conditionGagne": "emplacement-vertical",
-      "conditionGagneElement": ["droite"]
+      "conditionGagneElement": ["droite"],
+      "cadenas": false
     },
 
     "Apothicaire": {
@@ -183,7 +198,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": true,
       "conditionGagne": "bouclier-colonne",
-      "conditionGagneElement": ["vert"]
+      "conditionGagneElement": ["vert"],
+      "cadenas": false
     },
 
     "Alchimiste": {
@@ -194,7 +210,8 @@ export class CarteService {
       "reducVillage": true,
       "reducChateau": true,
       "conditionGagne": "reduc",
-      "conditionGagneElement": []
+      "conditionGagneElement": [],
+      "cadenas": false
     },
 
     "Prince": {
@@ -205,7 +222,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-ligne",
-      "conditionGagneElement": ["bleu"]
+      "conditionGagneElement": ["bleu"],
+      "cadenas": false
     },
 
     "Doyenne": {
@@ -216,18 +234,20 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "piece-bourse",
-      "conditionGagneElement": ["5"]
+      "conditionGagneElement": ["5"],
+      "cadenas": false
     },
 
     "Chanceliere": {
-      "bouclier": ["bleu", "verre"],
+      "bouclier": ["bleu", "vert"],
       "lieu": "chateau",
       "cout": 6,
       "nbPoint": 2,
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "lieu",
-      "conditionGagneElement": ["chateau"]
+      "conditionGagneElement": ["chateau"],
+      "cadenas": false
     },
 
     "Architecte": {
@@ -238,7 +258,8 @@ export class CarteService {
       "reducVillage": true,
       "reducChateau": false,
       "conditionGagne": "bouclier-different",
-      "conditionGagneElement": []
+      "conditionGagneElement": [],
+      "cadenas": false
     },
 
     "Maitre de guilde": {
@@ -249,7 +270,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "emplacement-horizontal",
-      "conditionGagneElement": ["bas"]
+      "conditionGagneElement": ["bas"],
+      "cadenas": false
     },
 
     "Veilleur": {
@@ -260,7 +282,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-colonne",
-      "conditionGagneElement": ["different"]
+      "conditionGagneElement": ["different"],
+      "cadenas": false
     },
 
     "Chevaleresse": {
@@ -271,7 +294,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-ligne-colonne",
-      "conditionGagneElement": ["bleu"]
+      "conditionGagneElement": ["bleu"],
+      "cadenas": false
     },
 
     "Générale": {
@@ -282,7 +306,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "groupe-bouclier",
-      "conditionGagneElement": ["identique:3"]
+      "conditionGagneElement": ["identique:3"],
+      "cadenas": false
     },
 
     "Chatelaine": {
@@ -293,7 +318,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": true,
       "conditionGagne": "bouclier-ligne",
-      "conditionGagneElement": ["different"]
+      "conditionGagneElement": ["different"],
+      "cadenas": false
     },
 
     "Duchesse": {
@@ -304,7 +330,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "emplacement-horizontal",
-      "conditionGagneElement": ["haut"]
+      "conditionGagneElement": ["haut"],
+      "cadenas": false
     },
 
     "Sa majesté la reine": {
@@ -315,7 +342,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "groupe-bouclier",
-      "conditionGagneElement": ["bleu", "vert", "orange"]
+      "conditionGagneElement": ["bleu", "vert", "orange"],
+      "cadenas": false
     },
 
     "Officier": {
@@ -326,7 +354,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "groupe-bouclier",
-      "conditionGagneElement": ["bleu", "rouge"]
+      "conditionGagneElement": ["bleu", "rouge"],
+      "cadenas": false
     },
 
     "Astronome": {
@@ -337,7 +366,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": true,
       "conditionGagne": "emplacement-vertical",
-      "conditionGagneElement": ["gauche"]
+      "conditionGagneElement": ["gauche"],
+      "cadenas": false
     },
 
     "Devot": {
@@ -348,7 +378,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-absent",
-      "conditionGagneElement": ["orange"]
+      "conditionGagneElement": ["orange"],
+      "cadenas": false
     },
 
     "Templier": {
@@ -359,7 +390,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "cle",
-      "conditionGagneElement": []
+      "conditionGagneElement": [],
+      "cadenas": false
     },
 
     "Cardinale": {
@@ -370,7 +402,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-ligne",
-      "conditionGagneElement": ["violet"]
+      "conditionGagneElement": ["violet"],
+      "cadenas": false
     },
 
     "Fossoyeur": {
@@ -381,7 +414,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "piece-bourse",
-      "conditionGagneElement": ["8"]
+      "conditionGagneElement": ["8"],
+      "cadenas": false
     },
 
     "Professeur": {
@@ -392,7 +426,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-ligne",
-      "conditionGagneElement": ["vert"]
+      "conditionGagneElement": ["vert"],
+      "cadenas": false
     },
 
     "Scribe": {
@@ -403,7 +438,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-ligne-colonne",
-      "conditionGagneElement": ["vert"]
+      "conditionGagneElement": ["vert"],
+      "cadenas": false
     },
 
     "Orfèvre": {
@@ -414,7 +450,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "emplacement-vertical",
-      "conditionGagneElement": ["gauche"]
+      "conditionGagneElement": ["gauche"],
+      "cadenas": false
     },
 
     "Banquière": {
@@ -425,7 +462,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bourse",
-      "conditionGagneElement": []
+      "conditionGagneElement": [],
+      "cadenas": false
     },
 
     "Preteur sur gages": {
@@ -436,7 +474,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "cout-cartes",
-      "conditionGagneElement": ["4"]
+      "conditionGagneElement": ["4"],
+      "cadenas": false
     },
 
     "Princesse": {
@@ -447,7 +486,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": true,
       "conditionGagne": "bouclier-ligne",
-      "conditionGagneElement": ["bleu"]
+      "conditionGagneElement": ["bleu"],
+      "cadenas": false
     },
 
     "Pélerin": {
@@ -458,7 +498,8 @@ export class CarteService {
       "reducVillage": true,
       "reducChateau": false,
       "conditionGagne": "bouclier-ligne",
-      "conditionGagneElement": ["different"]
+      "conditionGagneElement": ["different"],
+      "cadenas": false
     },
 
     "Aumonier": {
@@ -469,7 +510,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "lieu",
-      "conditionGagneElement": ["village"]
+      "conditionGagneElement": ["village"],
+      "cadenas": false
     },
 
     "Usurpateur": {
@@ -480,7 +522,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "lieu",
-      "conditionGagneElement": ["chateau"]
+      "conditionGagneElement": ["chateau"],
+      "cadenas": false
     },
 
     "Ecuyer": {
@@ -491,7 +534,8 @@ export class CarteService {
       "reducVillage": true,
       "reducChateau": true,
       "conditionGagne": "bouclier-ligne-colonne",
-      "conditionGagneElement": ["orange"]
+      "conditionGagneElement": ["orange"],
+      "cadenas": false
     },
 
     "Agricultrice": {
@@ -502,7 +546,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "emplacement-horizontal",
-      "conditionGagneElement": ["bas"]
+      "conditionGagneElement": ["bas"],
+      "cadenas": false
     },
 
     "Milicien": {
@@ -513,7 +558,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-ligne",
-      "conditionGagneElement": ["rouge"]
+      "conditionGagneElement": ["rouge"],
+      "cadenas": false
     },
 
     "Révolutionnaire": {
@@ -524,7 +570,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-absent",
-      "conditionGagneElement": ["bleu"]
+      "conditionGagneElement": ["bleu"],
+      "cadenas": false
     },
 
     "Médecin": {
@@ -535,7 +582,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "groupe-bouclier",
-      "conditionGagneElement": ["vert", "jaune"]
+      "conditionGagneElement": ["vert", "jaune"],
+      "cadenas": false
     },
 
     "Brigand": {
@@ -546,7 +594,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "groupe-lieu",
-      "conditionGagneElement": ["village:3"]
+      "conditionGagneElement": ["village:3"],
+      "cadenas": false
     },
 
     "Batard": {
@@ -557,7 +606,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-colonne",
-      "conditionGagneElement": ["jaune"]
+      "conditionGagneElement": ["jaune"],
+      "cadenas": false
     },
 
     "Scupltrice": {
@@ -568,7 +618,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "piece-bourse",
-      "conditionGagneElement": ["7"]
+      "conditionGagneElement": ["7"],
+      "cadenas": false
     },
 
     "Epicière": {
@@ -579,7 +630,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "emplacement-horizontal",
-      "conditionGagneElement": ["milieu"]
+      "conditionGagneElement": ["milieu"],
+      "cadenas": false
     },
 
     "Maitre d'armes": {
@@ -590,7 +642,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "piece-bourse",
-      "conditionGagneElement": ["4"]
+      "conditionGagneElement": ["4"],
+      "cadenas": false
     },
 
     "Curé": {
@@ -601,7 +654,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "piece-bourse",
-      "conditionGagneElement": ["5"]
+      "conditionGagneElement": ["5"],
+      "cadenas": false
     },
 
     "Charpentier": {
@@ -612,7 +666,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "carte-retourne-indif",
-      "conditionGagneElement": []
+      "conditionGagneElement": [],
+      "cadenas": false
     },
 
     "Serrurier": {
@@ -623,7 +678,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "cle",
-      "conditionGagneElement": []
+      "conditionGagneElement": [],
+      "cadenas": false
     },
 
     "Forgeronne": {
@@ -634,7 +690,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-double",
-      "conditionGagneElement": []
+      "conditionGagneElement": [],
+      "cadenas": false
     },
 
     "Espion": {
@@ -645,7 +702,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "emplacement-vertical",
-      "conditionGagneElement": ["milieu"]
+      "conditionGagneElement": ["milieu"],
+      "cadenas": false
     },
 
     "Fermière": {
@@ -656,7 +714,8 @@ export class CarteService {
       "reducVillage": true,
       "reducChateau": false,
       "conditionGagne": "piece-bourse",
-      "conditionGagneElement": ["5"]
+      "conditionGagneElement": ["5"],
+      "cadenas": false
     },
 
     "Horlogère": {
@@ -667,7 +726,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-ligne",
-      "conditionGagneElement": ["orange"]
+      "conditionGagneElement": ["orange"],
+      "cadenas": false
     },
 
     "Artificier": {
@@ -678,7 +738,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-colonne",
-      "conditionGagneElement": ["rouge"]
+      "conditionGagneElement": ["rouge"],
+      "cadenas": false
     },
 
     "Bucheron": {
@@ -689,7 +750,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "emplacement-vertical",
-      "conditionGagneElement": ["droite"]
+      "conditionGagneElement": ["droite"],
+      "cadenas": false
     },
 
     "Mercenaire": {
@@ -700,7 +762,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "groupe-bouclier",
-      "conditionGagneElement": ["violet", "rouge", "jaune"]
+      "conditionGagneElement": ["violet", "rouge", "jaune"],
+      "cadenas": false
     },
 
     "Boulangère": {
@@ -711,7 +774,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "emplacement-bi",
-      "conditionGagneElement": ["croix"]
+      "conditionGagneElement": ["croix"],
+      "cadenas": false
     },
 
     "Vigneron": {
@@ -722,7 +786,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-colonne",
-      "conditionGagneElement": ["different"]
+      "conditionGagneElement": ["different"],
+      "cadenas": false
     },
 
     "Apiculteur": {
@@ -733,7 +798,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "piece-bourse",
-      "conditionGagneElement": ["9"]
+      "conditionGagneElement": ["9"],
+      "cadenas": false
     },
 
     "Aubergiste": {
@@ -744,7 +810,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "piece-bourse",
-      "conditionGagneElement": ["6"]
+      "conditionGagneElement": ["6"],
+      "cadenas": false
     },
 
     "Inventeur": {
@@ -755,7 +822,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "lieu",
-      "conditionGagneElement": ["village"]
+      "conditionGagneElement": ["village"],
+      "cadenas": false
     },
 
     "Philosophe": {
@@ -766,7 +834,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": true,
       "conditionGagne": "bouclier-absent",
-      "conditionGagneElement": ["rouge"]
+      "conditionGagneElement": ["rouge"],
+      "cadenas": false
     },
 
     "Barbare": {
@@ -777,7 +846,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-absent",
-      "conditionGagneElement": ["vert"]
+      "conditionGagneElement": ["vert"],
+      "cadenas": false
     },
 
     "Moine": {
@@ -788,7 +858,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-ligne-colonne",
-      "conditionGagneElement": ["jaune"]
+      "conditionGagneElement": ["jaune"],
+      "cadenas": false
     },
 
     "Tailleuse de pierre": {
@@ -799,7 +870,8 @@ export class CarteService {
       "reducVillage": true,
       "reducChateau": false,
       "conditionGagne": "bouclier-colonne",
-      "conditionGagneElement": ["orange"]
+      "conditionGagneElement": ["orange"],
+      "cadenas": false
     },
 
     "Pecheur": {
@@ -810,7 +882,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": true,
       "conditionGagne": "emplacement-bi",
-      "conditionGagneElement": ["extremite"]
+      "conditionGagneElement": ["extremite"],
+      "cadenas": false
     },
 
     "Miraculée": {
@@ -821,7 +894,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "piece-bourse",
-      "conditionGagneElement": ["4"]
+      "conditionGagneElement": ["4"],
+      "cadenas": false
     },
 
     "Potier": {
@@ -832,7 +906,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "piece-bourse",
-      "conditionGagneElement": ["4"]
+      "conditionGagneElement": ["4"],
+      "cadenas": false
     },
 
     "Voyageuse": {
@@ -843,7 +918,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "cout-cartes",
-      "conditionGagneElement": ["0"]
+      "conditionGagneElement": ["0"],
+      "cadenas": false
     },
 
     "Sorcière": {
@@ -854,7 +930,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-absent",
-      "conditionGagneElement": ["violet"]
+      "conditionGagneElement": ["violet"],
+      "cadenas": false
     },
 
     "Armurière": {
@@ -865,7 +942,8 @@ export class CarteService {
       "reducVillage": true,
       "reducChateau": true,
       "conditionGagne": "bouclier-ligne-colonne",
-      "conditionGagneElement": ["rouge"]
+      "conditionGagneElement": ["rouge"],
+      "cadenas": false
     },
 
     "Bourreau": {
@@ -876,7 +954,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "lieu",
-      "conditionGagneElement": ["chateau"]
+      "conditionGagneElement": ["chateau"],
+      "cadenas": false
     },
 
     "Bergère": {
@@ -887,7 +966,8 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-ligne",
-      "conditionGagneElement": ["jaune"]
+      "conditionGagneElement": ["jaune"],
+      "cadenas": false
     },
 
     "Mendiante": {
@@ -898,7 +978,152 @@ export class CarteService {
       "reducVillage": false,
       "reducChateau": false,
       "conditionGagne": "bouclier-ligne-colonne",
-      "conditionGagneElement": ["violet"]
-    }
+      "conditionGagneElement": ["violet"],
+      "cadenas": false
+    },
+
+    "Roi des gueux": {
+      "bouclier": ["rouge","orange","jaune"],
+      "lieu": "village",
+      "cout": 5,
+      "nbPoint": 12,
+      "reducVillage": false,
+      "reducChateau": false,
+      "conditionGagne": "carte-retourne-indif-absent",
+      "conditionGagneElement": [],
+      "cadenas": true
+    },
+
+    "Faussaire": {
+      "bouclier": ["vert"],
+      "lieu": "village",
+      "cout": 4,
+      "nbPoint": 7,
+      "reducVillage": false,
+      "reducChateau": false,
+      "conditionGagne": "check-bouclier-ligne",
+      "conditionGagneElement": ["rouge"],
+      "cadenas": true
+    },
+
+    "Tire-laine": {
+      "bouclier": ["rouge"],
+      "lieu": "village",
+      "cout": 3,
+      "nbPoint": 10,
+      "reducVillage": false,
+      "reducChateau": false,
+      "conditionGagne": "check-bourse-absent",
+      "conditionGagneElement": [],
+      "cadenas": true
+    },
+
+    "Prince des voleurs": {
+      "bouclier": ["jaune"],
+      "lieu": "village",
+      "cout": 4,
+      "nbPoint": 4,
+      "reducVillage": false,
+      "reducChateau": false,
+      "conditionGagne": "compte-cadenas",
+      "conditionGagneElement": [],
+      "cadenas": true
+    },
+
+    "Voyante": {
+      "bouclier": ["jaune","jaune"],
+      "lieu": "village",
+      "cout": 1,
+      "nbPoint": 3,
+      "reducVillage": false,
+      "reducChateau": false,
+      "conditionGagne": "check-bouclier-colonne",
+      "conditionGagneElement": ["bleu"],
+      "cadenas": true
+    },
+
+    "Colporteur": {
+      "bouclier": ["orange"],
+      "lieu": "village",
+      "cout": 7,
+      "nbPoint": 1,
+      "reducVillage": false,
+      "reducChateau": false,
+      "conditionGagne": "somme-argent-colonne",
+      "conditionGagneElement": [],
+      "cadenas": true
+    },
+
+    "Flagorneur": {
+      "bouclier": ["bleu"],
+      "lieu": "chateau",
+      "cout": 7,
+      "nbPoint": 1,
+      "reducVillage": false,
+      "reducChateau": false,
+      "conditionGagne": "somme-argent-ligne",
+      "conditionGagneElement": [],
+      "cadenas": true
+    },
+
+    "Conspirateur": {
+      "bouclier": ["violet"],
+      "lieu": "chateau",
+      "cout": 1,
+      "nbPoint": 8,
+      "reducVillage": false,
+      "reducChateau": false,
+      "conditionGagne": "check-reduction-absente",
+      "conditionGagneElement": [],
+      "cadenas": true
+    },
+
+    "Dramaturge": {
+      "bouclier": ["vert"],
+      "lieu": "chateau",
+      "cout": 3,
+      "nbPoint": 2,
+      "reducVillage": false,
+      "reducChateau": false,
+      "conditionGagne": "bouclier-simple",
+      "conditionGagneElement": [],
+      "cadenas": true
+    },
+
+    "La main du cardinal": {
+      "bouclier": ["rouge"],
+      "lieu": "chateau",
+      "cout": 0,
+      "nbPoint": 5,
+      "reducVillage": false,
+      "reducChateau": false,
+      "conditionGagne": "check-bouclier-ligne",
+      "conditionGagneElement": ["violet"],
+      "cadenas": true
+    },
+
+    "Imprimeuse": {
+      "bouclier": ["orange"],
+      "lieu": "chateau",
+      "cout": 0,
+      "nbPoint": 5,
+      "reducVillage": false,
+      "reducChateau": false,
+      "conditionGagne": "check-bouclier-colonne",
+      "conditionGagneElement": ["vert"],
+      "cadenas": true
+    },
+
+    "Dame au masque de fer": {
+      "bouclier": ["bleu","violet","vert"],
+      "lieu": "chateau",
+      "cout": 8,
+      "nbPoint": 3,
+      "reducVillage": false,
+      "reducChateau": false,
+      "conditionGagne": "carte-somme-differente",
+      "conditionGagneElement": [],
+      "cadenas": true
+    },
   };
 }

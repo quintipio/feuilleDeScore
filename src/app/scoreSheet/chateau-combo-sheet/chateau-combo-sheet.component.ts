@@ -115,6 +115,12 @@ export class ChateauComboSheetComponent {
         case "bouclier-colonne":
           nbPoints += this.calculerBouclierColonne(j, plateau[i][j].carte!.conditionGagneElement[0]);
           break;
+        case "check-bouclier-ligne":
+          nbPoints = this.calculerBouclierLigne(i, plateau[i][j].carte!.conditionGagneElement[0]) > 0 ? 1 : 0;
+          break;
+        case "check-bouclier-colonne":
+          nbPoints = this.calculerBouclierColonne(j, plateau[i][j].carte!.conditionGagneElement[0]) > 0 ? 1 : 0;
+          break;
         case "bouclier-absent":
           nbPoints = this.controleBouclierAbsent(plateau[i][j].carte!.conditionGagneElement) ? 1 : 0;
           break;
@@ -140,19 +146,22 @@ export class ChateauComboSheetComponent {
           nbPoints = this.verifierEmplacementSpeciaux(i, j, plateau[i][j].carte!.conditionGagneElement[0]) ? 1 : 0;
           break;
         case "bouclier-different-absent":
-          nbPoints = this.comtperBouclierDifferent(true);
+          nbPoints = this.compterBouclierDifferent(true);
           break;
         case "reduc":
-          nbPoints = this.comtperReduc(true, true);
+          nbPoints = this.compterReduc(true, true);
           break;
         case "lieu":
           nbPoints = this.comtperLieu(plateau[i][j].carte!.conditionGagneElement[0]);
           break;
         case "bouclier-different":
-          nbPoints = this.comtperBouclierDifferent(false);
+          nbPoints = this.compterBouclierDifferent(false);
           break;
         case "bouclier-double":
-          nbPoints = this.compterCarteBouclierDouble();
+          nbPoints = this.compterCarteBouclier(2);
+          break;
+        case "bouclier-simple":
+          nbPoints = this.compterCarteBouclier(1);
           break;
         case "piece-bourse":
           nbPoints = plateau[i][j].nbPieces;
@@ -160,11 +169,32 @@ export class ChateauComboSheetComponent {
         case "carte-retourne-indif":
           nbPoints = this.compteurCarteRetourne(true, true) >= 1 ? 1 : 0;
           break;
+        case "carte-retourne-indif-absent":
+          nbPoints = this.compteurCarteRetourne(true, true) === 0 ? 1 : 0;
+          break;
         case "bourse":
           nbPoints = this.compterPieceEnBourse();
           break;
         case "cle":
           nbPoints = this.joueurEnCours!.cle;
+          break;
+        case "check-bourse-absent":
+          nbPoints = this.compterCarteBourse() === 0 ? 1 : 0;
+          break;
+        case "compte-cadenas":
+          nbPoints = this.compterCadenas();
+          break;
+        case "somme-argent-colonne":
+          nbPoints = this.calculerSommeArgentColonne(j);
+          break;
+        case "somme-argent-ligne":
+          nbPoints = this.calculerSommeArgentLigne(i);
+          break;
+        case "check-reduction-absente":
+          nbPoints = this.compterReduc(true, true) === 0 ? 1 : 0;
+          break;
+        case "carte-somme-differente":
+          nbPoints = this.compterCarteSommeDifferente(i, j);
           break;
       }
       plateau[i][j].score = nbPoints * plateau[i][j].carte!.nbPoint;
@@ -181,16 +211,86 @@ export class ChateauComboSheetComponent {
     return 0;
   }
 
-  private compterCarteBouclierDouble(): number {
+  private compterCarteBouclier(nombreBoucliers: number): number {
     let inc = 0;
     for (let i = 0; i <= 2; i++) {
       for (let j = 0; j <= 2; j++) {
-        if (this.joueurEnCours!.plateau[i][j].carte && this.joueurEnCours!.plateau[i][j].carte!.bouclier.length === 2) {
+        if (this.joueurEnCours!.plateau[i][j].carte) {
+          const nomCarte = this.joueurEnCours!.plateau[i][j].nomCarte;
+          if ((nomCarte !== "Retourné chateau" && nomCarte !== "Retourné village") &&
+              this.joueurEnCours!.plateau[i][j].carte!.bouclier.length === nombreBoucliers) {
+            inc += 1;
+          }
+        }
+      }
+    }
+    return inc;
+  }
+
+  private compterCarteBourse(): number {
+    let inc = 0;
+    for (let i = 0; i <= 2; i++) {
+      for (let j = 0; j <= 2; j++) {
+        if (this.joueurEnCours!.plateau[i][j].carte && this.joueurEnCours!.plateau[i][j].carte!.conditionGagne === "piece-bourse") {
           inc += 1;
         }
       }
     }
     return inc;
+  }
+
+  private compterCadenas(): number {
+    let inc = 0;
+    for (let i = 0; i <= 2; i++) {
+      for (let j = 0; j <= 2; j++) {
+        if (this.joueurEnCours!.plateau[i][j].carte && this.joueurEnCours!.plateau[i][j].carte!.cadenas === true) {
+          inc += 1;
+        }
+      }
+    }
+    return inc;
+  }
+
+  private calculerSommeArgentColonne(colonne: number): number {
+    let somme = 0;
+    for (let i = 0; i <= 2; i++) {
+      if (this.joueurEnCours!.plateau[i][colonne].carte) {
+        const nomCarte = this.joueurEnCours!.plateau[i][colonne].nomCarte;
+        if (nomCarte !== "Retourné chateau" && nomCarte !== "Retourné village") {
+          somme += this.joueurEnCours!.plateau[i][colonne].carte!.cout;
+        }
+      }
+    }
+    return somme;
+  }
+
+  private calculerSommeArgentLigne(ligne: number): number {
+    let somme = 0;
+    for (let j = 0; j <= 2; j++) {
+      if (this.joueurEnCours!.plateau[ligne][j].carte) {
+        const nomCarte = this.joueurEnCours!.plateau[ligne][j].nomCarte;
+        if (nomCarte !== "Retourné chateau" && nomCarte !== "Retourné village") {
+          somme += this.joueurEnCours!.plateau[ligne][j].carte!.cout;
+        }
+      }
+    }
+    return somme;
+  }
+
+  private compterCarteSommeDifferente(ligneActuelle: number, colonneActuelle: number): number {
+    const coutsDifferents = new Set<number>();
+    for (let i = 0; i <= 2; i++) {
+      for (let j = 0; j <= 2; j++) {
+        if (this.joueurEnCours!.plateau[i][j].carte) {
+          const nomCarte = this.joueurEnCours!.plateau[i][j].nomCarte;
+          // Exclure les cartes retournées et collecter les coûts distincts
+          if (nomCarte !== "Retourné chateau" && nomCarte !== "Retourné village") {
+            coutsDifferents.add(this.joueurEnCours!.plateau[i][j].carte!.cout);
+          }
+        }
+      }
+    }
+    return coutsDifferents.size;
   }
 
   private compteurCarteRetourne(village: boolean, chateau: boolean): number {
@@ -237,7 +337,7 @@ export class ChateauComboSheetComponent {
     return inc;
   }
 
-  private comtperReduc(village: boolean, chateau: boolean): number {
+  private compterReduc(village: boolean, chateau: boolean): number {
     let inc = 0;
     for (let i = 0; i <= 2; i++) {
       for (let j = 0; j <= 2; j++) {
@@ -253,7 +353,7 @@ export class ChateauComboSheetComponent {
     return inc;
   }
 
-  private comtperBouclierDifferent(absent: boolean) {
+  private compterBouclierDifferent(absent: boolean) {
     const seen = new Set<string>();
     for (let i = 0; i <= 2; i++) {
       for (let j = 0; j <= 2; j++) {
