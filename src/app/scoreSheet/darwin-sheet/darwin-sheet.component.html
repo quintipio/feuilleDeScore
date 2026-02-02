@@ -1,0 +1,68 @@
+<div class="darwin-sheet">
+	<h2 class="sheet-title">Sur les traces de Darwin</h2>
+
+	<div class="cards-grid">
+		@for(player of game?.players; track player.user.id) {
+		<div class="player-card">
+			<h3 class="player-title">{{ player?.user?.name }} <span class="player-score">{{ player.scoreTotal }}</span></h3>
+
+			<div class="player-body">
+				<div class="field-row checkbox-row">
+					<label class="checkbox-label">
+						<input type="checkbox" name="premier_{{player.user.id}}" (change)="togglePremier(player, $any($event.target).checked)"> Pion darwin
+					</label>
+				</div>
+
+				<div class="field-row">
+					<span class="field-label">Points par animaux : </span>
+					<app-input-score name="animaux_{{player.user.id}}" [initValue]="player?.pointsAnimaux" (valueChange)="changePointsAnimaux(player, $event)"></app-input-score>
+				</div>
+
+				<div class="field-row">
+					<span class="field-label">Points par chapitre : </span>
+					<app-input-score name="chapitre_{{player.user.id}}" [initValue]="player?.pointsChapitre" (valueChange)="changePointsChapitre(player, $event)"></app-input-score>
+				</div>
+
+				<div class="field-row">
+					<span class="field-label">Nombre de cartes : </span>
+					<app-input-score name="cartes_{{player.user.id}}" [initValue]="player?.nombreCartes" (valueChange)="changeNombreCartes(player, $event)"></app-input-score>
+				</div>
+
+				<div class="field-row">
+					<span class="field-label">Nombre de boussoles : </span>
+					<app-input-score name="boussoles_{{player.user.id}}" [initValue]="player?.boussoles" [max]="5" (valueChange)="changeBoussoles(player, $event)"></app-input-score>
+				</div>
+
+				<div class="field-row">
+					<span class="field-label">Livres : </span>
+					<app-input-score name="livres_{{player.user.id}}" [initValue]="player?.livres" [inc]="5" (valueChange)="changeLivres(player, $event)"></app-input-score>
+				</div>
+
+				<div class="field-row">
+					<span class="field-label">Points des jeton exploration (extension correspondance): </span>
+					<app-input-score name="jeton_{{player.user.id}}" [initValue]="player?.jetonExploration" [inc]="2" (valueChange)="changeJetonExploration(player, $event)"></app-input-score>
+				</div>
+
+				<div class="field-row">
+					<span class="field-label">Livres bonus (extension correspondance) : </span>
+					<app-input-score name="livreBonus_{{player.user.id}}" [initValue]="player?.livreBonus" (valueChange)="changeLivreBonus(player, $event)"></app-input-score>
+				</div>
+			</div>
+		</div>
+		}
+	</div>
+
+
+	<div class="actions">
+		<button class="validate-btn" (click)="openWinner()" data-bs-toggle="modal" data-bs-target="#winnerModal">Valider</button>
+	</div>
+
+	<div class="modal fade" id="winnerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<app-winner (outWindow)="closeGame()"></app-winner>
+			</div>
+		</div>
+	</div>
+
+</div>

@@ -29,7 +29,8 @@ export const GameExisting: Game[] = [
   { "id": 12,"uuid":"1f87c1b5-9c62-4253-8476-bc8d0e91c337", "name": "Scrabble", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "generic", "specificConf":"" },
   { "id": 13,"uuid":"8f277ffa-ccaa-4264-be4b-73ab0b2167e8", "name": "Rami", "scorePlusEleve": true, "scoreLimite": 250, "mancheLimite": 0, "scoreNegatif": true, "canEdit": false, "sheet": "generic", "specificConf":"" },
   { "id": 14,"uuid":"f69c6723-8e46-45ad-8cc2-dc15e7ef76d8", "name": "Yahtzee", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "yams", "specificConf":"" },
-  { "id": 15,"uuid":"4f04f9a3-986a-40d7-8d42-231eaef11ccc", "name": "Abra Chadabra", "scorePlusEleve": true, "scoreLimite": 22, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "generic", "specificConf":"" }
+  { "id": 15,"uuid":"4f04f9a3-986a-40d7-8d42-231eaef11ccc", "name": "Abra Chadabra", "scorePlusEleve": true, "scoreLimite": 22, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "generic", "specificConf":"" },
+  { "id": 16,"uuid":"a13e8744-9be1-4611-87b7-6d6d32b442c5", "name": "Sur les traces de darwin", "scorePlusEleve": true, "scoreLimite": 0, "mancheLimite": 0, "scoreNegatif": false, "canEdit": false, "sheet": "darwin", "specificConf":"" }
 ]
 
 export function isGame(object: any): object is Game {

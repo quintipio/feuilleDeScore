@@ -1,0 +1,107 @@
+
+.darwin-sheet {
+	padding: 16px;
+	background: linear-gradient(180deg, #faf6ef 0%, #fbf8f5 100%);
+	color: #5b4f3b;
+	min-height: 100%;
+}
+
+.sheet-title {
+	text-align: left;
+	margin: 0 0 12px 8px;
+	color: #6b5f4a;
+	font-weight: 600;
+}
+
+.cards-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 14px;
+}
+
+.player-card {
+	background: #fffaf2;
+	border: 2px solid #e6dcc8;
+	border-radius: 12px;
+	padding: 14px;
+	box-shadow: 0 2px 6px rgba(91,79,59,0.06);
+	display: flex;
+	flex-direction: column;
+}
+
+.player-title {
+	margin: 0 0 10px 0;
+	text-align: center;
+	font-size: 1.1rem;
+	color: #4b4130;
+}
+
+.player-body {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.field-row {
+	display: flex;
+	flex-direction: column;
+}
+
+.field-label {
+	font-size: 0.9rem;
+	color: #6b5f4a;
+	margin-bottom: 6px;
+}
+
+.checkbox-row {
+	align-items: center;
+}
+
+.checkbox-label {
+	font-size: 0.95rem;
+	color: #6b5f4a;
+}
+
+/* Make input-score take available width and align nicely */
+app-input-score {
+	display: block;
+}
+
+@media (max-width: 420px) {
+	.player-card {
+		padding: 12px;
+	}
+	.sheet-title {
+		font-size: 1rem;
+	}
+}
+
+.player-score {
+	display: inline-block;
+	background: #efe6cf;
+	color: #4b4130;
+	padding: 4px 8px;
+	border-radius: 999px;
+	font-weight: 600;
+	margin-left: 8px;
+}
+
+.actions {
+	display: flex;
+	justify-content: center;
+	margin-top: 18px;
+}
+
+.validate-btn {
+	background: #d9c9a6;
+	border: 1px solid #cbb995;
+	color: #3f3424;
+	padding: 10px 20px;
+	border-radius: 8px;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.validate-btn:hover {
+	background: #d0c0a0;
+}

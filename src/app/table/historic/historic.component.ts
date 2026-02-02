@@ -41,7 +41,7 @@ export class HistoricComponent {
   }
 
   get sortedDates(): string[] {
-    return Object.keys(this.historic).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+    return Object.keys(this.historic).sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
   }
 
   formatDate(key: string): string {
