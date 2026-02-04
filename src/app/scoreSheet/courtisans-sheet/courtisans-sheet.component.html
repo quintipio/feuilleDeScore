@@ -1,0 +1,129 @@
+<div class="courtisans-sheet">
+	<h2 class="sheet-title">Courtisans</h2>
+
+	<!-- Table de la reine encadré -->
+	<div class="table-reine-container">
+		<h3 class="table-title">Table de la Reine</h3>
+		<div class="familles-list">
+			@for(famille of familles; track famille) {
+			<div class="famille-row">
+				<span class="famille-name">{{ famille }}</span>
+				<app-input-score
+					[name]="'table_' + famille"
+					[values]="['lumière', 'disgrace']"
+					[initValue]="famillesState[famille]"
+					(valueChange)="changeFamilleState(famille, $any($event))">
+				</app-input-score>
+			</div>
+			}
+		</div>
+	</div>
+
+	<!-- Cartes joueurs -->
+	<div class="cards-grid">
+		@for(player of game?.players; track player.user.id) {
+		<div class="player-card">
+			<h3 class="player-title">{{ player?.user?.name }} <span class="player-score">{{ player.scoreTotal }}</span></h3>
+
+			<div class="player-body">
+				<!-- Missions -->
+				<div class="missions-section">
+					<h4 class="section-title">Missions</h4>
+					<div class="field-row checkbox-row">
+						<label class="checkbox-label">
+							<input type="checkbox"
+								[name]="'mission1_' + player.user.id"
+								[checked]="player.mission1"
+								(change)="toggleMission1(player, $any($event.target).checked)">
+							Réussite de la première mission
+						</label>
+					</div>
+					<div class="field-row checkbox-row">
+						<label class="checkbox-label">
+							<input type="checkbox"
+								[name]="'mission2_' + player.user.id"
+								[checked]="player.mission2"
+								(change)="toggleMission2(player, $any($event.target).checked)">
+							Réussite de la seconde mission
+						</label>
+					</div>
+				</div>
+
+				<!-- Familles -->
+				<div class="familles-section">
+					<h4 class="section-title">Familles</h4>
+					<div class="famille-input-row">
+						<span class="famille-label">Rossignol</span>
+						<app-input-score
+							[name]="'rossignol_' + player.user.id"
+							[min]="0"
+							[initValue]="player?.rossignol"
+							(valueChange)="changeRossignol(player, $event)">
+						</app-input-score>
+					</div>
+					<div class="famille-input-row">
+						<span class="famille-label">Lièvre</span>
+						<app-input-score
+							[name]="'lievre_' + player.user.id"
+							[min]="0"
+							[initValue]="player?.lievre"
+							(valueChange)="changeLievre(player, $event)">
+						</app-input-score>
+					</div>
+					<div class="famille-input-row">
+						<span class="famille-label">Crapaud</span>
+						<app-input-score
+							[name]="'crapaud_' + player.user.id"
+							[min]="0"
+							[initValue]="player?.crapaud"
+							(valueChange)="changeCrapaud(player, $event)">
+						</app-input-score>
+					</div>
+					<div class="famille-input-row">
+						<span class="famille-label">Abeille</span>
+						<app-input-score
+							[name]="'abeille_' + player.user.id"
+							[min]="0"
+							[initValue]="player?.abeille"
+							(valueChange)="changeAbeille(player, $event)">
+						</app-input-score>
+					</div>
+					<div class="famille-input-row">
+						<span class="famille-label">Cerf</span>
+						<app-input-score
+							[name]="'cerf_' + player.user.id"
+							[min]="0"
+							[initValue]="player?.cerf"
+							(valueChange)="changeCerf(player, $event)">
+						</app-input-score>
+					</div>
+					<div class="famille-input-row">
+						<span class="famille-label">Carpe</span>
+						<app-input-score
+							[name]="'carpe_' + player.user.id"
+							[min]="0"
+							[initValue]="player?.carpe"
+							(valueChange)="changeCarpe(player, $event)">
+						</app-input-score>
+					</div>
+				</div>
+			</div>
+		</div>
+		}
+	</div>
+
+	<!-- Bouton Valider -->
+	<div class="actions">
+		<button class="validate-btn" (click)="openWinner()" data-bs-toggle="modal" data-bs-target="#winnerModal">Valider</button>
+	</div>
+
+	<!-- Modal Winner -->
+	<div class="modal fade" id="winnerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<app-winner (outWindow)="closeGame()"></app-winner>
+			</div>
+		</div>
+	</div>
+
+</div>

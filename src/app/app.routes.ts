@@ -12,6 +12,7 @@ import { DorfromantikSheetComponent } from './scoreSheet/dorfromantik-sheet/dorf
 import { YamsSheetComponent } from './scoreSheet/yams-sheet/yams-sheet.component';
 import { DarwinSheetComponent } from './scoreSheet/darwin-sheet/darwin-sheet.component';
 import { HistoricComponent } from './table/historic/historic.component';
+import { CourtisansSheetComponent  } from './scoreSheet/courtisans-sheet/courtisans-sheet.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/tables', pathMatch: 'full' },
@@ -79,5 +80,10 @@ export const routes: Routes = [
     path: 'sheet/darwin',
     title: 'Sur les traces de Darwin',
     component: DarwinSheetComponent,
+  },
+  {
+    path: 'sheet/courtisans',
+    title: 'Courtisans',
+    component: CourtisansSheetComponent,
   },
 ];
