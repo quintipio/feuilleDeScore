@@ -1,27 +1,37 @@
 .number-input-container {
-  display: flex;
+  display: inline-flex; /* Utilisation de inline-flex pour que le cadre colle aux boutons */
   align-items: center;
+  justify-content: center;
 }
 
 .chiffre {
-  width: 45px;
+  /* CHANGEMENTS ICI */
+  min-width: 45px;      /* Garde la taille originale pour les petits chiffres */
+  width: auto;          /* Permet l'extension si le texte est long */
+  padding: 0 10px;      /* Ajoute de l'air sur les côtés pour que le mot ne touche pas les boutons */
+  white-space: nowrap;  /* Empêche le mot de revenir à la ligne */
+
+  /* Tes styles originaux conservés */
   padding-top: 10px;
   text-align: center;
   font-size: large;
   font-weight: bolder;
 }
 
-button {
-  width: 30px;
-  height: 30px;
-}
-
+/* On s'assure que les boutons gardent leur forme */
 .btn {
+  flex-shrink: 0;       /* IMPORTANT : Empêche le bouton de rétrécir si le mot est très long */
   border: 2px solid black;
   line-height: 0px;
   width: 40px;
+  height: 35px;         /* Ajusté pour être cohérent avec tes 30px originaux mais avec bordure */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Le reste de tes styles pour les arrondis */
 .btn-left {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
@@ -34,4 +44,11 @@ button {
   border-bottom-left-radius: 0px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+}
+
+/* Optionnel : style pour les boutons désactivés */
+.btn:disabled {
+  border-color: #ccc;
+  color: #ccc;
+  cursor: not-allowed;
 }
