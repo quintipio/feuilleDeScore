@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, inject, QueryList, ViewChild, ViewChildren, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { InputScoreComponent } from '../../components/input-score/input-score.component';
 import { WinnerComponent } from '../../components/winner/winner.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,11 +29,12 @@ interface CourtisansPlayer {
   templateUrl: './courtisans-sheet.component.html',
   styleUrl: './courtisans-sheet.component.css'
 })
-export class CourtisansSheetComponent {
+export class CourtisansSheetComponent implements AfterViewInit {
   @ViewChild(WinnerComponent) winnerComponent: WinnerComponent | undefined;
   @ViewChildren(InputScoreComponent) inputScores: QueryList<InputScoreComponent> | undefined;
 
   private tableService = inject(TableService);
+  private cdr = inject(ChangeDetectorRef);
 
   table: Table | undefined;
 
@@ -78,6 +79,20 @@ export class CourtisansSheetComponent {
     this.inputScores?.forEach((input) => {
       input.reinit(0);
     });
+    // Forcer la détection de changements après le chargement du jeu
+    setTimeout(() => {
+      this.cdr.detectChanges();
+    }, 0);
+  }
+
+  ngAfterViewInit() {
+    // Réinitialiser les composants après que les vues soient complètement chargées
+    setTimeout(() => {
+      this.inputScores?.forEach((input) => {
+        input.ngOnInit();
+      });
+      this.cdr.detectChanges();
+    }, 100);
   }
 
   private initializeGame(){

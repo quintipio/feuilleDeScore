@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './input-score.component.html',
   styleUrl: './input-score.component.css'
 })
-export class InputScoreComponent<T extends string | number = number> implements OnInit {
+export class InputScoreComponent<T extends string | number = number> implements OnInit, OnChanges {
   @Input() name: string = '';
   @Input() initValue: T | undefined;
   @Input() min: number | undefined;
@@ -17,18 +17,26 @@ export class InputScoreComponent<T extends string | number = number> implements 
   @Input() inc: number = 1;
   @Input() values: T[] | undefined;
 
-  value!: T;
+  value: T = 0 as unknown as T;
 
   @Output() valueChange = new EventEmitter<T>();
 
   ngOnInit() {
-    if (this.initValue !== undefined) {
+    this.initializeValue();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['initValue'] || changes['values']) {
+      this.initializeValue();
+    }
+  }
+
+  private initializeValue() {
+    if (this.values && this.values.length > 0) {
+      this.value = this.initValue !== undefined ? this.initValue : this.values[0];
+    } else if (this.initValue !== undefined) {
       this.value = this.initValue;
-    }
-    else if (this.values && this.values.length > 0) {
-      this.value = this.values[0];
-    }
-    else {
+    } else {
       this.value = 0 as unknown as T;
     }
   }
