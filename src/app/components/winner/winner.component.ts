@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { CountRoundRow } from '../../models/sheet';
 
 @Component({
     selector: 'app-winner',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './winner.component.html',
     styleUrl: './winner.component.css'
 })

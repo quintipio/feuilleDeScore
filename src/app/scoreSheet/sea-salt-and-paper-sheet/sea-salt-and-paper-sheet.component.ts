@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
 import { Table } from '../../models/table.model';
 import { TableService } from '../../service/table.service';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { InputPadComponent } from '../../components/input-pad/input-pad.component';
 import { WinnerComponent } from '../../components/winner/winner.component';
 import { SheetComponent } from '../../components/sheet/sheet.component';
@@ -13,7 +13,7 @@ import { formatDateNowToKey } from '../../Utils/Utils';
 
 @Component({
     selector: 'app-sea-salt-and-paper-sheet',
-    imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent, SheetComponent, FormsModule],
+    imports: [RouterLink, InputPadComponent, WinnerComponent, SheetComponent, FormsModule],
     templateUrl: './sea-salt-and-paper-sheet.component.html',
     styleUrl: './sea-salt-and-paper-sheet.component.css'
 })

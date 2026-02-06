@@ -3,26 +3,28 @@
 <app-sheet (checkEndingGame)="checkEndingGame($event.round, $event.users)"
   (triggerOpenWinner)="openWinner($event.round, $event.users)"
   (triggerSaveRound)="saveRoundInDb($event)"
-  [isEndingGame]="isEndingGame"></app-sheet>
+[isEndingGame]="isEndingGame"></app-sheet>
 
-  <div class="row align-items-center mb-3 espace-top">
-    <!-- 9 symboles identiques -->
-    <div class="col-4 d-flex justify-content-center">
-      <span class="mx-1">4 sirènes : </span>
-    </div>
-
-    <!-- Liste déroulante des utilisateurs et bouton OK -->
-    <div class="col-6 d-flex align-items-center">
-      <select class="form-select me-2" [(ngModel)]="selectedUser" required>
-        <option [ngValue]="null" disabled selected>Choisir un utilisateur</option>
-        <option *ngFor="let user of table?.users" [ngValue]="user">{{ user.name }}</option>
-      </select>
-
-      <button class="btn btn-primary" (click)="onOkClick()" [disabled]="!selectedUser" data-bs-toggle="modal" data-bs-target="#winnerModal">
-        OK
-      </button>
-    </div>
+<div class="row align-items-center mb-3 espace-top">
+  <!-- 9 symboles identiques -->
+  <div class="col-4 d-flex justify-content-center">
+    <span class="mx-1">4 sirènes : </span>
   </div>
+
+  <!-- Liste déroulante des utilisateurs et bouton OK -->
+  <div class="col-6 d-flex align-items-center">
+    <select class="form-select me-2" [(ngModel)]="selectedUser" required>
+      <option [ngValue]="null" disabled selected>Choisir un utilisateur</option>
+      @for (user of table?.users; track user) {
+        <option [ngValue]="user">{{ user.name }}</option>
+      }
+    </select>
+
+    <button class="btn btn-primary" (click)="onOkClick()" [disabled]="!selectedUser" data-bs-toggle="modal" data-bs-target="#winnerModal">
+      OK
+    </button>
+  </div>
+</div>
 
 
 <div class="modal fade" id="winnerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

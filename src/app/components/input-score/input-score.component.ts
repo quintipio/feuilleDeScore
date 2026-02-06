@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-input-score',
-    imports: [FormsModule, CommonModule],
+    imports: [FormsModule],
     templateUrl: './input-score.component.html',
     styleUrl: './input-score.component.css'
 })

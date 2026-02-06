@@ -3,11 +3,11 @@ import { Table } from '../../models/table.model';
 import { TableService } from '../../service/table.service';
 import { ActivatedRoute } from '@angular/router';
 import { CountRoundRow } from '../../models/sheet';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-historic',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './historic.component.html',
     styleUrl: './historic.component.css'
 })

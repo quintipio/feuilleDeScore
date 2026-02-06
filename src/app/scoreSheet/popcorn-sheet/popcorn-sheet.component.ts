@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { InputScoreComponent } from '../../components/input-score/input-score.component';
 import { WinnerComponent } from '../../components/winner/winner.component';
@@ -10,7 +10,7 @@ import { formatDateNowToKey } from '../../Utils/Utils';
 
 @Component({
     selector: 'app-popcorn-sheet',
-    imports: [CommonModule, InputScoreComponent, WinnerComponent],
+    imports: [InputScoreComponent, WinnerComponent],
     templateUrl: './popcorn-sheet.component.html',
     styleUrl: './popcorn-sheet.component.css'
 })

@@ -5,8 +5,12 @@
 
 <div class="d-flex justify-content-between mt-4">
   <button class="btn btn-navigate" [disabled]="!canGoBack()" (click)="manchePrecedente()"><i class="fa-solid fa-arrow-left"></i></button>
-  <button class="btn btn-navigate" (click)="mancheSuivante()" *ngIf="!isFinish()"><i class="fa-solid fa-arrow-right"></i></button>
-  <button class="btn btn-navigate" (click)="openWinner()" *ngIf="isFinish()" data-bs-toggle="modal" data-bs-target="#winnerModal"><i class="fa-solid fa-skull-crossbones" ></i></button>
+  @if (!isFinish()) {
+    <button class="btn btn-navigate" (click)="mancheSuivante()"><i class="fa-solid fa-arrow-right"></i></button>
+  }
+  @if (isFinish()) {
+    <button class="btn btn-navigate" (click)="openWinner()" data-bs-toggle="modal" data-bs-target="#winnerModal"><i class="fa-solid fa-skull-crossbones" ></i></button>
+  }
 </div>
 
 
@@ -20,71 +24,81 @@
     <div class="text-left mt-2">
       <p class="small-label">Pari :</p>
       <div class="d-flex flex-wrap mb-3">
-        <button *ngFor="let num of numbers" class="btn btn-circle" [ngClass]="{'btn-selected':isSelectedPari(player, num)}" (click)="changePari(player, num)">{{ num }}</button>
+        @for (num of numbers; track num) {
+          <button class="btn btn-circle" [ngClass]="{'btn-selected':isSelectedPari(player, num)}" (click)="changePari(player, num)">{{ num }}</button>
+        }
       </div>
     </div>
 
-    <div class="text-left mt-2" *ngIf="rascalPoing && rascalScore">
-      <p class="small-label">Poing ouvert(10p) ou fermé(15p) :</p>
-      <div class="d-flex flex-wrap mb-3">
-        <button type="button" class="btn btn-circle"
-          [ngClass]="{'btn-selected':!player.poingferme}"
-          (click)="changePoing(player)"><i class="fa-solid fa-hand"></i></button>
-        <button type="button" class="btn btn-circle"
-          [ngClass]="{'btn-selected':player.poingferme}"
-          (click)="changePoing(player)"><i class="fa-solid fa-hand-back-fist"></i></button>
-      </div>
-    </div>
+    @if (rascalPoing && rascalScore) {
+      <div class="text-left mt-2">
+        <p class="small-label">Poing ouvert(10p) ou fermé(15p) :</p>
+        <div class="d-flex flex-wrap mb-3">
+          <button type="button" class="btn btn-circle"
+            [ngClass]="{'btn-selected':!player.poingferme}"
+            (click)="changePoing(player)"><i class="fa-solid fa-hand"></i></button>
+            <button type="button" class="btn btn-circle"
+              [ngClass]="{'btn-selected':player.poingferme}"
+              (click)="changePoing(player)"><i class="fa-solid fa-hand-back-fist"></i></button>
+            </div>
+          </div>
+        }
 
-    <div class="text-left">
-      <p class="small-label">Remporté : {{ player.scoreManche}}</p>
-      <div class="d-flex flex-wrap mb-3">
-        <button *ngFor="let num of numbers" class="btn btn-circle" [ngClass]="{'btn-selected':isSelectedScore(player, num)}" (click)="changeScore(player, num)">{{ num }}</button>
-      </div>
-    </div>
+        <div class="text-left">
+          <p class="small-label">Remporté : {{ player.scoreManche}}</p>
+          <div class="d-flex flex-wrap mb-3">
+            @for (num of numbers; track num) {
+              <button class="btn btn-circle" [ngClass]="{'btn-selected':isSelectedScore(player, num)}" (click)="changeScore(player, num)">{{ num }}</button>
+            }
+          </div>
+        </div>
 
-    <!-- Tableau responsive de bonus -->
-    <div class="d-flex flex-wrap">
-      <div class="d-flex flex-column align-items-center p-2">
-        <span class="small-label">Bonus +10 : </span>
-        <app-input-score name="bonusCarteMax_{{player.user.id}}" (valueChange)="getBonusDix(player, $event)" [min]="0" [max]="5" [initValue]="player.bonusDix"></app-input-score>
+        <!-- Tableau responsive de bonus -->
+        <div class="d-flex flex-wrap">
+          <div class="d-flex flex-column align-items-center p-2">
+            <span class="small-label">Bonus +10 : </span>
+            <app-input-score name="bonusCarteMax_{{player.user.id}}" (valueChange)="getBonusDix(player, $event)" [min]="0" [max]="5" [initValue]="player.bonusDix"></app-input-score>
+          </div>
+          <div class="d-flex flex-column align-items-center p-2">
+            <span class="small-label">Pirate capturé : </span>
+            <app-input-score name="bonusPirate_{{player.user.id}}" (valueChange)="getBonusPirate(player, $event)" [min]="0" [max]="extension ? 7 : 6" [initValue]="player.bonusPirate"></app-input-score>
+          </div>
+          <div class="d-flex flex-column align-items-center p-2">
+            <span class="small-label">Sirène capturée : </span>
+            <app-input-score name="bonusSirene_{{player.user.id}}" (valueChange)="getBonusSirene(player, $event)" [min]="0" [max]="2" [initValue]="player.bonusSirene"></app-input-score>
+          </div>
+          <div class="d-flex flex-column align-items-center p-2">
+            <span class="small-label">Skull King capturé : </span>
+            <app-input-score name="bonusSkullKing_{{player.user.id}}" (valueChange)="getBonusSkullKing(player, $event)" [min]="0" [max]="1" [initValue]="player.bonusSkullKing"></app-input-score>
+          </div>
+          @if (extension) {
+            <div class="d-flex flex-column align-items-center p-2">
+              <span class="small-label">Second capturé: </span>
+              <app-input-score name="bonusSecond_{{player.user.id}}" (valueChange)="getSecond(player, $event)" [min]="0" [max]="1" [initValue]="player.bonusSecond"></app-input-score>
+            </div>
+          }
+          @if (extension) {
+            <div class="d-flex flex-column align-items-center p-2">
+              <span class="small-label">Léviathan capturé : </span>
+              <app-input-score name="bonusLeviathan_{{player.user.id}}" (valueChange)="getLeviathan(player, $event)" [min]="0" [max]="3" [initValue]="player.bonusLeviathan"></app-input-score>
+            </div>
+          }
+          <div class="d-flex flex-column align-items-center p-2">
+            <span class="small-label">Bonus butin : </span>
+            <app-input-score name="bonusButin_{{player.user.id}}" (valueChange)="getBonusButin(player, $event)" [min]="0" [max]="2" [initValue]="player.bonusButin"></app-input-score>
+          </div>
+          <div class="d-flex flex-column align-items-center p-2">
+            <span class="small-label">Autre bonus : </span>
+            <app-input-score name="bonusAutre_{{player.user.id}}" (valueChange)="getBonusAutre(player, $event)" [inc]="5" [initValue]="player.bonusAutre"></app-input-score>
+          </div>
+        </div>
       </div>
-      <div class="d-flex flex-column align-items-center p-2">
-        <span class="small-label">Pirate capturé : </span>
-        <app-input-score name="bonusPirate_{{player.user.id}}" (valueChange)="getBonusPirate(player, $event)" [min]="0" [max]="extension ? 7 : 6" [initValue]="player.bonusPirate"></app-input-score>
-      </div>
-      <div class="d-flex flex-column align-items-center p-2">
-        <span class="small-label">Sirène capturée : </span>
-        <app-input-score name="bonusSirene_{{player.user.id}}" (valueChange)="getBonusSirene(player, $event)" [min]="0" [max]="2" [initValue]="player.bonusSirene"></app-input-score>
-      </div>
-      <div class="d-flex flex-column align-items-center p-2">
-        <span class="small-label">Skull King capturé : </span>
-        <app-input-score name="bonusSkullKing_{{player.user.id}}" (valueChange)="getBonusSkullKing(player, $event)" [min]="0" [max]="1" [initValue]="player.bonusSkullKing"></app-input-score>
-      </div>
-            <div class="d-flex flex-column align-items-center p-2" *ngIf="extension">
-        <span class="small-label">Second capturé: </span>
-        <app-input-score name="bonusSecond_{{player.user.id}}" (valueChange)="getSecond(player, $event)" [min]="0" [max]="1" [initValue]="player.bonusSecond"></app-input-score>
-      </div>
-      <div class="d-flex flex-column align-items-center p-2" *ngIf="extension">
-        <span class="small-label">Léviathan capturé : </span>
-        <app-input-score name="bonusLeviathan_{{player.user.id}}" (valueChange)="getLeviathan(player, $event)" [min]="0" [max]="3" [initValue]="player.bonusLeviathan"></app-input-score>
-      </div>
-      <div class="d-flex flex-column align-items-center p-2">
-        <span class="small-label">Bonus butin : </span>
-        <app-input-score name="bonusButin_{{player.user.id}}" (valueChange)="getBonusButin(player, $event)" [min]="0" [max]="2" [initValue]="player.bonusButin"></app-input-score>
-      </div>
-      <div class="d-flex flex-column align-items-center p-2">
-        <span class="small-label">Autre bonus : </span>
-        <app-input-score name="bonusAutre_{{player.user.id}}" (valueChange)="getBonusAutre(player, $event)" [inc]="5" [initValue]="player.bonusAutre"></app-input-score>
-      </div>
-    </div>
-  </div>
-}
+    }
 
-<div class="modal fade" id="winnerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <app-winner  (outWindow)="closeGame()"></app-winner>
+    <div class="modal fade" id="winnerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <app-winner  (outWindow)="closeGame()"></app-winner>
+        </div>
+      </div>
     </div>
-  </div>
-</div>

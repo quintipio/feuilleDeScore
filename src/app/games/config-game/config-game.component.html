@@ -14,10 +14,10 @@
       <div name="game-win" class="btn-group btn-flex game-win">
         <button type="button"
           [ngClass]="editGameConditionWinScoreEleve ? 'btn btn-success' : 'btn btn-outline-success'"
-          (click)="changeConditionWin(true)">Le score le plus élevé gagne</button>
+        (click)="changeConditionWin(true)">Le score le plus élevé gagne</button>
         <button type="button"
           [ngClass]="!editGameConditionWinScoreEleve ? 'btn btn-success' : 'btn btn-outline-success'"
-          (click)="changeConditionWin(false)">Le score le plus bas gagne</button>
+        (click)="changeConditionWin(false)">Le score le plus bas gagne</button>
       </div>
     </div>
 
@@ -29,22 +29,26 @@
       <label for="game-limit-point">Nombre de point limite : </label>
       <input name="game-limit-point" type="number" formControlName="pointLimite" required min="0">
     </div>
-    <div class="form-group checkbox-group" *ngIf="isScoreMaxEmpty()">
-      <label for="scoreNegatif">Score négatif autorisé :
+    @if (isScoreMaxEmpty()) {
+      <div class="form-group checkbox-group">
+        <label for="scoreNegatif">Score négatif autorisé :
         <input type="checkbox" name="scoreNegatif" formControlName="scoreNegatif" /></label>
-    </div>
+      </div>
+    }
 
-    <app-skull-king-config *ngIf="gameReceived!.sheet === 'skullKing'"
-    [specificConfIn]="gameReceived!.specificConf"
-    (specificConfOut)="getSpecificConf($event)"
-    (okForSave)="getvalidator($event)"></app-skull-king-config>
+    @if (gameReceived!.sheet === 'skullKing') {
+      <app-skull-king-config
+        [specificConfIn]="gameReceived!.specificConf"
+        (specificConfOut)="getSpecificConf($event)"
+      (okForSave)="getvalidator($event)"></app-skull-king-config>
+    }
   </div>
 
 
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i
-        class="fa-solid fa-xmark"></i></button>
+    class="fa-solid fa-xmark"></i></button>
     <button type="submit" class="btn btn-primary" [disabled]="!gameForm.valid || !conditionSpecificConf" data-bs-dismiss="modal"><i
-        class="fa-solid fa-save"></i></button>
+    class="fa-solid fa-save"></i></button>
   </div>
 </form>

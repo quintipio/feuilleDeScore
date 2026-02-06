@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
 import { Table } from '../../models/table.model';
 import { TableService } from '../../service/table.service';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { InputPadComponent } from '../../components/input-pad/input-pad.component';
 import { WinnerComponent } from '../../components/winner/winner.component';
 import { SheetComponent } from '../../components/sheet/sheet.component';
@@ -13,7 +13,7 @@ import { formatDateNowToKey } from '../../Utils/Utils';
 
 @Component({
     selector: 'app-mille-sabord-sheet',
-    imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent, SheetComponent, FormsModule],
+    imports: [RouterLink, InputPadComponent, WinnerComponent, SheetComponent, FormsModule],
     templateUrl: './mille-sabord-sheet.component.html',
     styleUrl: './mille-sabord-sheet.component.css'
 })

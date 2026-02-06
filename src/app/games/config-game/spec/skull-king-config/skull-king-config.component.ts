@@ -1,4 +1,4 @@
-import { CommonModule, JsonPipe } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export type SkullKingConf = {
@@ -11,7 +11,7 @@ export type SkullKingConf = {
 
 @Component({
     selector: 'app-skull-king-config',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './skull-king-config.component.html',
     styleUrl: './skull-king-config.component.css'
 })

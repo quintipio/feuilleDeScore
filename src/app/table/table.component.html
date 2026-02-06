@@ -1,51 +1,55 @@
 <div class="row" style="margin-top: 30px;">
   <ul class="vertical-list">
     @for(table of tables; track table.id) {
-    <li>
-      <div class="table-element">
-        <div class="table-content">
-          <div class="image-container">
-            <img
-              [src]="environment.baseUrl + (table.game?.uuid ? '/assets/rsc/' + table.game?.uuid + '.png' : '/assets/rsc/generic.png')"
-              alt="{{ table.game?.name }}" class="game-image">
-          </div>
+      <li>
+        <div class="table-element">
+          <div class="table-content">
+            <div class="image-container">
+              <img
+                [src]="environment.baseUrl + (table.game?.uuid ? '/assets/rsc/' + table.game?.uuid + '.png' : '/assets/rsc/generic.png')"
+                alt="{{ table.game?.name }}" class="game-image">
+            </div>
 
-          <div class="table-info">
-            <div class="table-title">{{ table.game?.name }}</div>
-            <div class="table-user">(
-              @for(user of table.users; track user.id) {
-              {{user?.name}}<span *ngIf="$index < table.users.length - 1">, </span>
-              })
+            <div class="table-info">
+              <div class="table-title">{{ table.game?.name }}</div>
+              <div class="table-user">(
+                @for(user of table.users; track user.id) {
+                  {{user?.name}}@if ($index < table.users.length - 1) {
+                  <span>, </span>
+                }
+                })
+              </div>
             </div>
           </div>
+
+          <div class="table-btn">
+            @if (isGameInProgress(table)) {
+              <button class="btn btn-outline-success" type="button"
+                (click)="startSheet(table.game?.sheet, table.id)">
+                <i class="fa-solid fa-hourglass-start"></i>
+              </button>
+            }
+
+            <button class="btn btn-outline-success" type="button" (click)="startNewSheet(table.game?.sheet, table.id)">
+              <i class="fa-solid fa-play"></i>
+            </button>
+
+            <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#gameModal"
+              (click)="openGameModal(table.game, table.id)">
+              <i class="fa-solid fa-edit"></i>
+            </button>
+
+            <button class="btn btn-outline-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteTableModal"
+              (click)="prepareDeleteTable(table.id)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+
+            <button class="btn btn-outline-secondary" type="button" (click)="openHistoric(table.id)">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </button>
+          </div>
         </div>
-
-        <div class="table-btn">
-          <button *ngIf="isGameInProgress(table)" class="btn btn-outline-success" type="button"
-            (click)="startSheet(table.game?.sheet, table.id)">
-            <i class="fa-solid fa-hourglass-start"></i>
-          </button>
-
-          <button class="btn btn-outline-success" type="button" (click)="startNewSheet(table.game?.sheet, table.id)">
-            <i class="fa-solid fa-play"></i>
-          </button>
-
-          <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#gameModal"
-            (click)="openGameModal(table.game, table.id)">
-            <i class="fa-solid fa-edit"></i>
-          </button>
-
-          <button class="btn btn-outline-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteTableModal"
-            (click)="prepareDeleteTable(table.id)">
-            <i class="fa-solid fa-trash"></i>
-          </button>
-
-          <button class="btn btn-outline-secondary" type="button" (click)="openHistoric(table.id)">
-            <i class="fa-solid fa-clock-rotate-left"></i>
-          </button>
-        </div>
-      </div>
-    </li>
+      </li>
     }
   </ul>
 
@@ -55,7 +59,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <app-config-game labelModal="Modifier la table" [isModif]="true"
-        (gameValidated)="onGameValidated($event)"></app-config-game>
+      (gameValidated)="onGameValidated($event)"></app-config-game>
     </div>
   </div>
 </div>

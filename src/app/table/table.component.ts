@@ -4,12 +4,12 @@ import { TableService } from '../service/table.service';
 import { Table } from '../models/table.model';
 import { Game } from '../models/game.model';
 import { ConfigGameComponent } from '../games/config-game/config-game.component';
-import { CommonModule } from '@angular/common';
+
 import { environment } from './../../environments/environment'
 
 @Component({
     selector: 'app-table',
-    imports: [RouterLink, ConfigGameComponent, CommonModule],
+    imports: [RouterLink, ConfigGameComponent],
     templateUrl: './table.component.html',
     styleUrl: './table.component.css'
 })

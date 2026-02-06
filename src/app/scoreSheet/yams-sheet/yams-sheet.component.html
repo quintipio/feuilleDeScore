@@ -14,27 +14,37 @@
     </button>
   </div>
 
-  <div class="roll-dice-container" *ngIf="desVirtuel">
-    <app-dices [maxRolls]="3" [numberOfDice]="5" (diceRolled)="changeDiceValue($event)"></app-dices>
-  </div>
-
-  <div class="dice-container" *ngIf="!desVirtuel">
-    <div *ngFor="let die of dice; let index = index" class="die-row">
-      <span>Dé {{ index + 1 }} :</span>
-      <div class="die-buttons">
-        <button *ngFor="let value of [1, 2, 3, 4, 5, 6]" [class.active]="die === value"
-          (click)="setDieValue(index, value)">
-          <img [src]="'assets/rsc/' + getDieImage(value)" [alt]="value" />
-        </button>
-      </div>
+  @if (desVirtuel) {
+    <div class="roll-dice-container">
+      <app-dices [maxRolls]="3" [numberOfDice]="5" (diceRolled)="changeDiceValue($event)"></app-dices>
     </div>
-  </div>
+  }
+
+  @if (!desVirtuel) {
+    <div class="dice-container">
+      @for (die of dice; track die; let index = $index) {
+        <div class="die-row">
+          <span>Dé {{ index + 1 }} :</span>
+          <div class="die-buttons">
+            @for (value of [1, 2, 3, 4, 5, 6]; track value) {
+              <button [class.active]="die === value"
+                (click)="setDieValue(index, value)">
+                <img [src]="'assets/rsc/' + getDieImage(value)" [alt]="value" />
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
 
 
 
   <div class="player-selector">
     <button (click)="changePlayer('left')"><i class="fa-solid fa-arrow-left"></i></button>
-    <span *ngIf="players !== undefined && players.length > 0">{{ players[activePlayerIndex].name }}</span>
+    @if (players !== undefined && players.length > 0) {
+      <span>{{ players[activePlayerIndex].name }}</span>
+    }
     <button (click)="changePlayer('right')"><i class="fa-solid fa-arrow-right"></i></button>
   </div>
 
@@ -44,55 +54,72 @@
       <thead>
         <tr>
           <th>Catégories</th>
-          <th *ngFor="let player of players">{{ player.name }}</th>
+          @for (player of players; track player) {
+            <th>{{ player.name }}</th>
+          }
         </tr>
       </thead>
       <tbody>
         <!-- Catégories -->
-        <tr *ngFor="let category of categories">
-          <td>{{ category }}</td>
-          <td *ngFor="let player of players" [ngClass]="{ 'locked-cell': locked[player.id][category] }">
-            <div class="score-cell" [ngClass]="{ 'locked-cell': locked[player.id][category] }">
-              <!-- Si la case est verrouillée -->
-              <span *ngIf="locked[player.id][category]">
-                {{ scores[player.id][category] ?? '-' }}
-                <button *ngIf="isActivePlayer(player.id)" (click)="unlockScore(category)" class="edit-button"><i
-                    class="fa-solid fa-pen-to-square"></i>
-                </button>
-              </span>
-
-              <!-- Si la case est modifiable par le joueur actif -->
-              <div *ngIf="isActivePlayer(player.id) && !locked[player.id][category]">
-                <span>{{ scores[player.id][category] ?? calculatePoints(category) }}</span>
-                <button (click)="lockScore(category)" class="ok-button"><i class="fa-solid fa-check"></i></button>
+        @for (category of categories; track category) {
+          <tr>
+            <td>{{ category }}</td>
+            @for (player of players; track player) {
+              <td [ngClass]="{ 'locked-cell': locked[player.id][category] }">
+                <div class="score-cell" [ngClass]="{ 'locked-cell': locked[player.id][category] }">
+                  <!-- Si la case est verrouillée -->
+                  @if (locked[player.id][category]) {
+                    <span>
+                      {{ scores[player.id][category] ?? '-' }}
+                      @if (isActivePlayer(player.id)) {
+                        <button (click)="unlockScore(category)" class="edit-button"><i
+                        class="fa-solid fa-pen-to-square"></i>
+                      </button>
+                    }
+                  </span>
+                }
+                <!-- Si la case est modifiable par le joueur actif -->
+                @if (isActivePlayer(player.id) && !locked[player.id][category]) {
+                  <div>
+                    <span>{{ scores[player.id][category] ?? calculatePoints(category) }}</span>
+                    <button (click)="lockScore(category)" class="ok-button"><i class="fa-solid fa-check"></i></button>
+                  </div>
+                }
               </div>
-            </div>
-          </td>
+            </td>
+          }
         </tr>
+      }
 
-        <!-- Ligne bonus -->
-        <tr class="bonus-row">
-          <td><strong>Bonus</strong></td>
-          <td *ngFor="let player of players">
+      <!-- Ligne bonus -->
+      <tr class="bonus-row">
+        <td><strong>Bonus</strong></td>
+        @for (player of players; track player) {
+          <td>
             <strong>{{ getBonus(player.id) }}</strong>
           </td>
-        </tr>
+        }
+      </tr>
 
-        <!-- Total -->
-        <tr>
-          <td><strong>Total</strong></td>
-          <td *ngFor="let player of players">
+      <!-- Total -->
+      <tr>
+        <td><strong>Total</strong></td>
+        @for (player of players; track player) {
+          <td>
             <strong>{{ getTotal(player.id) }}</strong>
           </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+        }
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-  <div *ngIf="gameOver" class="game-over-message" style="margin-top : 30px;">
+@if (gameOver) {
+  <div class="game-over-message" style="margin-top : 30px;">
     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#winnerModal">Finir la
-      partie</button>
+    partie</button>
   </div>
+}
 </div>
 
 <div class="modal fade" id="winnerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

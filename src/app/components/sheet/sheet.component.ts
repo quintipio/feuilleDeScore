@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { Table } from '../../models/table.model';
 import { RouterLink } from '@angular/router';
 import { User } from '../../models/user.model';
-import { CommonModule } from '@angular/common';
+
 import { InputPadComponent } from '../../components/input-pad/input-pad.component';
 import { WinnerComponent } from '../../components/winner/winner.component';
 import { RoundRow, UserColumn, CountRoundRow } from '../../models/sheet';
@@ -10,7 +10,7 @@ import { RoundRow, UserColumn, CountRoundRow } from '../../models/sheet';
 
 @Component({
     selector: 'app-sheet',
-    imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent],
+    imports: [RouterLink, InputPadComponent, WinnerComponent],
     templateUrl: './sheet.component.html',
     styleUrl: './sheet.component.css'
 })

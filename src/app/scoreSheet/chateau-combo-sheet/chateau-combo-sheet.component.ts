@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Table } from '../../models/table.model';
 import { User } from '../../models/user.model';
 import {  ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { AutocompleteComponent } from '../../components/autocomplete/autocomplete.component';
 import { CountRoundRow, RoundRow } from '../../models/sheet';
 import { formatDateNowToKey } from '../../Utils/Utils';
@@ -28,7 +28,7 @@ type ChateauComboJoueur = {
 
 @Component({
     selector: 'app-chateau-combo-sheet',
-    imports: [InputScoreComponent, WinnerComponent, AutocompleteComponent, ReactiveFormsModule, CommonModule],
+    imports: [InputScoreComponent, WinnerComponent, AutocompleteComponent, ReactiveFormsModule],
     templateUrl: './chateau-combo-sheet.component.html',
     styleUrl: './chateau-combo-sheet.component.css'
 })

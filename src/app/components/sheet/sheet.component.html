@@ -2,53 +2,59 @@
   <div class="title">
     {{table?.game?.name}}
   </div>
-  </div>
-  <div class="row">
-    <div class="table-responsive">
-      <table class="table-score">
-        <tr>
-          <th></th>
-          @for(user of users; track user.position) {
-            <th>{{user.user.name}} </th>
-          }
-        </tr>
-        <tr>
-          <th></th>
-          <th *ngFor="let user of users; trackBy: trackByUserPosition">
+</div>
+<div class="row">
+  <div class="table-responsive">
+    <table class="table-score">
+      <tr>
+        <th></th>
+        @for(user of users; track user.position) {
+          <th>{{user.user.name}} </th>
+        }
+      </tr>
+      <tr>
+        <th></th>
+        @for (user of users; track trackByUserPosition($index, user)) {
+          <th>
             {{ getSum(user) }}
           </th>
-        </tr>
+        }
+      </tr>
 
-          @for(row of table?.round; track row.row){
-            <tr>
-              <td style="width: 30px;">#{{row.row}}</td>
-              @for(point of row.points; track point.user.position){
-                <td class="point" (click)="openInputPad(row.row, point)" data-bs-toggle="modal" data-bs-target="#padModal">{{ point.value }}</td>
-              }
-            </tr>
+      @for(row of table?.round; track row.row){
+        <tr>
+          <td style="width: 30px;">#{{row.row}}</td>
+          @for(point of row.points; track point.user.position){
+            <td class="point" (click)="openInputPad(row.row, point)" data-bs-toggle="modal" data-bs-target="#padModal">{{ point.value }}</td>
           }
-      </table>
-    </div>
+        </tr>
+      }
+    </table>
   </div>
+</div>
 
 
-  <div class="row justify-content-center">
-    <div class="button-wrapper">
-      <button *ngIf="!isEndingGame" class="btn btn-success rounded-circle btn-custom" type="button" (click)="addRound()">
+<div class="row justify-content-center">
+  <div class="button-wrapper">
+    @if (!isEndingGame) {
+      <button class="btn btn-success rounded-circle btn-custom" type="button" (click)="addRound()">
         <i class="fa-solid fa-add"></i>
       </button>
-      <button *ngIf="isEndingGame" class="btn btn-danger rounded-circle btn-custom"  data-bs-toggle="modal" data-bs-target="#winnerModal" type="button" (click)="openWinner()">
+    }
+    @if (isEndingGame) {
+      <button class="btn btn-danger rounded-circle btn-custom"  data-bs-toggle="modal" data-bs-target="#winnerModal" type="button" (click)="openWinner()">
         <i class="fa-solid fa-check"></i>
       </button>
-    </div>
+    }
   </div>
+</div>
 
 
-  <div class="modal fade" id="padModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <app-input-pad (valueChange)="changeValue($event)" table="table"></app-input-pad>
-      </div>
+<div class="modal fade" id="padModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <app-input-pad (valueChange)="changeValue($event)" table="table"></app-input-pad>
     </div>
   </div>
+</div>
 

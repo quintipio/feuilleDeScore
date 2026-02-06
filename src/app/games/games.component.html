@@ -5,7 +5,7 @@
 </div>
 <div class="row">
   @for(user of selectedUsers; track user.id) {
-  <div class="userElement">{{user.name }} <button class="btnUserElement" (click)="removeUser(user.id)"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="userElement">{{user.name }} <button class="btnUserElement" (click)="removeUser(user.id)"><i class="fa-solid fa-xmark"></i></button></div>
   }
 </div>
 <div class="row errorMessage">
@@ -15,16 +15,20 @@
 
 <div class="row espace-top espace-bottom">
   <div class="col">
-    <button *ngIf="isSelectedAndEditableGame()" class="btn btn-outline-secondary" type="button" (click)="openEditGameModal()"
-      data-bs-toggle="modal" data-bs-target="#gameModal" >
-      <i class="fa-solid fa-edit"></i>
-    </button>
+    @if (isSelectedAndEditableGame()) {
+      <button class="btn btn-outline-secondary" type="button" (click)="openEditGameModal()"
+        data-bs-toggle="modal" data-bs-target="#gameModal" >
+        <i class="fa-solid fa-edit"></i>
+      </button>
+    }
   </div>
 
   <div class="col">
-    <button *ngIf="isSelectedAndEditableGame()" class="btn btn-outline-danger" (click)="deleteGame()" type="button">
-      <i class="fa-solid fa-trash"></i>
-    </button>
+    @if (isSelectedAndEditableGame()) {
+      <button class="btn btn-outline-danger" (click)="deleteGame()" type="button">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    }
   </div>
 </div>
 
@@ -75,12 +79,14 @@
         <div class="mb-3">
           <h6>Liste des utilisateurs</h6>
           <div class="user-list">
-            <div *ngFor="let user of allUsers" class="user-item">
-              <span (click)="selectUser(user)" style="cursor: pointer;">{{ user.name }}</span>
-              <button class="btn" (click)="deleteUser(user)">
-                <i class="fa-solid fa-trash"></i>
-              </button>
-            </div>
+            @for (user of allUsers; track user) {
+              <div class="user-item">
+                <span (click)="selectUser(user)" style="cursor: pointer;">{{ user.name }}</span>
+                <button class="btn" (click)="deleteUser(user)">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            }
           </div>
         </div>
 
@@ -88,12 +94,14 @@
         <div>
           <h6>Utilisateurs sélectionnés</h6>
           <div class="selected-user-list">
-            <div *ngFor="let user of selectedUsers" class="selected-user-item">
-              <span>{{ user.name }}</span>
-              <button class="btnUserElement" (click)="removeUser(user.id)">
-                <i class="fa-solid fa-trash"></i>
-              </button>
-            </div>
+            @for (user of selectedUsers; track user) {
+              <div class="selected-user-item">
+                <span>{{ user.name }}</span>
+                <button class="btnUserElement" (click)="removeUser(user.id)">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            }
           </div>
         </div>
       </div>
@@ -109,9 +117,11 @@
 
 <div class="row fixed-bottom-button">
   <div class="col-12 d-flex justify-content-center">
-    <button *ngIf="isReadyToCreateTable()" (click)="createTable()" class="btn btn-outline-success" type="button">
-      Créer une table
-    </button>
+    @if (isReadyToCreateTable()) {
+      <button (click)="createTable()" class="btn btn-outline-success" type="button">
+        Créer une table
+      </button>
+    }
   </div>
 </div>
 

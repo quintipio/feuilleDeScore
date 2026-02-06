@@ -11,44 +11,48 @@
 
 <div class="round-container">
   <h5>Manche {{ partie?.manche}} / {{ table?.game?.mancheLimite }}</h5>
-  <button class="next-round-btn" (click)="mancheSuivante()" *ngIf="!canShowEndGame()">Manche suivante</button>
-  <button class="next-round-btn" (click)="openWinner()" *ngIf="canShowEndGame()"  data-bs-toggle="modal" data-bs-target="#winnerModal">Fin de partie</button>
+  @if (!canShowEndGame()) {
+    <button class="next-round-btn" (click)="mancheSuivante()">Manche suivante</button>
+  }
+  @if (canShowEndGame()) {
+    <button class="next-round-btn" (click)="openWinner()"  data-bs-toggle="modal" data-bs-target="#winnerModal">Fin de partie</button>
+  }
 </div>
 @for(player of partie?.players; track player.user.id) {
-<div class="player-details-card">
-  <div class="player-header">
-    <h3>{{player?.user?.name}}</h3>
-    <div class="player-score-circle">{{ player.scoreManche }}</div>
-  </div>
+  <div class="player-details-card">
+    <div class="player-header">
+      <h3>{{player?.user?.name}}</h3>
+      <div class="player-score-circle">{{ player.scoreManche }}</div>
+    </div>
 
-  <div class="player-stats">
-    <div class="stat-row">
-      <span>Nombre de spirales</span>
-      <app-input-score name="spirale_{{player.user.id}}" (valueChange)="changeSpirale(player, $event)" [min]="0" [initValue]="player?.spirales"></app-input-score>
+    <div class="player-stats">
+      <div class="stat-row">
+        <span>Nombre de spirales</span>
+        <app-input-score name="spirale_{{player.user.id}}" (valueChange)="changeSpirale(player, $event)" [min]="0" [initValue]="player?.spirales"></app-input-score>
+      </div>
+      <div class="stat-row">
+        <span>Nombre de croix</span>
+        <app-input-score name="spirale_{{player.user.id}}" (valueChange)="changeCroix(player, $event)" [min]="0" [initValue]="player?.croix"></app-input-score>
+      </div>
+      <div class="stat-row">
+        <span>Plus grande zone</span>
+        <app-input-score name="spirale_{{player.user.id}}" (valueChange)="changeZone(player, $event)" [min]="0" [max]="9" [initValue]="player?.zone"></app-input-score>
+      </div>
     </div>
-    <div class="stat-row">
-      <span>Nombre de croix</span>
-      <app-input-score name="spirale_{{player.user.id}}" (valueChange)="changeCroix(player, $event)" [min]="0" [initValue]="player?.croix"></app-input-score>
-    </div>
-    <div class="stat-row">
-      <span>Plus grande zone</span>
-      <app-input-score name="spirale_{{player.user.id}}" (valueChange)="changeZone(player, $event)" [min]="0" [max]="9" [initValue]="player?.zone"></app-input-score>
-    </div>
-  </div>
 
-  <p class="validated-cards-text">Carte validées</p>
-  <div class="button-grid">
-    <button (click)="changeCartevalide(player, 1)" [ngClass]="{'btn-selected':player.valideUn}">1</button>
-    <button (click)="changeCartevalide(player, 2)" [ngClass]="{'btn-selected':player.valideDeux}">2</button>
-    <button (click)="changeCartevalide(player, 3)" [ngClass]="{'btn-selected':player.valideTrois}">3</button>
-    <button (click)="changeCartevalide(player, 4)" [ngClass]="{'btn-selected':player.valideQuatre}">4</button>
-    <button (click)="changeCartevalide(player, 5)" [ngClass]="{'btn-selected':player.valideCinq}">5</button>
-    <button (click)="changeCartevalide(player, 6)" [ngClass]="{'btn-selected':player.valideSix}">6</button>
-    <button (click)="changeCartevalide(player, 7)" [ngClass]="{'btn-selected':player.valideSept}">7</button>
-    <button (click)="changeCartevalide(player, 8)" [ngClass]="{'btn-selected':player.valideHuit}">8</button>
-    <button (click)="changeCartevalide(player, 9)" [ngClass]="{'btn-selected':player.valideNeuf}">9</button>
+    <p class="validated-cards-text">Carte validées</p>
+    <div class="button-grid">
+      <button (click)="changeCartevalide(player, 1)" [ngClass]="{'btn-selected':player.valideUn}">1</button>
+      <button (click)="changeCartevalide(player, 2)" [ngClass]="{'btn-selected':player.valideDeux}">2</button>
+      <button (click)="changeCartevalide(player, 3)" [ngClass]="{'btn-selected':player.valideTrois}">3</button>
+      <button (click)="changeCartevalide(player, 4)" [ngClass]="{'btn-selected':player.valideQuatre}">4</button>
+      <button (click)="changeCartevalide(player, 5)" [ngClass]="{'btn-selected':player.valideCinq}">5</button>
+      <button (click)="changeCartevalide(player, 6)" [ngClass]="{'btn-selected':player.valideSix}">6</button>
+      <button (click)="changeCartevalide(player, 7)" [ngClass]="{'btn-selected':player.valideSept}">7</button>
+      <button (click)="changeCartevalide(player, 8)" [ngClass]="{'btn-selected':player.valideHuit}">8</button>
+      <button (click)="changeCartevalide(player, 9)" [ngClass]="{'btn-selected':player.valideNeuf}">9</button>
+    </div>
   </div>
-</div>
 }
 
 

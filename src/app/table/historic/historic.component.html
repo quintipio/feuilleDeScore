@@ -1,23 +1,29 @@
-<div *ngIf="sortedDates.length === 0" class="no-data">
-  <p>Aucun historique disponible.</p>
-</div>
+@if (sortedDates.length === 0) {
+  <div class="no-data">
+    <p>Aucun historique disponible.</p>
+  </div>
+}
 
-<div *ngFor="let dateKey of sortedDates" class="history-card">
-  <h3 class="history-header">Score du {{ formatDate(dateKey) }}</h3>
-  <table class="history-table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Nom</th>
-        <th>Score</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let winner of historic[dateKey]; trackBy: trackByPosition">
-        <td>#{{ winner.user.position }}</td>
-        <td>{{ winner.user.user.name }}</td>
-        <td><i>{{ winner.value }}</i></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+@for (dateKey of sortedDates; track dateKey) {
+  <div class="history-card">
+    <h3 class="history-header">Score du {{ formatDate(dateKey) }}</h3>
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nom</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (winner of historic[dateKey]; track trackByPosition($index, winner)) {
+          <tr>
+            <td>#{{ winner.user.position }}</td>
+            <td>{{ winner.user.user.name }}</td>
+            <td><i>{{ winner.value }}</i></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, QueryList, ViewChild, ViewChildren, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { InputScoreComponent } from '../../components/input-score/input-score.component';
 import { WinnerComponent } from '../../components/winner/winner.component';
@@ -24,7 +24,7 @@ interface CourtisansPlayer {
 
 @Component({
     selector: 'app-courtisans-sheet',
-    imports: [CommonModule, InputScoreComponent, WinnerComponent],
+    imports: [InputScoreComponent, WinnerComponent],
     templateUrl: './courtisans-sheet.component.html',
     styleUrl: './courtisans-sheet.component.css'
 })

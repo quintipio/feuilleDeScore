@@ -1,4 +1,8 @@
 <input class="input-style" name="{{name}}" type="text" [formControl]="typeahead" placeholder="{{placeholder}}" (input)="suggest()">
-<div class="suggestions" *ngIf="suggestions.length">
-  <p *ngFor="let s of suggestions" (click)="selectElement(s)">{{s}}</p>
-</div>
+@if (suggestions.length) {
+  <div class="suggestions">
+    @for (s of suggestions; track s) {
+      <p (click)="selectElement(s)">{{s}}</p>
+    }
+  </div>
+}
