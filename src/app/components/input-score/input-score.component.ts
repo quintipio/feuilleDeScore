@@ -3,11 +3,10 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-input-score',
-  standalone: true,
-  imports: [FormsModule, CommonModule],
-  templateUrl: './input-score.component.html',
-  styleUrl: './input-score.component.css'
+    selector: 'app-input-score',
+    imports: [FormsModule, CommonModule],
+    templateUrl: './input-score.component.html',
+    styleUrl: './input-score.component.css'
 })
 export class InputScoreComponent<T extends string | number = number> implements OnInit, OnChanges {
   @Input() name: string = '';

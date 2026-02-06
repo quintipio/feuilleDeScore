@@ -12,11 +12,10 @@ import { User } from '../../models/user.model';
 import { formatDateNowToKey } from '../../Utils/Utils';
 
 @Component({
-  selector: 'app-mille-sabord-sheet',
-  standalone: true,
-  imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent, SheetComponent, FormsModule],
-  templateUrl: './mille-sabord-sheet.component.html',
-  styleUrl: './mille-sabord-sheet.component.css'
+    selector: 'app-mille-sabord-sheet',
+    imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent, SheetComponent, FormsModule],
+    templateUrl: './mille-sabord-sheet.component.html',
+    styleUrl: './mille-sabord-sheet.component.css'
 })
 export class MilleSabordSheetComponent {
 

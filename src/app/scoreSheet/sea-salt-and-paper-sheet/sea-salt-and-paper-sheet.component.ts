@@ -12,11 +12,10 @@ import { User } from '../../models/user.model';
 import { formatDateNowToKey } from '../../Utils/Utils';
 
 @Component({
-  selector: 'app-sea-salt-and-paper-sheet',
-  standalone: true,
-  imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent, SheetComponent, FormsModule],
-  templateUrl: './sea-salt-and-paper-sheet.component.html',
-  styleUrl: './sea-salt-and-paper-sheet.component.css'
+    selector: 'app-sea-salt-and-paper-sheet',
+    imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent, SheetComponent, FormsModule],
+    templateUrl: './sea-salt-and-paper-sheet.component.html',
+    styleUrl: './sea-salt-and-paper-sheet.component.css'
 })
 export class SeaSaltAndPaperSheetComponent {
 

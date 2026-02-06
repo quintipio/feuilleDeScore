@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { CountRoundRow } from '../../models/sheet';
 
 @Component({
-  selector: 'app-winner',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './winner.component.html',
-  styleUrl: './winner.component.css'
+    selector: 'app-winner',
+    imports: [CommonModule],
+    templateUrl: './winner.component.html',
+    styleUrl: './winner.component.css'
 })
 export class WinnerComponent {
 

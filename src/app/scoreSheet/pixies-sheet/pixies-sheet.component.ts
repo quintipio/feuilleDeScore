@@ -33,11 +33,10 @@ type PixiesManche = {
 }
 
 @Component({
-  selector: 'app-pixies-sheet',
-  standalone: true,
-  imports: [CommonModule, InputScoreComponent, WinnerComponent],
-  templateUrl: './pixies-sheet.component.html',
-  styleUrl: './pixies-sheet.component.css'
+    selector: 'app-pixies-sheet',
+    imports: [CommonModule, InputScoreComponent, WinnerComponent],
+    templateUrl: './pixies-sheet.component.html',
+    styleUrl: './pixies-sheet.component.css'
 })
 export class PixiesSheetComponent {
   @ViewChild(WinnerComponent) winnerComponent: WinnerComponent | undefined;

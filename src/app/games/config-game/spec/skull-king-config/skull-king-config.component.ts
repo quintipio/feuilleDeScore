@@ -10,11 +10,10 @@ export type SkullKingConf = {
 }
 
 @Component({
-  selector: 'app-skull-king-config',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './skull-king-config.component.html',
-  styleUrl: './skull-king-config.component.css'
+    selector: 'app-skull-king-config',
+    imports: [CommonModule],
+    templateUrl: './skull-king-config.component.html',
+    styleUrl: './skull-king-config.component.css'
 })
 export class SkullKingConfigComponent {
 

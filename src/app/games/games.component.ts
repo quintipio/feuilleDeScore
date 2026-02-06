@@ -11,11 +11,10 @@ import { GameService } from '../service/games.service';
 import { environment } from './../../environments/environment'
 
 @Component({
-  selector: 'app-games',
-  standalone: true,
-  imports: [CommonModule, RouterLink, ConfigGameComponent, FormsModule],
-  templateUrl: './games.component.html',
-  styleUrl: './games.component.css'
+    selector: 'app-games',
+    imports: [CommonModule, RouterLink, ConfigGameComponent, FormsModule],
+    templateUrl: './games.component.html',
+    styleUrl: './games.component.css'
 })
 export class GamesComponent {
   environment = environment

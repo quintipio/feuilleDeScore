@@ -27,11 +27,10 @@ type ChateauComboJoueur = {
 }
 
 @Component({
-  selector: 'app-chateau-combo-sheet',
-  standalone: true,
-  imports: [InputScoreComponent, WinnerComponent, AutocompleteComponent, ReactiveFormsModule, CommonModule],
-  templateUrl: './chateau-combo-sheet.component.html',
-  styleUrl: './chateau-combo-sheet.component.css'
+    selector: 'app-chateau-combo-sheet',
+    imports: [InputScoreComponent, WinnerComponent, AutocompleteComponent, ReactiveFormsModule, CommonModule],
+    templateUrl: './chateau-combo-sheet.component.html',
+    styleUrl: './chateau-combo-sheet.component.css'
 })
 export class ChateauComboSheetComponent {
   @ViewChild(WinnerComponent) winnerComponent: WinnerComponent | undefined;

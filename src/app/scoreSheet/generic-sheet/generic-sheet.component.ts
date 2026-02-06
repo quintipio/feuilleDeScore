@@ -10,11 +10,10 @@ import { CountRoundRow, RoundRow, UserColumn } from '../../models/sheet';
 import { formatDateNowToKey } from '../../Utils/Utils';
 
 @Component({
-  selector: 'app-generic-sheet',
-  standalone: true,
-  imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent,SheetComponent],
-  templateUrl: './generic-sheet.component.html',
-  styleUrl: './generic-sheet.component.css'
+    selector: 'app-generic-sheet',
+    imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent, SheetComponent],
+    templateUrl: './generic-sheet.component.html',
+    styleUrl: './generic-sheet.component.css'
 })
 export class GenericSheetComponent {
 

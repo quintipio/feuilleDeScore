@@ -9,11 +9,10 @@ import { RoundRow, UserColumn, CountRoundRow } from '../../models/sheet';
 
 
 @Component({
-  selector: 'app-sheet',
-  standalone: true,
-  imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent],
-  templateUrl: './sheet.component.html',
-  styleUrl: './sheet.component.css'
+    selector: 'app-sheet',
+    imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent],
+    templateUrl: './sheet.component.html',
+    styleUrl: './sheet.component.css'
 })
 export class SheetComponent {
 

@@ -3,11 +3,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-autocomplete',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './autocomplete.component.html',
-  styleUrl: './autocomplete.component.css'
+    selector: 'app-autocomplete',
+    imports: [ReactiveFormsModule, CommonModule],
+    templateUrl: './autocomplete.component.html',
+    styleUrl: './autocomplete.component.css'
 })
 export class AutocompleteComponent {
 

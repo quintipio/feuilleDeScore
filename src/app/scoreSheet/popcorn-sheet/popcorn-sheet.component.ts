@@ -9,11 +9,10 @@ import { CountRoundRow } from '../../models/sheet';
 import { formatDateNowToKey } from '../../Utils/Utils';
 
 @Component({
-  selector: 'app-popcorn-sheet',
-  standalone: true,
-  imports: [CommonModule, InputScoreComponent, WinnerComponent],
-  templateUrl: './popcorn-sheet.component.html',
-  styleUrl: './popcorn-sheet.component.css'
+    selector: 'app-popcorn-sheet',
+    imports: [CommonModule, InputScoreComponent, WinnerComponent],
+    templateUrl: './popcorn-sheet.component.html',
+    styleUrl: './popcorn-sheet.component.css'
 })
 export class PopcornSheetComponent {
   @ViewChild(WinnerComponent) winnerComponent: WinnerComponent | undefined;

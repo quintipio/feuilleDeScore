@@ -6,11 +6,10 @@ import { CountRoundRow } from '../../models/sheet';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-historic',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './historic.component.html',
-  styleUrl: './historic.component.css'
+    selector: 'app-historic',
+    imports: [CommonModule],
+    templateUrl: './historic.component.html',
+    styleUrl: './historic.component.css'
 })
 export class HistoricComponent {
 

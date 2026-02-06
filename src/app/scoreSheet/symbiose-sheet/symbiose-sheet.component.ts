@@ -9,11 +9,10 @@ import { CountRoundRow } from '../../models/sheet';
 import { formatDateNowToKey } from '../../Utils/Utils';
 
 @Component({
-  selector: 'app-symbiose-sheet',
-  standalone: true,
-  imports: [CommonModule, InputScoreComponent, WinnerComponent],
-  templateUrl: './symbiose-sheet.component.html',
-  styleUrl: './symbiose-sheet.component.css'
+    selector: 'app-symbiose-sheet',
+    imports: [CommonModule, InputScoreComponent, WinnerComponent],
+    templateUrl: './symbiose-sheet.component.html',
+    styleUrl: './symbiose-sheet.component.css'
 })
 export class SymbioseSheetComponent {
   @ViewChild(WinnerComponent) winnerComponent: WinnerComponent | undefined;

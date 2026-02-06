@@ -54,11 +54,10 @@ export type DataDorf = {
 }
 
 @Component({
-  selector: 'app-dorfromantik-sheet',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, InputScoreComponent],
-  templateUrl: './dorfromantik-sheet.component.html',
-  styleUrl: './dorfromantik-sheet.component.css'
+    selector: 'app-dorfromantik-sheet',
+    imports: [ReactiveFormsModule, CommonModule, InputScoreComponent],
+    templateUrl: './dorfromantik-sheet.component.html',
+    styleUrl: './dorfromantik-sheet.component.css'
 })
 export class DorfromantikSheetComponent {
 

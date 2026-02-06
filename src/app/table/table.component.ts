@@ -8,11 +8,10 @@ import { CommonModule } from '@angular/common';
 import { environment } from './../../environments/environment'
 
 @Component({
-  selector: 'app-table',
-  standalone: true,
-  imports: [RouterLink, ConfigGameComponent, CommonModule],
-  templateUrl: './table.component.html',
-  styleUrl: './table.component.css'
+    selector: 'app-table',
+    imports: [RouterLink, ConfigGameComponent, CommonModule],
+    templateUrl: './table.component.html',
+    styleUrl: './table.component.css'
 })
 export class TableComponent {
   environment = environment;

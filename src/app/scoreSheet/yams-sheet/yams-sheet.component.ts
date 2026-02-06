@@ -9,11 +9,10 @@ import { CountRoundRow, RoundRow, UserColumn } from '../../models/sheet';
 import { formatDateNowToKey } from '../../Utils/Utils';
 import { DicesComponent } from '../../components/dices/dices.component';
 @Component({
-  selector: 'app-yams-sheet',
-  standalone: true,
-  imports: [CommonModule, WinnerComponent, DicesComponent],
-  templateUrl: './yams-sheet.component.html',
-  styleUrl: './yams-sheet.component.css'
+    selector: 'app-yams-sheet',
+    imports: [CommonModule, WinnerComponent, DicesComponent],
+    templateUrl: './yams-sheet.component.html',
+    styleUrl: './yams-sheet.component.css'
 })
 export class YamsSheetComponent {
 

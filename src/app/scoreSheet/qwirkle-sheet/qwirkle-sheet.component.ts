@@ -12,11 +12,10 @@ import { User } from '../../models/user.model';
 import { formatDateNowToKey } from '../../Utils/Utils';
 
 @Component({
-  selector: 'app-qwirkle-sheet',
-  standalone: true,
-  imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent, SheetComponent, FormsModule],
-  templateUrl: './qwirkle-sheet.component.html',
-  styleUrl: './qwirkle-sheet.component.css'
+    selector: 'app-qwirkle-sheet',
+    imports: [RouterLink, CommonModule, InputPadComponent, WinnerComponent, SheetComponent, FormsModule],
+    templateUrl: './qwirkle-sheet.component.html',
+    styleUrl: './qwirkle-sheet.component.css'
 })
 export class QwirkleSheetComponent {
 

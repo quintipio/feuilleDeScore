@@ -5,11 +5,10 @@ import { CommonModule } from '@angular/common';
 import { SkullKingConfigComponent } from './spec/skull-king-config/skull-king-config.component';
 
 @Component({
-  selector: 'app-config-game',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, SkullKingConfigComponent ],
-  templateUrl: './config-game.component.html',
-  styleUrl: './config-game.component.css'
+    selector: 'app-config-game',
+    imports: [ReactiveFormsModule, CommonModule, SkullKingConfigComponent],
+    templateUrl: './config-game.component.html',
+    styleUrl: './config-game.component.css'
 })
 export class ConfigGameComponent {
 

@@ -23,11 +23,10 @@ interface CourtisansPlayer {
 }
 
 @Component({
-  selector: 'app-courtisans-sheet',
-  standalone: true,
-  imports: [CommonModule, InputScoreComponent, WinnerComponent],
-  templateUrl: './courtisans-sheet.component.html',
-  styleUrl: './courtisans-sheet.component.css'
+    selector: 'app-courtisans-sheet',
+    imports: [CommonModule, InputScoreComponent, WinnerComponent],
+    templateUrl: './courtisans-sheet.component.html',
+    styleUrl: './courtisans-sheet.component.css'
 })
 export class CourtisansSheetComponent implements AfterViewInit {
   @ViewChild(WinnerComponent) winnerComponent: WinnerComponent | undefined;

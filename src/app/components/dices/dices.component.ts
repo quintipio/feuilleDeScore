@@ -2,11 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-dices',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './dices.component.html',
-  styleUrl: './dices.component.css'
+    selector: 'app-dices',
+    imports: [CommonModule],
+    templateUrl: './dices.component.html',
+    styleUrl: './dices.component.css'
 })
 export class DicesComponent {
   @Input() maxRolls: number = 0;

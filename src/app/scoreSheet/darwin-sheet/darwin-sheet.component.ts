@@ -9,11 +9,10 @@ import { CountRoundRow } from '../../models/sheet';
 import { formatDateNowToKey } from '../../Utils/Utils';
 
 @Component({
-  selector: 'app-darwin-sheet',
-  standalone: true,
-  imports: [CommonModule, InputScoreComponent, WinnerComponent],
-  templateUrl: './darwin-sheet.component.html',
-  styleUrls: ['./darwin-sheet.component.css']
+    selector: 'app-darwin-sheet',
+    imports: [CommonModule, InputScoreComponent, WinnerComponent],
+    templateUrl: './darwin-sheet.component.html',
+    styleUrls: ['./darwin-sheet.component.css']
 })
 export class DarwinSheetComponent {
   @ViewChild(WinnerComponent) winnerComponent: WinnerComponent | undefined;

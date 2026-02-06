@@ -2,11 +2,10 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
-  selector: 'app-input-pad',
-  standalone: true,
-  imports: [],
-  templateUrl: './input-pad.component.html',
-  styleUrls: ['./input-pad.component.css']
+    selector: 'app-input-pad',
+    imports: [],
+    templateUrl: './input-pad.component.html',
+    styleUrls: ['./input-pad.component.css']
 })
 export class InputPadComponent {
   @Output() valueChange = new EventEmitter<number>();

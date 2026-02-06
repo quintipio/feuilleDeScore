@@ -34,11 +34,10 @@ type SkullKingRound = {
 }
 
 @Component({
-  selector: 'app-skull-king-sheet',
-  standalone: true,
-  imports: [CommonModule, InputScoreComponent, WinnerComponent],
-  templateUrl: './skull-king-sheet.component.html',
-  styleUrl: './skull-king-sheet.component.css'
+    selector: 'app-skull-king-sheet',
+    imports: [CommonModule, InputScoreComponent, WinnerComponent],
+    templateUrl: './skull-king-sheet.component.html',
+    styleUrl: './skull-king-sheet.component.css'
 })
 export class SkullKingSheetComponent {
   @ViewChild(WinnerComponent) winnerComponent: WinnerComponent | undefined;
