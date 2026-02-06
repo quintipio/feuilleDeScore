@@ -1,0 +1,46 @@
+<div class="popcorn-sheet">
+	<h2 class="sheet-title">Popcorn</h2>
+
+	<div class="cards-grid">
+		@for(player of game?.players; track player.user.id) {
+		<div class="player-card">
+			<h3 class="player-title">{{ player?.user?.name }} <span class="player-score">{{ player.scoreTotal }}</span></h3>
+
+			<div class="player-body">
+				<div class="field-row">
+					<span class="field-label">Nombre de popcorn : </span>
+					<app-input-score name="popcorn_{{player.user.id}}" [initValue]="player?.nombrePopcorn" [min]="0" (valueChange)="changeNombrePopcorn(player, $event)"></app-input-score>
+				</div>
+
+				<div class="field-row">
+					<span class="field-label">Argent restant (5 pièces = 1 point) : </span>
+					<app-input-score name="argent_{{player.user.id}}" [initValue]="player?.argentRestant" [min]="0" [inc]="5" (valueChange)="changeArgentRestant(player, $event)"></app-input-score>
+				</div>
+
+				<div class="field-row">
+					<span class="field-label">Points gagnés avec les labels : </span>
+					<app-input-score name="labels_{{player.user.id}}" [initValue]="player?.pointsLabels" [min]="0" (valueChange)="changePointsLabels(player, $event)"></app-input-score>
+				</div>
+
+				<div class="field-row">
+					<span class="field-label">Trophée popcorn : </span>
+					<app-input-score name="trophees_{{player.user.id}}" [initValue]="player?.tropheesCount" [values]="[0, 3, 5]" (valueChange)="changeTrophees(player, $event)"></app-input-score>
+				</div>
+			</div>
+		</div>
+		}
+	</div>
+
+	<div class="actions">
+		<button class="validate-btn" (click)="openWinner()" data-bs-toggle="modal" data-bs-target="#winnerModal">Valider</button>
+	</div>
+
+	<div class="modal fade" id="winnerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<app-winner (outWindow)="closeGame()"></app-winner>
+			</div>
+		</div>
+	</div>
+
+</div>

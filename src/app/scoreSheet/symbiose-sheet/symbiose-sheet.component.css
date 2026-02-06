@@ -1,0 +1,119 @@
+.symbiose-sheet {
+	padding: 16px;
+	background: linear-gradient(180deg, #f5fffb 0%, #f0fef8 100%);
+	color: #2d5f4f;
+	min-height: 100%;
+}
+
+.sheet-title {
+	text-align: left;
+	margin: 0 0 12px 8px;
+	color: #2d5f4f;
+	font-weight: 600;
+}
+
+.players-container {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.player-card {
+	background: #fafef9;
+	border: 2px solid #7cb98f;
+	border-radius: 12px;
+	padding: 14px;
+	box-shadow: 0 2px 6px rgba(45, 95, 79, 0.08);
+	display: flex;
+	flex-direction: column;
+}
+
+.player-title {
+	margin: 0 0 14px 0;
+	text-align: center;
+	font-size: 1.1rem;
+	color: #2d5f4f;
+}
+
+.scroll-container {
+	width: 100%;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.cartes-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 10px;
+	min-width: 350px;
+}
+
+.carte-box {
+	background: linear-gradient(135deg, #e8f5f0 0%, #daf1eb 100%);
+	border: 2px solid #a0d5c0;
+	border-radius: 8px;
+	padding: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+app-input-score {
+	display: block;
+	width: 100%;
+}
+
+@media (max-width: 768px) {
+	.cartes-grid {
+		grid-template-columns: repeat(4, 1fr);
+	}
+
+	.player-card {
+		padding: 12px;
+	}
+}
+
+@media (max-width: 420px) {
+	.cartes-grid {
+		grid-template-columns: repeat(4, 1fr);
+	}
+
+	.player-card {
+		padding: 10px;
+	}
+
+	.sheet-title {
+		font-size: 1rem;
+	}
+}
+
+.player-score {
+	display: inline-block;
+	background: linear-gradient(135deg, #c1e9dd 0%, #b0dfd4 100%);
+	color: #2d5f4f;
+	padding: 4px 8px;
+	border-radius: 999px;
+	font-weight: 600;
+	margin-left: 8px;
+	border: 1px solid #7cb98f;
+}
+
+.actions {
+	display: flex;
+	justify-content: center;
+	margin-top: 18px;
+}
+
+.validate-btn {
+	background: #4a8f6f;
+	border: 1px solid #3a6f5f;
+	color: #fff;
+	padding: 10px 20px;
+	border-radius: 8px;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.validate-btn:hover {
+	background: #3a6f5f;
+}

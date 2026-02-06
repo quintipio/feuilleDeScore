@@ -13,6 +13,8 @@ import { YamsSheetComponent } from './scoreSheet/yams-sheet/yams-sheet.component
 import { DarwinSheetComponent } from './scoreSheet/darwin-sheet/darwin-sheet.component';
 import { HistoricComponent } from './table/historic/historic.component';
 import { CourtisansSheetComponent  } from './scoreSheet/courtisans-sheet/courtisans-sheet.component';
+import { SymbioseSheetComponent  } from './scoreSheet/symbiose-sheet/symbiose-sheet.component';
+import { PopcornSheetComponent  } from './scoreSheet/popcorn-sheet/popcorn-sheet.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/tables', pathMatch: 'full' },
@@ -85,5 +87,15 @@ export const routes: Routes = [
     path: 'sheet/courtisans',
     title: 'Courtisans',
     component: CourtisansSheetComponent,
+  },
+  {
+    path: 'sheet/symbiose',
+    title: 'Symbiose',
+    component: SymbioseSheetComponent,
+  },
+  {
+    path: 'sheet/popcorn',
+    title: 'Popcorn',
+    component: PopcornSheetComponent,
   },
 ];

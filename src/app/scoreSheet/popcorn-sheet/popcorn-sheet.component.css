@@ -1,0 +1,97 @@
+.popcorn-sheet {
+	padding: 16px;
+	background: linear-gradient(180deg, #fff5f5 0%, #ffebeb 100%);
+	color: #8b0000;
+	min-height: 100%;
+}
+
+.sheet-title {
+	text-align: left;
+	margin: 0 0 12px 8px;
+	color: #c41e3a;
+	font-weight: 600;
+}
+
+.cards-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 14px;
+}
+
+.player-card {
+	background: #fffbfb;
+	border: 2px solid #ff6b6b;
+	border-radius: 12px;
+	padding: 14px;
+	box-shadow: 0 2px 6px rgba(139, 0, 0, 0.08);
+	display: flex;
+	flex-direction: column;
+}
+
+.player-title {
+	margin: 0 0 10px 0;
+	text-align: center;
+	font-size: 1.1rem;
+	color: #8b0000;
+}
+
+.player-body {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.field-row {
+	display: flex;
+	flex-direction: column;
+}
+
+.field-label {
+	font-size: 0.9rem;
+	color: #c41e3a;
+	margin-bottom: 6px;
+	font-weight: 500;
+}
+
+app-input-score {
+	display: block;
+}
+
+@media (max-width: 420px) {
+	.player-card {
+		padding: 12px;
+	}
+	.sheet-title {
+		font-size: 1rem;
+	}
+}
+
+.player-score {
+	display: inline-block;
+	background: #ffcccc;
+	color: #8b0000;
+	padding: 4px 8px;
+	border-radius: 999px;
+	font-weight: 600;
+	margin-left: 8px;
+}
+
+.actions {
+	display: flex;
+	justify-content: center;
+	margin-top: 18px;
+}
+
+.validate-btn {
+	background: #c41e3a;
+	border: 1px solid #a01830;
+	color: #fff;
+	padding: 10px 20px;
+	border-radius: 8px;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.validate-btn:hover {
+	background: #a01830;
+}

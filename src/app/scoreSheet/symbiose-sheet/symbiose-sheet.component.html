@@ -1,0 +1,60 @@
+<div class="symbiose-sheet">
+	<h2 class="sheet-title">Symbiose</h2>
+
+	<div class="players-container">
+		@for(player of game?.players; track player.user.id) {
+		<div class="player-card">
+			<h3 class="player-title">{{ player?.user?.name }} <span class="player-score">{{ player.scoreTotal }}</span></h3>
+
+			<div class="scroll-container">
+			<div class="cartes-grid">
+				<div class="carte-box">
+					<app-input-score name="eco1_{{player.user.id}}" [initValue]="player?.carte1" (valueChange)="changecarte(player, 1, $event)"></app-input-score>
+				</div>
+
+				<div class="carte-box">
+					<app-input-score name="eco2_{{player.user.id}}" [initValue]="player?.carte2" (valueChange)="changecarte(player, 2, $event)"></app-input-score>
+				</div>
+
+				<div class="carte-box">
+					<app-input-score name="eco3_{{player.user.id}}" [initValue]="player?.carte3" (valueChange)="changecarte(player, 3, $event)"></app-input-score>
+				</div>
+
+				<div class="carte-box">
+					<app-input-score name="eco4_{{player.user.id}}" [initValue]="player?.carte4" (valueChange)="changecarte(player, 4, $event)"></app-input-score>
+				</div>
+
+				<div class="carte-box">
+					<app-input-score name="eco5_{{player.user.id}}" [initValue]="player?.carte5" (valueChange)="changecarte(player, 5, $event)"></app-input-score>
+				</div>
+
+				<div class="carte-box">
+					<app-input-score name="eco6_{{player.user.id}}" [initValue]="player?.carte6" (valueChange)="changecarte(player, 6, $event)"></app-input-score>
+				</div>
+
+				<div class="carte-box">
+					<app-input-score name="eco7_{{player.user.id}}" [initValue]="player?.carte7" (valueChange)="changecarte(player, 7, $event)"></app-input-score>
+				</div>
+
+				<div class="carte-box">
+					<app-input-score name="eco8_{{player.user.id}}" [initValue]="player?.carte8" (valueChange)="changecarte(player, 8, $event)"></app-input-score>
+				</div>
+			</div>
+			</div>
+		</div>
+		}
+	</div>
+
+	<div class="actions">
+		<button class="validate-btn" (click)="openWinner()" data-bs-toggle="modal" data-bs-target="#winnerModal">Valider</button>
+	</div>
+
+	<div class="modal fade" id="winnerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<app-winner (outWindow)="closeGame()"></app-winner>
+			</div>
+		</div>
+	</div>
+
+</div>
