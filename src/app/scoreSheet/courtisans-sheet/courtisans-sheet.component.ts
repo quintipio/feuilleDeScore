@@ -15,7 +15,7 @@ interface CourtisansPlayer {
   rossignol: number;
   lievre: number;
   crapaud: number;
-  abeille: number;
+  papillon: number;
   cerf: number;
   carpe: number;
   score: number;
@@ -42,12 +42,12 @@ export class CourtisansSheetComponent implements AfterViewInit {
   winnerAlreadyOpen = false;
 
   // Table de la reine
-  familles = ['Rossignol', 'Lièvre', 'Crapaud', 'Abeille', 'Cerf', 'Carpe'];
+  familles = ['Papillon', 'Crapaud','Rossignol', 'Lièvre', 'Cerf', 'Carpe'];
   famillesState: { [key: string]: string } = {
+    'Papillon': 'lumière',
+    'Crapaud': 'lumière',
     'Rossignol': 'lumière',
     'Lièvre': 'lumière',
-    'Crapaud': 'lumière',
-    'Abeille': 'lumière',
     'Cerf': 'lumière',
     'Carpe': 'lumière'
   };
@@ -79,14 +79,12 @@ export class CourtisansSheetComponent implements AfterViewInit {
     this.inputScores?.forEach((input) => {
       input.reinit(0);
     });
-    // Forcer la détection de changements après le chargement du jeu
     setTimeout(() => {
       this.cdr.detectChanges();
     }, 0);
   }
 
   ngAfterViewInit() {
-    // Réinitialiser les composants après que les vues soient complètement chargées
     setTimeout(() => {
       this.inputScores?.forEach((input) => {
         input.ngOnInit();
@@ -105,7 +103,7 @@ export class CourtisansSheetComponent implements AfterViewInit {
         rossignol: 0,
         lievre: 0,
         crapaud: 0,
-        abeille: 0,
+        papillon: 0,
         cerf: 0,
         carpe: 0,
         score: 0,
@@ -119,13 +117,11 @@ export class CourtisansSheetComponent implements AfterViewInit {
   private calculateScore(player: CourtisansPlayer){
     player.score = 0;
 
-    // Points pour les missions (3 points chacune)
     if (player.mission1) player.score += 3;
     if (player.mission2) player.score += 3;
 
-    // Points pour les familles
-    const familleKeys = ['rossignol', 'lievre', 'crapaud', 'abeille', 'cerf', 'carpe'];
-    const familleNames = ['Rossignol', 'Lièvre', 'Crapaud', 'Abeille', 'Cerf', 'Carpe'];
+    const familleKeys = ['papillon', 'crapaud', 'rossignol', 'lievre',  'cerf', 'carpe'];
+    const familleNames = ['Papillon','Crapaud', 'Rossignol', 'Lièvre',  'Cerf', 'Carpe'];
 
     familleKeys.forEach((key, index) => {
       const count = player[key as keyof CourtisansPlayer] as number;
@@ -162,7 +158,7 @@ export class CourtisansSheetComponent implements AfterViewInit {
   changeRossignol(player: CourtisansPlayer, value: number){ player.rossignol = value; this.calculateScore(player); }
   changeLievre(player: CourtisansPlayer, value: number){ player.lievre = value; this.calculateScore(player); }
   changeCrapaud(player: CourtisansPlayer, value: number){ player.crapaud = value; this.calculateScore(player); }
-  changeAbeille(player: CourtisansPlayer, value: number){ player.abeille = value; this.calculateScore(player); }
+  changePapillon(player: CourtisansPlayer, value: number){ player.papillon = value; this.calculateScore(player); }
   changeCerf(player: CourtisansPlayer, value: number){ player.cerf = value; this.calculateScore(player); }
   changeCarpe(player: CourtisansPlayer, value: number){ player.carpe = value; this.calculateScore(player); }
 
