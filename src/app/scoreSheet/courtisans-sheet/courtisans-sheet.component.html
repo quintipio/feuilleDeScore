@@ -10,7 +10,7 @@
 				<span class="famille-name">{{ famille }}</span>
 				<app-input-score
 					[name]="'table_' + famille"
-					[values]="['lumière', 'disgrace']"
+					[values]="['lumière', 'disgrace','nulle']"
 					[initValue]="famillesState[famille]"
 					(valueChange)="changeFamilleState(famille, $any($event))">
 				</app-input-score>
